@@ -1,0 +1,43 @@
+---
+title: "About the FSU R Group"
+image: limits.png
+about:
+  template: jolla
+  links:
+    - icon: github
+      text: Github (Russell Almond)
+      href: https://github.com/ralmond
+    - icon: canvas
+      text: Canvas Self-enrollment
+      href: https://fsu.instructure.com/enroll/AWFYCW
+    - icon: mail
+      text: Listserve Enrollment
+      href: https://lists.fsu.edu/mailman/listinfo/epls-r-users
+---
+
+## FSU R User Group
+
+The FSU R Group is open to students, faculty, staff, alumni and general friends of Florida State University. (Being a member of the R group, makes you a friend, so really open to anyone.)
+
+We meet to learn how to better use the R programming language (<https://cloud.r-project.org/>) for data analysis, statistical programming and other applications. We welcome people at all levels of experience.
+
+## Mailing List and Canvas Site
+
+### Canvas Site
+
+Much of our material, including handouts and recordings of previous sessions are available through our canvas site. If you have an FSU ID, you can self-enroll though the following link:
+
+[**https://fsu.instructure.com/enroll/AWFYCW**](https://fsu.instructure.com/enroll/AWFYCW)
+
+If you do not have a current FSU ID (i.e., you are not currently faculty, staff, a student or visiting scholar), then send a note to the faculty leader, [Russell Almond](mailto:ralmond@fsu.edu) describing what you hope to accomplish with the R group and I will look into getting you an account.
+
+### Mailing List
+
+We also have a self-service mailing list for the R user group. You can enroll by going to <https://lists.fsu.edu/mailman/listinfo/epls-r-users>.
+
+The mailing list is low volume, mostly announcements of group activities, although members are welcome to post R related questions to the list.
+
+## Faculty Leader
+
+The faculty leader for the FSU R group is Russell Almond. You can read more about him at his [home page](https://ralmond.net).  You can also see his [github](https://github.com/ralmond) and [R-Universe](https://ralmond.r-universe.dev) pages.
+

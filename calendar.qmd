@@ -1,0 +1,11 @@
+---
+title: "R Group Calendar Calendar"
+---
+
+## Meeting Times
+
+We are currently meeting every other Friday at 12:00 (Eastern Time) in Stone Building Room 3303. We also have a Zoom link (which is shared through our mailing list and canvas site).
+
+### Calendar
+
+<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=YjA5ZDE2ODc1MGQ2ZTU3NWQ1MDAxZmQwNzUzZWU4ZWI2NDM2MmJjNTk2NmQ1MGY4OTU5YTBlMjQ3N2NkMjk0OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%23F4511E" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no"></iframe>

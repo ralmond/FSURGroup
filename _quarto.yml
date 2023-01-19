@@ -1,0 +1,38 @@
+project:
+  type: website
+
+theme: 
+  - FSU.scss
+
+website:
+  title: "FSURGroup"
+  navbar:
+    background: primary
+    foreground: secondary
+    title: false
+    logo: img/fsu-seal-3d-1.png    
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/ralmond
+      - icon: easil2
+        text: Canvas Self-enrollment
+        href: https://fsu.instructure.com/enroll/AWFYCW
+      - icon: envelope
+        text: Listserve Enrollment
+        href: https://lists.fsu.edu/mailman/listinfo/epls-r-users
+      - icon: calendar
+        text: R Group Calendar
+        href: calendar.qmd
+        
+sidebar:
+  contents: auto
+  
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+
+editor: visual
+

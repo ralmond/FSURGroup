@@ -1,0 +1,16 @@
+---
+title: "FSU R Group"
+listing:
+  contents: posts
+  sort: "date desc"
+  type: default
+  categories: true
+  sort-ui: false
+  filter-ui: false
+page-layout: full
+title-block-banner: true
+---
+
+If you want to join, check out the [about](about.qmd) page.
+
+---
