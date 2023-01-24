@@ -1,16 +1,18 @@
 ---
 title: "FSU R Group"
 listing:
-  contents: posts
+  contents: posts/**/*.qmd
   sort: "date desc"
   type: default
   categories: true
   sort-ui: false
   filter-ui: false
+  fields: [date, title, descritpion, categories, author]
+  feed: true
 page-layout: full
-title-block-banner: true
+title-block-banner: false
 ---
 
 If you want to join, check out the [about](about.qmd) page.
 
----
+------------------------------------------------------------------------

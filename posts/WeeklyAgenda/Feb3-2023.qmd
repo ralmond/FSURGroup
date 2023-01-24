@@ -1,0 +1,19 @@
+---
+title: "Friday, Feb 3, 2023"
+author: "Russell Almond"
+date: "2023-01-24"
+categories: [agenda]
+---
+
+We will start our exploration of _R for Data science_ with Chapter 3, [Data Visualization](https://r4ds.had.co.nz/data-visualisation.html).  
+
+For this to work, we need volunteers to try the exercises.  You don't have to succeed, but you should get far enough to get stuck in an interesting place, which we can discuss.
+
+### Post your solutions
+
+Post your solutions (or attempts) in Posit Cloud.
+
+You can sign up for a free posit cloud account which allows us to share R code.  Create your account at [Posit.cloud](https://posit.cloud), and then use the [signup link](https://posit.cloud/spaces/329970/join?access_code=6HlAFOwHd5QDO7d62xcSqX0XHq7_4b2qu3vbO5qG) to access our R group project space.
+
+If you have a question, or want to volunteer to work on a problem, use the comment section below.
+

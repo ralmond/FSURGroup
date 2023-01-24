@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>FSU R User Group - R Group Calendar Calendar</title>
+<title>FSU R User Group - Archive</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,6 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -58,12 +60,42 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-description','listing-categories','listing-author',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -99,7 +131,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Listserve Enrollment</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./calendar.html" aria-current="page"><i class="bi bi-calendar" role="img">
+    <a class="nav-link" href="./calendar.html"><i class="bi bi-calendar" role="img">
 </i> 
  <span class="menu-text">R Group Calendar</span></a>
   </li>  
@@ -115,16 +147,16 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">R Group Calendar Calendar</h1>
+<h1 class="title">Archive</h1>
 </div>
 
 
@@ -139,19 +171,81 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="meeting-times" class="level2">
-<h2 class="anchored" data-anchor-id="meeting-times">Meeting Times</h2>
-<p>We are currently meeting every other Friday at 12:00 (Eastern Time) in Stone Building Room 3303. We also have a Zoom link (which is shared through our mailing list and canvas site).</p>
-<section id="calendar" class="level3">
-<h3 class="anchored" data-anchor-id="calendar">Calendar</h3>
-<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;ctz=America%2FNew_York&amp;src=YjA5ZDE2ODc1MGQ2ZTU3NWQ1MDAxZmQwNzUzZWU4ZWI2NDM2MmJjNTk2NmQ1MGY4OTU5YTBlMjQ3N2NkMjk0OUBncm91cC5jYWxlbmRhci5nb29nbGUuY29t&amp;color=%23F4511E" style="border:solid 1px #777" width="800" height="600" frameborder="0" scrolling="no">
-</iframe>
 
 
-</section>
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="agenda" data-listing-date-sort="1674536400000" data-listing-file-modified-sort="1674578133885" data-listing-reading-time-sort="0.55">
+<div class="body">
+<a href="./posts/WeeklyAgenda/Feb3-2023.html">
+<h3 class="no-anchor listing-title">
+Friday, Feb 3, 2023
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('agenda'); return false;">
+agenda
+</div>
+</div>
+<a href="./posts/WeeklyAgenda/Feb3-2023.html">
+<div class="listing-description">
+We will start our exploration of <em>R for Data science</em> with Chapter 3, Data Visualization.
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/WeeklyAgenda/Feb3-2023.html">
+<div class="listing-date">
+Jan 24, 2023
+</div>
+<div class="listing-author">
+Russell Almond
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="news" data-listing-date-sort="1673326800000" data-listing-file-modified-sort="1674576214199" data-listing-reading-time-sort="0.35">
+<div class="body">
+<a href="./posts/welcome/index.html">
+<h3 class="no-anchor listing-title">
+Plans for Spring 2023
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('news'); return false;">
+news
+</div>
+</div>
+<a href="./posts/welcome/index.html">
+<div class="listing-description">
+The plan for 2023 is to do a self-study on the book
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="./posts/welcome/index.html">
+<div class="listing-date">
+Jan 10, 2023
+</div>
+<div class="listing-author">
+Russell Almond
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

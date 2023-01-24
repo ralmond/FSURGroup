@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>FSU R User Group</title>
+<link>https://pluto.coe.fsu.edu/FSURGroup/index.html</link>
+<atom:link href="https://pluto.coe.fsu.edu/FSURGroup/index.xml" rel="self" type="application/rss+xml"/>
+<description>Blog for the FSU R Group.</description>
+<generator>quarto-1.2.269</generator>
+<lastBuildDate>Tue, 24 Jan 2023 05:00:00 GMT</lastBuildDate>
+<item>
+  <title>Friday, Feb 3, 2023</title>
+  <dc:creator>Russell Almond</dc:creator>
+  <link>https://pluto.coe.fsu.edu/FSURGroup/posts/WeeklyAgenda/Feb3-2023.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>We will start our exploration of <em>R for Data science</em> with Chapter 3, <a href="https://r4ds.had.co.nz/data-visualisation.html">Data Visualization</a>.</p>
+<p>For this to work, we need volunteers to try the exercises. You don’t have to succeed, but you should get far enough to get stuck in an interesting place, which we can discuss.</p>
+<section id="post-your-solutions" class="level3">
+<h3 class="anchored" data-anchor-id="post-your-solutions">Post your solutions</h3>
+<p>Post your solutions (or attempts) in Posit Cloud.</p>
+<p>You can sign up for a free posit cloud account which allows us to share R code. Create your account at <a href="https://posit.cloud">Posit.cloud</a>, and then use the <a href="https://posit.cloud/spaces/329970/join?access_code=6HlAFOwHd5QDO7d62xcSqX0XHq7_4b2qu3vbO5qG">signup link</a> to access our R group project space.</p>
+<p>If you have a question, or want to volunteer to work on a problem, use the comment section below.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>agenda</category>
+  <guid>https://pluto.coe.fsu.edu/FSURGroup/posts/WeeklyAgenda/Feb3-2023.html</guid>
+  <pubDate>Tue, 24 Jan 2023 05:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Plans for Spring 2023</title>
+  <dc:creator>Russell Almond</dc:creator>
+  <link>https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>The plan for 2023 is to do a self-study on the book</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://r4ds.had.co.nz"><img src="https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/cover.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
+<p><a href="https://r4ds.had.co.nz">R for Data Science</a></p>
+<p>which is available online.</p>
+<p>Each session, volunteers will present on the exercises in the book, and we will discuss some of the ideas.</p>
+<p>We will also check in with some other projects that people might be working on, workshopping problems they are having.</p>
+<p>In particular, I will present some of my ongoing work with data analysis for <em>Physics Playground</em>.</p>
+
+
+
+ ]]></description>
+  <category>news</category>
+  <guid>https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/index.html</guid>
+  <pubDate>Tue, 10 Jan 2023 05:00:00 GMT</pubDate>
+  <media:content url="https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/cover.png" medium="image" type="image/png" height="216" width="144"/>
+</item>
+</channel>
+</rss>

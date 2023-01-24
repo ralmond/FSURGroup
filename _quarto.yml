@@ -1,11 +1,13 @@
 project:
-  type: website
+  type:  website
 
 theme: 
   - FSU.scss
 
 website:
-  title: "FSURGroup"
+  title: "FSU R User Group"
+  site-url: https://pluto.coe.fsu.edu/FSURGroup
+  description: "Blog for the FSU R Group."
   navbar:
     background: primary
     foreground: secondary
@@ -24,6 +26,8 @@ website:
       - icon: calendar
         text: R Group Calendar
         href: calendar.qmd
+      - icon: rss
+        href: index.xml
         
 sidebar:
   contents: auto

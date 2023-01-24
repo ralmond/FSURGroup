@@ -1,0 +1,20 @@
+---
+title: "Plans for Spring 2023"
+author: "Russell Almond"
+date: "2023-01-10"
+categories: [news]
+---
+
+The plan for 2023 is to do a self-study on the book
+
+[![](cover.png)](https://r4ds.had.co.nz)
+
+[R for Data Science](https://r4ds.had.co.nz)
+
+which is available online.
+
+Each session, volunteers will present on the exercises in the book, and we will discuss some of the ideas.
+
+We will also check in with some other projects that people might be working on, workshopping problems they are having.
+
+In particular, I will present some of my ongoing work with data analysis for *Physics Playground*.

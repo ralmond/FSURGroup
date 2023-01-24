@@ -37,6 +37,11 @@ We also have a self-service mailing list for the R user group. You can enroll by
 
 The mailing list is low volume, mostly announcements of group activities, although members are welcome to post R related questions to the list.
 
+### Posit Cloud
+
+You can sign up for a free posit cloud account which allows us to share R code.  Create your account at [Posit.cloud](https://posit.cloud), and then use the [signup link](https://posit.cloud/spaces/329970/join?access_code=6HlAFOwHd5QDO7d62xcSqX0XHq7_4b2qu3vbO5qG) to access our R group project space.
+
+
 ## Faculty Leader
 
 The faculty leader for the FSU R group is Russell Almond. You can read more about him at his [home page](https://ralmond.net).  You can also see his [github](https://github.com/ralmond) and [R-Universe](https://ralmond.r-universe.dev) pages.

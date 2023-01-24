@@ -1,24 +1,31 @@
 [
   {
-    "objectID": "calendar.html",
-    "href": "calendar.html",
-    "title": "R Group Calendar Calendar",
-    "section": "",
-    "text": "We are currently meeting every other Friday at 12:00 (Eastern Time) in Stone Building Room 3303. We also have a Zoom link (which is shared through our mailing list and canvas site)."
-  },
-  {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
-    "section": "",
-    "text": "This is a post with executable code.\n\n1 + 1\n\n[1] 2"
-  },
-  {
     "objectID": "posts/welcome/index.html",
     "href": "posts/welcome/index.html",
-    "title": "Welcome To My Blog",
+    "title": "Plans for Spring 2023",
     "section": "",
-    "text": "This is the first post in a Quarto blog. Welcome!\n\nSince this post doesn’t specify an explicit image, the first image in the post will be used in the listing page of posts."
+    "text": "The plan for 2023 is to do a self-study on the book\n\n\n\n\n\nR for Data Science\nwhich is available online.\nEach session, volunteers will present on the exercises in the book, and we will discuss some of the ideas.\nWe will also check in with some other projects that people might be working on, workshopping problems they are having.\nIn particular, I will present some of my ongoing work with data analysis for Physics Playground."
+  },
+  {
+    "objectID": "posts/WeeklyAgenda/Feb3-2023.html",
+    "href": "posts/WeeklyAgenda/Feb3-2023.html",
+    "title": "Friday, Feb 3, 2023",
+    "section": "",
+    "text": "We will start our exploration of R for Data science with Chapter 3, Data Visualization.\nFor this to work, we need volunteers to try the exercises. You don’t have to succeed, but you should get far enough to get stuck in an interesting place, which we can discuss.\n\nPost your solutions\nPost your solutions (or attempts) in Posit Cloud.\nYou can sign up for a free posit cloud account which allows us to share R code. Create your account at Posit.cloud, and then use the signup link to access our R group project space.\nIf you have a question, or want to volunteer to work on a problem, use the comment section below."
+  },
+  {
+    "objectID": "archive.html",
+    "href": "archive.html",
+    "title": "Archive",
+    "section": "",
+    "text": "Friday, Feb 3, 2023\n\n\n\n\n\n\n\nagenda\n\n\n\n\n\n\n\n\n\n\n\nJan 24, 2023\n\n\nRussell Almond\n\n\n\n\n\n\n\n\nPlans for Spring 2023\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJan 10, 2023\n\n\nRussell Almond\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "FSU R Group",
+    "section": "",
+    "text": "If you want to join, check out the about page.\n\n\n\n\n\n\n\n\n\n\n\nFriday, Feb 3, 2023\n\n\n\n\n\n\n\nagenda\n\n\n \n\n\n\n\nJan 24, 2023\n\n\nRussell Almond\n\n\n\n\n\n\n\n\nPlans for Spring 2023\n\n\n\n\n\n\n\nnews\n\n\n \n\n\n\n\nJan 10, 2023\n\n\nRussell Almond\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
@@ -28,25 +35,11 @@
     "text": "The FSU R Group is open to students, faculty, staff, alumni and general friends of Florida State University. (Being a member of the R group, makes you a friend, so really open to anyone.)\nWe meet to learn how to better use the R programming language (https://cloud.r-project.org/) for data analysis, statistical programming and other applications. We welcome people at all levels of experience."
   },
   {
-    "objectID": "RGroup2020.html",
-    "href": "RGroup2020.html",
-    "title": "R Group Flyer",
-    "section": "",
-    "text": "R is a free (both as in speech and as in beer) software package that allows for statistical analyses ranging from the simple to the complex, with support for great graphics.\nWe will be covering the R tidyverse series of commands which makes R easier to use for people with little programming experience. The text will be R for Data Science which is available for free at https://r4ds.had.co.nz/.\n\n\n\nMeetings Fridays at 3:45 in the LRC (Stone Building, 1301A).\nNo prior experience with R is necessary.\nSessions will be recorded so you can catch up if you miss a week.\nOpen to Grads, Undergrads, Faculty and Staff\n\n\n\n\nAlthough the LRC has computers available, you will probably want to install R on your own computer. Here are instructions for various kinds of computers.\nThere are three things you need to get: * R — this is the base program that does the calculations. * RStudio — this is a development environment which makes writing and running R scripts easier. It also has tools for building papers and presentations using R. * tidyverse — these are a series of packages which make the data analysis flow in R easier.\n\n\nThis is the source distribution. Select the installation method for your platform.\n\n\n\nUse the following command:\nsudo apt-get install r-base\nYou can also use sudo apt-get install rstudio to get RStudio.\n\n\n\nFirst, you need to configure the EPEL repositories. (In CentOS, this can be done with sudo yum install -y epel-release\nThen, you can install:\nsudo yum install -y R\n\n\n\nAssuming you have home brew installed, R can be installed using:\nsudo brew install r\nI think RStudio is available from homebrew, but I don’t know the recipe.\n\n\n\nAssumeing you have chocolatey installed, R can be installed using:\nchoco install r.project\nNote that you need to be running the powershell as admin to do installations with chocolatey.\nYou can also do choco install r.studio to get R Studio.\n\n\n\n\nRStudio is an integrated development environment (IDE) for R. That means it is a wrap around program that runs R inside it. At the same time it provides a number of tools to make working in R easier. These include:\n\nEditor for R code and scripts that is aware of R syntax.\nDebugging Tools\nWays of saving graphs and tables.\nIntegration with source code control systems (git and svn).\nA special way of writing reports and slides with integrated R code.\n\nThere are other IDEs for R, but this is the one we recommend. It is available from https://RStudio.com/.\n\n\n\nThe R system comes with the ability to add packages. There are 15,382 packages available for R, many of which are useful.\nThe tidyverse series of packages which make the normal data analysis flow work much more easily. These are used in the book we are following.\nTo install using RStudio: From the menubar select “Tools” followed by “Install Packages…”. Then type “tidyverse”. Make sure the “Install Dependencies” box is checked.\nTo install from the R command line, type install.packages(\"tidyverse\") then return. R will prompt for a mirror site to download from. All will work, but pick one in the US for fastest speed."
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "FSU R Group",
-    "section": "",
-    "text": "If you want to join, check out the about page.\n\n\n\n\n\n\n\n\n\n  \n\n\n\n\nPost With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJan 13, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\n  \n\n\n\n\nWelcome To My Blog\n\n\n\n\n\n\n\nnews\n\n\n\n\n\n\n\n\n\n\n\nJan 10, 2023\n\n\nTristan O’Malley\n\n\n\n\n\n\nNo matching items"
-  },
-  {
     "objectID": "about.html#mailing-list-and-canvas-site",
     "href": "about.html#mailing-list-and-canvas-site",
     "title": "About the FSU R Group",
     "section": "Mailing List and Canvas Site",
-    "text": "Mailing List and Canvas Site\n\nCanvas Site\nMuch of our material, including handouts and recordings of previous sessions are available through our canvas site. If you have an FSU ID, you can self-enroll though the following link:\nhttps://fsu.instructure.com/enroll/AWFYCW\nIf you do not have a current FSU ID (i.e., you are not currently faculty, staff, a student or visiting scholar), then send a note to the faculty leader, Russell Almond describing what you hope to accomplish with the R group and I will look into getting you an account.\n\n\nMailing List\nWe also have a self-service mailing list for the R user group. You can enroll by going to https://lists.fsu.edu/mailman/listinfo/epls-r-users.\nThe mailing list is low volume, mostly announcements of group activities, although members are welcome to post R related questions to the list."
+    "text": "Mailing List and Canvas Site\n\nCanvas Site\nMuch of our material, including handouts and recordings of previous sessions are available through our canvas site. If you have an FSU ID, you can self-enroll though the following link:\nhttps://fsu.instructure.com/enroll/AWFYCW\nIf you do not have a current FSU ID (i.e., you are not currently faculty, staff, a student or visiting scholar), then send a note to the faculty leader, Russell Almond describing what you hope to accomplish with the R group and I will look into getting you an account.\n\n\nMailing List\nWe also have a self-service mailing list for the R user group. You can enroll by going to https://lists.fsu.edu/mailman/listinfo/epls-r-users.\nThe mailing list is low volume, mostly announcements of group activities, although members are welcome to post R related questions to the list.\n\n\nPosit Cloud\nYou can sign up for a free posit cloud account which allows us to share R code. Create your account at Posit.cloud, and then use the signup link to access our R group project space."
   },
   {
     "objectID": "about.html#faculty-leader",
@@ -54,5 +47,12 @@
     "title": "About the FSU R Group",
     "section": "Faculty Leader",
     "text": "Faculty Leader\nThe faculty leader for the FSU R group is Russell Almond. You can read more about him at his home page. You can also see his github and R-Universe pages."
+  },
+  {
+    "objectID": "calendar.html",
+    "href": "calendar.html",
+    "title": "R Group Calendar Calendar",
+    "section": "",
+    "text": "We are currently meeting every other Friday at 12:00 (Eastern Time) in Stone Building Room 3303. We also have a Zoom link (which is shared through our mailing list and canvas site)."
   }
 ]
