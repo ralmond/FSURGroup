@@ -25,4 +25,4 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - run: wget https://pluto.coe.fsu.edu/cgi-bin/gitPull
+      - run: wget https://pluto.coe.fsu.edu/cgi-bin/gitPullRGroup
