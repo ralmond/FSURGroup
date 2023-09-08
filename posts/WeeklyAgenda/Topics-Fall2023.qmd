@@ -1,0 +1,28 @@
+---
+title: "Topics for Fall, 2023"
+author: "Russell Almond"
+date: "2023-09-8"
+categories: [agenda]
+---
+
+Ideas for future collquia
+
+1.  Talk about data archiving for *Physics Playground* (Sep 22, Russell)
+2.  Time series (Saeyan, Oct 6)
+    -   Graphics
+    -   ARIMA models
+    -   Filters & Smoothing
+
+3.  Networks or graphs (Shubham, Nov 3)
+    -   Displays (DiagrammeR, graphviz)
+    -   iGraph, gRain, bnlearn (Graphs view)
+    -   ggnet
+
+4. Graphs and interactive graphs
+   - ggplot
+   - plotly
+   - shiny
+   - Tableau
+   - Power BI (Kari, Oct 20)
+
+

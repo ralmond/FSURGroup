@@ -1,27 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/index.html</loc>
-    <lastmod>2023-01-24T17:18:06.432Z</lastmod>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/calendar.html</loc>
+    <lastmod>2023-09-08T16:43:38.765Z</lastmod>
   </url>
   <url>
-    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/WeeklyAgenda/Feb3-2023.html</loc>
-    <lastmod>2023-01-24T17:18:06.726Z</lastmod>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/WeeklyAgenda/Topics-Fall2023.html</loc>
+    <lastmod>2023-09-08T16:43:38.081Z</lastmod>
   </url>
   <url>
-    <loc>https://pluto.coe.fsu.edu/FSURGroup/archive.html</loc>
-    <lastmod>2023-01-24T17:18:07.059Z</lastmod>
-  </url>
-  <url>
-    <loc>https://pluto.coe.fsu.edu/FSURGroup/index.html</loc>
-    <lastmod>2023-01-24T17:18:07.526Z</lastmod>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/Making tables in R/index.html</loc>
+    <lastmod>2023-09-08T16:43:37.409Z</lastmod>
   </url>
   <url>
     <loc>https://pluto.coe.fsu.edu/FSURGroup/about.html</loc>
-    <lastmod>2023-01-24T17:18:07.836Z</lastmod>
+    <lastmod>2023-09-08T16:43:36.489Z</lastmod>
   </url>
   <url>
-    <loc>https://pluto.coe.fsu.edu/FSURGroup/calendar.html</loc>
-    <lastmod>2023-01-24T17:18:08.151Z</lastmod>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/index.html</loc>
+    <lastmod>2023-09-08T16:43:36.113Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/archive.html</loc>
+    <lastmod>2023-09-08T16:43:37.073Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/welcome/index.html</loc>
+    <lastmod>2023-09-08T16:43:37.765Z</lastmod>
+  </url>
+  <url>
+    <loc>https://pluto.coe.fsu.edu/FSURGroup/posts/WeeklyAgenda/Feb3-2023.html</loc>
+    <lastmod>2023-09-08T16:43:38.437Z</lastmod>
   </url>
 </urlset>

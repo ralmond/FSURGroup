@@ -1,14 +1,18 @@
 [
   {
-    "listing": "/archive.html",
+    "listing": "/index.html",
     "items": [
+      "/posts/WeeklyAgenda/Topics-Fall2023.html",
+      "/posts/Making tables in R/index.html",
       "/posts/WeeklyAgenda/Feb3-2023.html",
       "/posts/welcome/index.html"
     ]
   },
   {
-    "listing": "/index.html",
+    "listing": "/archive.html",
     "items": [
+      "/posts/WeeklyAgenda/Topics-Fall2023.html",
+      "/posts/Making tables in R/index.html",
       "/posts/WeeklyAgenda/Feb3-2023.html",
       "/posts/welcome/index.html"
     ]

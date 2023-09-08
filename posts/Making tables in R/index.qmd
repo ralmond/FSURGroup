@@ -1,0 +1,10 @@
+---
+title: "A package for making tables"
+author: "Russell Almond"
+date: "2023-02-03"
+categories: [tables, graphics]
+---
+
+Kari points us at the `gt` package for making tables. <https://cran.r-project.org/package=gt>
+
+This is sort of like the grammer of graphics, but for tables.
