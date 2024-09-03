@@ -1,0 +1,8 @@
+---
+title: "Jamovi"
+author: "Russell Almond"
+date: "2024-09-06"
+categories: [agenda,gui]
+---
+
+On Sept 6, we will look at the the free tool [Jamovi](https://jamovi.org) which provides a graphical front end for R.
