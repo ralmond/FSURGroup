@@ -1,0 +1,14 @@
+---
+title: "Introductory Statistics Demos"
+author: "Russell Almond"
+date: "2024-03-12"
+categories: [statistics]
+filters: 
+ - shinylive
+---
+
+These are the Shiny demos I've been using.  I'm experimenting with using shinylive to embed the R in the web pages rather than use the server.
+
+So far, I've ported:  
+
+[Normal Calculator](NormalCalculator.qmd)

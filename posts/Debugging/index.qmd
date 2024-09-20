@@ -1,0 +1,151 @@
+---
+title: "Debugging Strategies"
+author: "Russell Almond"
+categories: [debugging]
+---
+
+# Writing Test Cases
+
+## Setup inputs and expected outputs
+
+Often use a sequence here.
+
+```{r}
+mat <- matrix(1:12,3,4)
+mat
+```
+Test whether I got row/columns right in apply
+
+```{r}
+apply(mat,1,sum)
+apply(mat,2,sum)
+```
+
+## Using `stopifnot`
+
+```{r}
+try(stopifnot(length(apply(mat,2,sum)==3L)))
+```
+(The `try()` is necessary to keep quarto from stopping when the error occurs.  In general, we want the script to stop when if finds an error.)
+
+
+`all.equal` is useful here
+
+```{r}
+all.equal(apply(mat,1,sum),c(22,26,30))
+```
+Alternative is `all(apply(mat,1,sum)==c(22,26,30))`.
+
+```{r}
+all.equal(list(a=1,b=2),list(a=1,b="two"))
+```
+"Epsilon" is the biggest number such that $1+\epsilon \approx 1$.
+
+
+```{r}
+.Machine$double.eps
+tol <- sqrt(.Machine$double.eps)
+tol
+```
+To compare two doubles, subtract, then check that abs < tolerance
+
+```{r}
+stopifnot(all(abs(apply(mat,1,sum)-c(22,26,30)) < tol))
+```
+Could also use `all.equal(target, current, tolerance=tol)`
+
+Sometimes need to wrap this in `isTRUE`
+
+```{r}
+try({if (all.equal(c(22,26,30),apply(mat,2,sum))) {
+  print("Yattah!")
+} else {
+  print("Gomen nasai!")
+}})
+```
+```{r}
+if (isTRUE(all.equal(c(22,26,30),apply(mat,2,sum)))) {
+  print("Yattah!")
+} else {
+  print("Gomen nasai!")
+}
+
+```
+
+Better to use `{}` with `if`, `for`, `while`, as you may want to add debugging statements in between.
+
+```{r}
+myfun <- function(mat) {
+  rowsum <- apply(mat,2,sum)
+if (isTRUE(all.equal(c(22,26,30),rowsum))) {
+  print("Yattah!")
+} else {
+  print("Gomen nasai!")
+  recover()
+}
+}
+myfun(mat)
+```
+```{r}
+myfun <- function(mat) {
+  rowsum <- apply(mat,2,sum)
+if (isTRUE(all.equal(c(22,26,30),rowsum))) {
+  print("Yattah!")
+} else {
+  print("Gomen nasai!")
+}
+}
+```
+
+
+## Using `test_that`
+
+# Some things to try
+
+## Requesting Stack Traces
+
+```{r}
+foo <- function(x) { print(1); bar(2) }
+bar <- function(x) { x + a.variable.which.does.not.exist }
+try(foo(2))
+```
+
+## Check the inputs
+
+## Check the input order
+
+Check the order of arguments.
+
+```{r}
+args(myfun)
+```
+
+
+## Adding Print Statements
+
+```{r}
+myfun <- function(mat) {
+  rowsum <- apply(mat,2,sum)
+  print(rowsum)
+if (isTRUE(all.equal(c(22,26,30),rowsum))) {
+  print("Yattah!")
+} else {
+  print("Gomen nasai!")
+}
+}
+myfun(mat)
+```
+
+## Adding Logging
+
+## `recover()`
+
+`options(error=recover)` will fall into debugger when the error occurs.
+
+
+### RStudio environment tab
+
+## traceing
+
+## The RStudio debugger
+

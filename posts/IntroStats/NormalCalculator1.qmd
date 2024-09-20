@@ -1,0 +1,85 @@
+---
+title: "Normal Calculator"
+author: "Russell Almond"
+date: "9/10/2019"
+output: html_document
+filters:
+  - shinylive
+---
+
+## Normal Probabilities.
+
+In this tool, you input a z score, and get a corresponding normal probability.
+
+
+## Normal Quantiles.
+
+In this tool, you input a probability, and get a corresponding *z* score.
+
+```{shinylive-r}
+#| standalone: true
+#| viewerHeight: 500
+library(shiny)
+ui1 <- fluidPage(
+ inputPanel(
+   selectInput("tails1", label = "Which tails",
+               choices = c("Upper tail: Pr(z < Z)"="upper",
+                           "Lower tail: Pr(Z < z)"="lower",
+                           "Both tails: Pr(Z <-z or z< Z)"="both",
+                           "Middle: Pr(-z < Z < z)"="middle"),
+               selected = "both"),
+   
+   numericInput("p", label = "Probability of shaded region:", value=0.05, min=0, max=1)
+ ),
+ mainPanel(plotOutput("normcurve1")))
+ 
+server1 <- function(input,output) {
+ output$normcurve1 <- renderPlot({
+   pp <- input$p
+   q <- switch(input$tails1,
+               upper=qnorm(1-pp),
+               lower=qnorm(pp),
+               both=qnorm(1-pp/2),
+               middle=qnorm(.5+pp/2))
+   xl <- round(max(3,ceiling(abs(q)+.5)),1)
+   curve(dnorm(x),main=paste("Probability of shaded region = ",round(pp,3)),
+         sub=paste("z = ",round(q,3)),
+         xlim = c(-xl,xl),yaxt="n",cex=3,cex.lab=2,cex.main=2,ylab="",xlab="z")
+   switch(input$tails1,
+          upper={
+            cord.xu <- c(q,seq(q,xl,0.01),xl)
+            cord.yu <- c(0,dnorm(seq(q,xl,0.01)),0)
+            polygon(cord.xu,cord.yu,col='skyblue')
+            axis(1,q,paste(round(q,3)),cex.axis=2)
+          },
+          lower={
+            cord.xl <- c(-xl,seq(-xl,q,0.01),q)
+            cord.yl <- c(0,dnorm(seq(-xl,q,0.01)),0)
+            polygon(cord.xl,cord.yl,col='skyblue')
+            axis(1,q,paste(round(q,3)),cex.axis=2)
+          },
+          both={
+            q <- abs(q)
+            cord.xu <- c(q,seq(q,xl,0.01),xl)
+            cord.yu <- c(0,dnorm(seq(q,xl,0.01)),0)
+            polygon(cord.xu,cord.yu,col='skyblue')
+            cord.xl <- c(-xl,seq(-xl,-q,0.01),-q)
+            cord.yl <- c(0,dnorm(seq(-xl,-q,0.01)),0)
+            polygon(cord.xl,cord.yl,col='skyblue')
+            axis(1,q,paste(round(q,3)),cex.axis=2)
+            axis(1,-q,paste(-round(q,3)),cex.axis=2)
+          },
+          middle={
+            q <- abs(q)
+            cord.xmid <- c(-q,seq(-q,q,0.01),q)
+            cord.ymid <- c(0,dnorm(seq(-q,q,0.01)),0)
+            polygon(cord.xmid,cord.ymid,col='skyblue')
+            axis(1,q,paste(round(q,3)),cex.axis=2)
+            axis(1,-q,paste(-round(q,3)),cex.axis=2)
+          })
+   
+ })
+}
+shinyApp(ui1, server1)
+```
+
