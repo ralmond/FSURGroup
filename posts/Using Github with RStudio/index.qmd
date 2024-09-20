@@ -6,6 +6,6 @@ categories: [development]
 ------
 
 
-This tutorial might be useful:
+This tutorial you might find useful:
   <https://epiverse-trace.github.io/git-rstudio-basics/>.
   
