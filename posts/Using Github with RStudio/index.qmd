@@ -1,0 +1,11 @@
+---
+title: "Using Github With R Studio"
+author: "Russell Almond"
+date: "2023-09-20"
+categories: [development]
+------
+
+
+This tutorial might be useful:
+  <https://epiverse-trace.github.io/git-rstudio-basics/>.
+  
