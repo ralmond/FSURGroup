@@ -6,14 +6,15 @@ theme:
 
 website:
   title: "FSU R User Group"
-  site-url: https://pluto.coe.fsu.edu/FSURGroup
+  site-url: https://myweb.fsu.edu/ralmond/FSURGroup
   description: "Blog for the FSU R Group."
   navbar:
     background: primary
     foreground: secondary
     title: false
-    logo: img/fsu-seal-3d-1.png    
+    logo: img/RlogoGold.svg    
     right:
+      - index.qmd
       - about.qmd
       - icon: github
         href: https://github.com/ralmond

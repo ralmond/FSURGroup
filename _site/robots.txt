@@ -1,1 +1,1 @@
-Sitemap: https://pluto.coe.fsu.edu/FSURGroup/sitemap.xml
+Sitemap: https://myweb.fsu.edu/ralmond/FSURGroup/sitemap.xml

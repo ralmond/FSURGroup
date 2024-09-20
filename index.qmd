@@ -13,6 +13,8 @@ page-layout: full
 title-block-banner: false
 ---
 
+Fall 2024 Meeting times: Every other Friday, starting Sep 6 in Stone G158 or via the Zoom link posted in Canvas.
+
 If you want to join, check out the [about](about.qmd) page.
 
 ------------------------------------------------------------------------
