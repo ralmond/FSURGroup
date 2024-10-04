@@ -1,0 +1,248 @@
+%%% For this chapter, I need a few extra definitions.  First, I create a
+%%% new macro so that I can easily type the BibTeX and BibLaTeX logos.
+
+\def\BibTeX{{\rmfamily B\kern-.05em%
+   \textsc{i\kern-.025em b}\kern-.08em\TeX}}
+\def\BibLaTeX{{\rmfamily B\kern-.05em%
+   \textsc{i\kern-.025em b}\kern-.08em\LaTeX}}
+
+%%% Next I create a new environment called 'narrowref' simulating the
+%%% appearance of the 'references' environment.  The margins are
+%%% narrowed to set off the material a little better.  I also invoke
+%%% the 'singlespaced' environment to demonstrate the look of the
+%%% actual output of the references in case I'm processing this
+%%% document using 'expanded' mode.  If you'd like to create your own
+%%% environments for special purposes, refer to the references for the
+%%% details.  For aspiring LaTeX experts, note that I reset
+%%% the \parskip parameter *after* beginning the first paragraph
+%%% with \leavevmode.  This is because I only want to use the new
+%%% paragraph spacing between paragraphs contained *within* this
+%%% environment, and the default paragraph spacing outside the
+%%% environment.  (The \parskip glue is added before the start of a
+%%% new paragraph, not at the end of the old paragraph.)
+
+\newenvironment{narrowref}{
+  \begin{singlespaced}
+  \frenchspacing
+  \setlength{\leftskip}{4em}
+  \setlength{\rightskip}{3em}
+  \setlength{\parindent}{-2em}
+  \addvspace{0.5\baselineskip}
+  \leavevmode
+  \setlength{\parskip}{0.6\baselineskip}\ignorespaces}
+ {\end{singlespaced}\addvspace{.5\baselineskip}}
+
+%%% Now let the chapter begin.
+
+\chapter{Citations and References}
+In this chapter I demonstrate how to use features of \LaTeX{} and
+the \pkg{fsuthesis} class to help me create a list of references or
+bibliography.  There are three options: (1)~use the \lit{references}
+environment and enter bibliographic entries with styling that I create
+myself, or (2)~use the latest bibliography system called \BibLaTeX{}
+to manage a database of references, using \verb|\cite| macros within
+your text to create citations, or (3)~use the older \BibTeX{} system
+to order and style the bibliographic entries according to a
+pre-defined style sheet. Option~(2) is preferable to (3), unless you
+need to use an older style macro package that hasn't been converted
+to \BibLaTeX\ yet.
+
+\section{Using the \texttt{references} Environment}
+Let's start simply.  Assuming we don't have many citations, we'll
+create a references section manually using the
+\verb|\begin{references}| environment provided by the
+\textsf{fsuthesis} class.  If your discipline has a style
+guide for presenting references, you should use that information to
+create your own entries.  Here are some example entries with
+explicit formatting specified:
+\begin{verbatim}
+\begin{references}
+Picaut, J., F. Masia, and Y. du Penhoat, 1997: An advective-reflective
+conceptual model for the oscillatory nature of the ENSO.
+\textit{Science}, \textbf{277}, 663--666.
+
+Yasunari, T., 1990: Impact of Indian monsoon on the coupled
+atmosphere/ocean system in the tropical Pacific.
+\textit{Meteor. Atmos. Phys.}, \textbf{44}, 19--41.
+\end{references}
+\end{verbatim}
+
+Note that I had to specify italics and bold-facing myself, according
+to the style guide that I'm using.  (If you don't have a
+discipline-specific style guide, see \cite{Anonymous:1993:CMS}
+or \cite{Anonymous:2009:PMA} for lots of bibliographic examples.)
+The \lit{references} environment provides exdented entries, spacing,
+and a heading, but the rest of the formatting is up to you.  Likewise,
+citations of these references within your document must be formatted
+manually.  Once processed, the reference entries above look like the
+following:
+\begin{narrowref}
+Picaut, J., F. Masia, and Y. du Penhoat, 1997: An advective-reflective
+conceptual model for the oscillatory nature of the ENSO.
+\textit{Science}, \textbf{277}, 663--666.
+
+Yasunari, T., 1990: Impact of Indian monsoon on the coupled
+atmosphere/ocean system in the tropical Pacific.
+\textit{Meteor. Atmos. Phys.}, \textbf{44}, 19--41.
+\end{narrowref}
+
+%%% My \BibTeX macro fails me in this section title, because there are
+%%% no smallcaps bold-faced fonts provided by default with my LaTeX
+%%% installation.  For this one place, I do something slightly different.
+
+\section{Citations and B{\small IB}\LaTeX}
+If your thesis or dissertation does not have many citations or
+references, then the \lit{references} environment may be all you
+need. However, if you have more than a handful of citations, you owe
+it to yourself to invest a little more energy into learning about the
+powerful, time-saving features of \BibLaTeX.  To use \BibLaTeX,
+bibliographic entries are added to an external file with attributes
+identifying elements of the entry, such as authors, titles, journals,
+etc.  You may then cite a reference in your document using its unique
+key.  Many disciplines have developed large \BibTeX/\BibLaTeX{}
+databases already, so if you're lucky, you only need download a
+pre-built file ready to go.  You can always add a few more references
+if those entries don't already exist in the file you
+download. (\BibTeX{} databases are compatible with \BibLaTeX{}, so
+very few changes are necessary to use the newer system. However,
+\BibLaTeX{} provides many more features and options, so not all
+\BibLaTeX{} bibliography entries will be backwards compatible with
+\BibTeX).
+
+For this sample document, I have created a small \BibLaTeX{}
+bibliography database in a file called \lit{myrefs.bib} which is
+excerpted from a larger collection of pre-generated \TeX-related
+entries I downloaded from the web.  If your discipline does not
+already distribute \BibLaTeX{} databases publicly, it's just a bit more
+typing to create your own \BibLaTeX{} file.  As an example, here's
+what a \BibLaTeX{} entry might look like:
+\begin{verbatim}
+@Article{Picaut:1997,                  
+  author = "J. Picaut and F. Masia and Y. du Penhoat",
+  title = "An advective-reflective conceptual model for
+    the oscillatory nature of the ENSO",
+  volume = "277",
+  year = "1997",
+  journal = "Science",
+  pages = "663--666"
+}
+\end{verbatim}
+
+Another advantage of the \BibLaTeX{} approach is that you can continue
+to add to this database throughout your professional career, creating
+entries as you read books and journal articles you may want to
+reference in the future.  I encourage you to refer to the
+standard \LaTeX{} references (e.g., \cite{Lamport:1994:LDP}
+and \cite{Kopka:2004:GLT}) or to search the web for further
+information on creating your own \BibLaTeX{} database.
+
+Once you've created or downloaded a \BibLaTeX{} database, you may cite a
+document using its unique \textit{key} as an argument to
+the \LaTeX{} \verb|\cite| macro.  For example, in the previous
+paragraph, I used the commands \verb|\cite{Lamport:1994:LDP}| and
+\verb|\cite{Kopka:2004:GLT}|, where \lit{Lamport:1994:LDP} and
+\lit{Kopka:2004:GLT} are the keys for their respective documents.
+(The keys are defined in the \BibLaTeX\ database file.)  By making these
+citations, the bibliographic entries for these documents will be
+pulled from my \BibLaTeX{} database and added to the bibliography
+automatically.
+
+I can also add entries to the bibliography without having citations in
+my text by using the \verb|\nocite{key}| command with the
+desired \textit{key}.  If I want every entry in my \BibLaTeX{} file
+inserted into my bibliography, then I can issue the
+command \verb|\nocite{*}| as a shortcut.  (You don't have to worry
+about citations being redundant: bibliographic entries will be
+included only once no matter how many times they may be \verb|\cite|d
+or \verb|\nocite|d in your document.)
+
+For a comparison of the \BibTeX{} and \BibLaTeX{} systems, the
+links below provide useful information.
+\begin{itemize}\small
+\item \textsf{http://tex.stackexchange.com/questions/25701/bibtex-vs-biber-and-biblatex-vs-natbib}
+\item \textsf{http://tex.stackexchange.com/questions/5091/what-to-do-to-switch-to-biblatex}
+\end{itemize}
+
+\section{Alternative Citation and Bibliography Formats}
+The pre-formatted version of this document uses the default citation
+and bibliography formatting supplied by \LaTeX\ and \BibLaTeX.  There
+are a few options to alter the appearance of citations and the
+bibliography.  (See one of the references for your choices.)  However,
+many disciplines and journals have created their own
+advanced \BibTeX{} or \BibLaTeX{} formatting styles, and you may want
+to use one of these in your document.
+
+\subsection{The \pkg{biblatex-chicago} Package}
+While the older \BibTeX\ \pkg{natbib} package provides an optional
+bibliography style that closely follows the so-called ``Chicago
+style'' (see \cite{Anonymous:1993:CMS}),
+the \BibLaTeX{} \pkg{biblatex-chicago} package provides many more
+features and stricter stylistic adherence over a wider range of types
+of references. Include the
+line \verb|\usepackage[style=chicago]{biblatex}| in the document
+preamble to invoke this style option.
+
+Like most \BibLaTeX{} styles, this package makes use of the
+``back-end'' processor called \lit{biber} rather than the
+older \lit{bibtex} program. The major \TeX{} distributions already
+include the required programs. However, you may need to configure your
+environment to run \lit{biber} rather than \lit{bibtex} to process
+your document.
+
+\subsection{The \pkg{biblatex-apa} Package}
+For compatibility with the seventh edition of APA bibliography and
+citation styles, use the \pkg{biblatex-apa} package, accessed using
+the \verb|\usepackage[style=apa]{biblatex}| command. For sixth edition
+compatability, see the \pkg{apacite} package below.
+
+\subsection{The \pkg{natbib} B{\small IB}\TeX{} Package}
+The \pkg{natbib} package is an older \BibTeX-style macro package,
+activated by including the line \verb|\usepackage{natbib}| in the
+document preamble, which provides a common alternative to the
+default \LaTeX\ bibliography and citation styles.  Among other things,
+this package will allow you to make author--year citations in your
+document automatically (e.g., ``Fargunkle et al., (2001)'') without
+any changes to the \BibTeX{} database file.  In addition to the
+default \LaTeX\ \verb|\cite| macro, the package provides several new
+macros for creating citations in different contexts.
+
+This document's driver file (\lit{thesis.tex}) has options for trying
+out the \pkg{natbib} package.  Look for the \verb|\usepackage{natbib}|
+line near the top of the file, and then scroll down to the
+bibliography section for additional style selections you must specify
+for the bibliography itself.  For a bibliography formatted according
+to the style of the Association for Computing Machinery, for example,
+you would issue the command \verb|\bibliographystyle{acm}| before
+the \verb|\bibliography| command.  See \cite{Kopka:2004:GLT} (or
+search the web) for more information on \pkg{natbib}.
+
+\subsection{The \pkg{apacite} Package}
+The APA (American Psychological Association) created another
+commonly-used style guide for citations and bibliographic formatting.
+The \LaTeX\ package \pkg{apacite} was designed to follow the APA
+guidelines, sixth edition. (For seventh edition compatibility, you
+should instead use the \BibLaTeX{} \lit{style=apa} option.)  The
+package provides its own set of macros for specifying citations in the
+document text, but it also has a mode for compatibility with the
+popular \pkg{natbib} package.  With this compatibility mode enabled,
+you may use \pkg{natbib}-style citation commands in your document to
+generate the APA-style citations and bibliography.  In addition, using
+this compatibility mode means that you may switch between these two
+package alternatives without having to re-write the citations in your
+document.
+
+If you use the \pkg{apacite} package, and if you have also enabled
+the \pkg{hyperref} package for your document, you \emph{must} enable
+\lit{natbibapa} compatibility mode, or citations will give you
+cryptic error messages when your document is processed.  Load the
+package using the following line:
+\begin{verbatim}
+\usepackage[natbibapa]{apacite}
+\end{verbatim}
+The corresponding bibliography style would be set by the following 
+command line:
+\begin{verbatim}
+\bibliographystyle{apacite}
+\end{verbatim}
+
+

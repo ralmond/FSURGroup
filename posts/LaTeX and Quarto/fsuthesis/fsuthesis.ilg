@@ -1,0 +1,14 @@
+This is makeindex, version 2.15 [TeX Live 2022/dev] (kpathsea + Thai support).
+Scanning style file /usr/share/texlive/texmf-dist/makeindex/latex/gind.ist..........
+** Input style error (file = /usr/share/texlive/texmf-dist/makeindex/latex/gind.ist, line = 70):
+   -- Unknown specifier lethead_prefix.
+** Input style error (file = /usr/share/texlive/texmf-dist/makeindex/latex/gind.ist, line = 71):
+   -- Unknown specifier lethead_suffix.
+** Input style error (file = /usr/share/texlive/texmf-dist/makeindex/latex/gind.ist, line = 72):
+   -- Unknown specifier lethead_flag.
+...done (13 attributes redefined, 3 ignored).
+Scanning input file fsuthesis.idx....done (744 entries accepted, 0 rejected).
+Sorting entries........done (7409 comparisons).
+Generating output file fsuthesis.ind....done (408 lines written, 0 warnings).
+Output written in fsuthesis.ind.
+Transcript written in fsuthesis.ilg.

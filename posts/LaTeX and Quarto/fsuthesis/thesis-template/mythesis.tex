@@ -1,0 +1,123 @@
+% This is a "bare-bones" thesis template file.  For examples of how to
+% use a few more LaTeX features, look in the 'sample' folder.  Read
+% the User Guide for documentation of the 'fsuthesis' class features.
+% Follow the FSU 'Guidelines and Requirements for Electronic Theses,
+% Treatises, and Dissertations (ETDs)' document for all entries.
+
+\documentclass[11pt,expanded,copyright]{fsuthesis}
+
+% Additional packages may be loaded here.
+
+% Do NOT use 'geometry', 'setspace', or 'tocloft' packages! They will
+% mess up the spacing provided by 'fsuthesis'.
+
+% If using the BibLaTeX package for generating a bibliography or
+% references section, uncomment the following 5 lines. This is a
+% basic starting point, and you may want other package options.
+% You'll also need to uncomment the '\printbibliography' line
+% toward the end of this file. Refer to the biblatex package
+% documentation for information. The file 'myrefs.bib' contains
+% a few sample references. 
+
+%\usepackage[american]{babel}
+%\addto\captionsamerican{\renewcommand*{\contentsname}{Table of Contents}}
+%\usepackage{csquotes}
+%\usepackage{biblatex}
+%\addbibresource{myrefs.bib}
+
+%
+% Update these entries. See the User Guide for more information.
+%
+\title{This Is My Title:\protect\\And This Is Its Second Line}
+\author{Viktor Spoyles}
+\college{College of Extraterrestrial Recreation}
+\department{Department of Human Slacking}  % Delete if no department
+\manuscripttype{Dissertation}              % [Thesis, Dissertation, Treatise]
+\degree{Master of My Domain}               % [Master of Science, Doctor of Philosophy...]  
+\degreeyear{2021}
+\defensedate{October 31, 2021}
+
+%
+% If creating a PDF, you may want to uncomment these and enter
+% appropriate metadata for your document. See the User Guide.
+%
+%\subject{My Topic}
+%\keywords{keyterm1; keyterm2; keyterm3; ...}
+%
+
+%
+% Update to use the real names and positions of each person.
+% See FSU's 'Guidelines and Requirements' document for the proper
+% formats and titles.
+%
+\committeeperson{Faux Causson Yorverk}{Professor Directing Traffic}
+\committeeperson{Verda Boizaar}{University Representative}
+\committeeperson{Beauxeau D'Claune}{Committee Member}
+\committeeperson{Arlip Zarseeld}{Committee Member}
+
+\clubpenalty=9999
+\widowpenalty=9999
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\makecommitteepage
+
+%\begin{dedication}
+%\end{dedication}
+
+%\begin{acknowledgments}
+%\end{acknowledgments}
+
+\tableofcontents
+%\listoftables
+%\listoffigures
+%\listofmusex
+
+%\begin{listofsymbols}
+%\end{listofsymbols}
+
+%\begin{listofabbrevs}
+%\end{listofabbrevs}
+
+\begin{abstract}
+This is my abstract.
+\end{abstract}
+
+\mainmatter
+
+\input chapter1
+%\input chapter2
+%\input chapter3
+
+%\appendix
+%\input appendix1
+
+% You have your choice of bibliography sections: either
+% hand-crafted or BibLaTeX. The hand-crafted References
+% section is enabled by default. Remove these entries if
+% you're using BibLaTeX.
+
+% This is the "hand-crafted" bibliography/references section:
+\begin{references}
+Mybib, Sample. \textit{An Example of a Bibliographic Entry
+ Created Manually}. Tallahassee, Florida: Fornish and Frak, 2010.
+
+Smith, Marigold. \textit{Lots and Lots of Bibliographic Entries
+ and How to Display Them}. Tallahassee, Florida: Gibson and Goulash, 2010.
+\end{references}
+
+% Or use the BibLaTeX bibliography package, uncomment the lines in the
+% preamble, and uncomment the \printbibliography line below. View the
+% file 'myrefs.bib' to get a feel for what these entries may look
+% like. See the document in the 'sample' folder for more citation and
+% BibLaTeX examples.
+
+%\printbibliography
+
+\begin{biosketch}
+This is my biography.
+\end{biosketch}
+
+\end{document}

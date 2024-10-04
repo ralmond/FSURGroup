@@ -1,0 +1,1873 @@
+%\documentclass[11pt,letterpaper]{article}
+\documentclass[11pt,letterpaper]{ltxdockit}[2011/03/25]
+\usepackage[american]{babel}
+\usepackage{shortvrb}
+\usepackage{pifont}
+\usepackage{libertine}
+\usepackage[scaled=0.8]{beramono}
+\usepackage{microtype}
+\usepackage{makeidx}
+
+\lstset{basicstyle=\ttfamily,keepspaces=true}
+\KOMAoptions{numbers=noenddot}
+\definecolor{spot}{rgb}{0.5,0.1,0.1}
+\definecolor{boxfill}{rgb}{0.99,0.98,0.95}
+
+\addtokomafont{paragraph}{\spotcolor}
+\addtokomafont{section}{\spotcolor}
+\addtokomafont{subsection}{\spotcolor}
+\addtokomafont{subsubsection}{\spotcolor}
+\addtokomafont{descriptionlabel}{\spotcolor}
+
+\setlength{\paperwidth}{8.5in}
+\setlength{\paperheight}{11in}
+\setlength{\pdfpagewidth}{\paperwidth}
+\setlength{\pdfpageheight}{\paperheight}
+\addtolength{\textheight}{\baselineskip}
+
+\newcommand*{\acro}[1]{{\small\textsc{#1}}}
+\newcommand*{\booktitle}[1]{\textit{#1}}
+\newcommand*{\complit}[1]{\texttt{#1}}
+\newcommand*{\pkg}[1]{\textsf{#1}}
+\newcommand*{\comm}[1]{\texttt{\textbackslash#1}}
+
+\newcommand*{\fsuth}{\pkg{fsuthesis}}
+
+\renewcommand{\-}{\discretionary{}{}{}}
+
+% Logos:
+\def\BibTeX{{\rmfamily B\kern-.05em%
+   \textsc{i\kern-.025em b}\kern-.08em\TeX}}
+\def\BibLaTeX{{\rmfamily B\kern-.05em%
+   \textsc{i\kern-.025em b}\kern-.08em\LaTeX}}
+\def\MiKTeX{MiK\TeX}
+\def\MacTeX{\textsf{Mac}\TeX}
+\def\TeXLive{\TeX\,Live}
+
+\newenvironment*{macrolist}
+  {\list{}{%
+      \setlength{\labelwidth}{1.5in}
+      \setlength{\labelsep}{10pt}
+      \setlength{\leftmargin}{0pt}
+      \setlength{\parsep}{0pt}
+      \setlength{\listparindent}{\parindent}
+      \renewcommand*{\makelabel}[1]{{\setbox0=\hbox{\parbox[t]{1.5in}{\raggedleft\leavevmode\marglistfont##1}}\dp0=0pt\box0}}}}
+  {\endlist}
+
+\newenvironment*{narrowref}%
+ {\par\frenchspacing
+  \setlength{\leftskip}{4em}
+  \setlength{\rightskip}{3em}
+  \setlength{\parindent}{-2em}
+  \setlength{\parskip}{0.6\baselineskip}\ignorespaces}
+ {\par\addvspace{.5\baselineskip}}
+
+\DeclareListParser*{\listofitems}{,}
+
+\def\cmditem#1{\cmd{#1}\\}
+\def\plainitem#1{#1\\}
+
+\def\macroitems#1{\item[\listofitems{\cmditem}{#1}]}
+\def\envitems#1{\item[\listofitems{\plainitem}{Environment\rlap{:},#1}]}
+\def\optionitems#1{\item[\listofitems{\plainitem}{#1}]}
+
+\setlength{\marginparsep}{10pt}
+\setlength{\marginparwidth}{1.5in}
+
+\def\margcmds#1{\leavevmode\marginpar{\raggedleft\leavevmode\marglistfont\listofitems{\cmditem}{#1}}\ignorespaces}
+\reversemarginpar
+\def\margenvs#1{\leavevmode\marginpar{\raggedleft\leavevmode\marglistfont\listofitems{\plainitem}{Environment\rlap{:},#1}}\ignorespaces}
+\reversemarginpar
+\def\margplain#1{\leavevmode\marginpar{\raggedleft\leavevmode\marglistfont\listofitems{\plainitem}{#1}}\ignorespaces}
+
+\setcounter{tocdepth}{2}
+\raggedbottom
+
+\title{The \textsf{fsuthesis} \LaTeX{} Class\\User's Guide}
+\author{Bret D. Whissel\\Information Technology Services\\Florida State University}
+\date{December 9, 2021}
+
+\makeindex
+
+\begin{document}
+
+\maketitle
+
+
+\tableofcontents
+
+\section{Introduction to \LaTeX}
+\label{sec:intro}
+
+If you are already a \TeX/\LaTeX{} convert, you may skip over this
+introductory material and jump ahead to the description of the
+\fsuth{} class macros in section~\ref{sec:class}.  If you're new to
+\LaTeX, you may want to learn a little bit more about what you may be
+getting yourself into~first.
+
+If you have grown up only learning to use the word-processing tools
+that are installed on a typical PC, \LaTeX{} may feel awkward
+initially.  However, \LaTeX's ability to generate cross-references,
+lists of tables and figures, and a table of
+contents---automatically---is already worth the small amount of effort
+required to get started with this very powerful typesetting system.
+Further, if your document contains mathematics, you'll be hard-pressed
+to find better software for making your equations look good in~type.
+
+Historically, \LaTeX{} is not a \acro{WYSIWYG}\footnote{pronounced
+  ``wizzywig'': What You See Is What You Get}\index{WYSIWYG} system.
+Instead, documents are created using any available plain text editor.
+Your document will contain ``markup'' commands that identify things
+like chapter titles, section headings, citations, quotations,
+enumerated lists, etc.  When ready, the document is run through
+\LaTeX{} to produce viewable or printable output.  This two-step
+process may be different from what you're used to, but one advantage
+is that it allows authors to focus more on the content of their
+documents, and to focus less on the formatting (or at least to defer
+the attention to formatting until the final stages of document
+preparation).
+
+\section{Installation}%
+\index{latex@\LaTeX!installation}%
+\label{sec:install}
+
+\subsection{The Basic \LaTeX{} System}
+
+The \LaTeX{} system (and the \TeX{} engine upon which it is built)
+will take just a little effort and download time to get installed and
+running.  It is completely free software with a large and committed
+group of users, and there are lots of resources for helping you to get
+started.  These are much more comprehensive than this
+\booktitle{User's Guide} can~be.
+
+If you are working in a Microsoft Windows environment, take a look at
+the \MiKTeX\ project\index{latex@\LaTeX!distributions!\MiKTeX} (see
+\url{http://miktex.org}).  Mac users will find the
+\MacTeX\index{latex@\LaTeX!distributions!\MacTeX} resources useful
+(see \url{http://www.tug.org/mactex}).  Linux/\acro{UNIX} users should
+investigate the \TeXLive\index{latex@\LaTeX!distributions!\TeXLive}
+distribution, if \TeX{} is not already a part of your installation
+(see \url{http://www.tug.org/texlive}).
+
+\subsection{Editors and IDEs}
+
+In addition to the \TeX/\LaTeX{} system, you will need a plain text
+editor, or an editor/IDE specific for \LaTeX{}. (The Microsoft Word
+editor is not a valid choice.) The recommended \LaTeX{} packages for
+Windows and Mac provide an editor suitable for editing your
+document. Linux/\acro{UNIX} enthusiasts will probably already have
+access to and familiarity with \complit{emacs} or \complit{vim} (both
+of which have also been ported to Windows and Mac environments).
+
+There are more advanced document editors for \LaTeX\ which include
+document previews or \acro{WYSIWYG} functionality. One such option for
+Windows users is \textsf{\TeX nicCenter}\index{latex@\LaTeX!editors!\TeX
+  nicCenter}, available from \url{http://texniccenter.org/}.  This
+application provides a complete editing and previewing environment for
+creating \LaTeX\ documents, including drop-down menus for common
+\LaTeX\ commands.  The application
+\textsf{Texmaker}\index{latex@\LaTeX!editors!Texmaker} (see
+\url{http://www.xm1math.net/texmaker}) provides an integrated
+development environment for all three major operating system
+platforms.
+
+A popular alternative to \LaTeX\ is the
+\textsf{LyX}\index{latex@\LaTeX!editors!LyX} document processor (see
+\url{http://www.lyx.org}). However, in order to use the features
+provided by the \fsuth\ class, you will need to create a custom layout
+for \textsf{LyX} that corresponds to \fsuth. Unfortunately, this is
+not trivial. If you wish to use \textsf{LyX}, you could try creating
+your document using the standard \LaTeX\ \pkg{report} class layout
+within \textsf{LyX}, export the document to \LaTeX, and then do the
+final editing using the standard \LaTeX\ tools.
+
+\subsection{Installing the \fsuth{} Class File}
+
+The \fsuth\ class\index{fsuthesis@\pkg{fsuthesis}!package!contents} is
+distributed as a zip file. When the zip file is unpacked, a folder
+called \complit{fsuthesis} is created. Inside that folder will be
+found this \booktitle{User's Guide} (in both its \acro{PDF} and
+\LaTeX{} source form), the \complit{thesis-template} folder, a
+\complit{sample}\index{sample document@\complit{sample} document}
+folder, and supporting files.  The \fsuth{} class file is called
+\complit{fsuthesis.cls}.
+
+You may use the folder \complit{thesis-template} as a starting point
+for your document: the \complit{fsuthesis.cls} file is already
+unpacked there and ready to go. You can copy the template folder to a
+new location and build your document within as a self-contained
+entity. No further installation is necessary.
+
+If you are already a \LaTeX\ enthusiast, you may make customizations
+to the \fsuth\ class yourself. To do this, you will probably want to
+take a look at the documented version of the \fsuth\ class definitions
+found in the \complit{fsuthesis.dtx}
+source\index{fsuthesis@\pkg{fsuthesis}!source code} file in the main
+directory.  Processing this file with \LaTeX, you'll create a
+nicely-formatted and indexed version to read:
+\begin{verbatim}
+pdflatex fsuthesis.dtx 
+makeindex -s gglo.ist -o fsuthesis.gls fsuthesis.glo
+makeindex -s gind.ist -o fsuthesis.ind fsuthesis.idx
+pdflatex fsuthesis.dtx 
+\end{verbatim}
+Be sure to document your changes, and only edit the
+\complit{fsuthesis.dtx} file. If you make changes to the
+\complit{fsuthesis.cls} file, they may be overwritten later if the
+class file is re-extracted.
+
+To extract a new class file from the altered source, run the
+following command:
+\begin{verbatim}
+latex fsuthesis.ins
+\end{verbatim}
+To make the class available
+system-wide\index{fsuthesis@\pkg{fsuthesis}!installation}, copy the
+\complit{fsuthesis.cls} file into the \LaTeX{} file search tree.  (The
+proper location is operating system and installation-dependent.  For
+\acro{UNIX}/Linux systems, this location might be something like
+\complit{/usr/\-share/\-texmf-site/\-tex/\-latex/\-fsuthesis/}.)
+Otherwise, for local use only, copy the new \complit{fsuthesis.cls}
+file to the folder where your thesis or dissertation document resides.
+
+\section{Helpful \LaTeX\ References}
+\label{sec:references}
+
+For simple texts, you might not need more from
+\LaTeX\index{latex@\LaTeX!references}
+\index{documentation}
+\index{references, latex@references, \LaTeX}
+than what's described in this
+\booktitle{User's Guide}.  For more complicated texts, however, or for
+documents containing several tables, figures, or mathematics, you will
+certainly want to supplement your \LaTeX{} references.  You will find
+a wealth of information on-line using your favorite web search engine,
+as well as several bound and printed reference materials.  I have
+found the texts cited below to be of particular value.
+\begin{itemize}
+\item
+For first-timers,
+\href{http://www.ctan.org/tex-archive/info/lshort/english/lshort-letter.pdf}%
+{\booktitle{The Not So Short Introduction to \LaTeXe}}
+by Tobias Oetiker, Hubert Partl, Irene Hyna, and Elisabeth Schlegl
+promises to have you off and running in a few hours' time.  It's a
+document you may find readily on-line in \acro{PDF} form.
+
+\item
+The standard reference is the book \booktitle{\LaTeX: A Document
+Preparation System}, 2nd~Ed., by Leslie Lamport, the original author
+of \LaTeX{}.  This text covers all the basics clearly and succinctly.
+
+\item
+A larger starting reference book is \booktitle{Guide to \LaTeX},
+4th~Ed., by Helmut Kopka and Patrick W.~Daly.  At twice the length of
+the Lamport book, \booktitle{Guide} covers all the basics, and it also
+touches on a few of the more common add-on packages.  The book
+comes with a CD-ROM with the \TeXLive\ distribution included, which
+can save you a lot of downloading time.
+
+\item
+Once your working knowledge of \LaTeX{} is secure, \booktitle{The
+  \LaTeX{} Companion}, 2nd~Ed., by Frank Mittelbach and Michel
+Goossens covers a broad range of topics and \LaTeX{} add-on packages.
+This text goes far beyond the basics, but it's an indispensable
+reference if you're interested in customizing the appearance of
+\LaTeX{} documents.
+\end{itemize}
+
+\section{Working with \LaTeX}
+
+Files you create for processing by \LaTeX{} should have file
+extensions of \complit{.tex}, for example, \complit{mythesis.tex}.
+For your own convenience, you may split the document into pieces
+(perhaps one file per chapter), which may make the editing process a
+little easier by keeping manageable the amount of text you must scroll
+through at any one time.
+
+While you're typing your document, you will insert macro commands that
+mark up elements of your document, indicating chapter and section
+headings, equations, tables, figures, etc.  Markup languages attempt
+to separate the content of the document from its appearance.  As an
+author, you need not be quite as concerned about how everything looks,
+just what it says.  By marking up your document appropriately, you can
+let \LaTeX{} worry about how everything looks.
+
+\subsection{Paragraphs and Space}
+Typing your manuscript for processing by \LaTeX\ is not hard, but
+there are a few rules you should know. To end a
+paragraph\index{paragraph} and begin a new one, simply leave a
+blank\index{blank line} line between them.  No matter how many blank
+lines you leave between paragraphs, it's the same as typing a single
+blank line: all the extra space is ignored.  Likewise, a 100~taps of
+the space\index{space} bar has the same result as a single space.
+
+Don't worry about where the end-of-line occurs as you're typing:
+\LaTeX\ will reformat the paragraph for you.  \LaTeX\ will also insert
+paragraph indentations, so there's no need to type tabs or spaces (and
+they'll be ignored anyway).
+
+The \fsuth\ class has defined most of the document spacing for you, so
+you generally don't need to worry about it.  If you have particular
+spacing needs, look into the references in
+section~\ref{sec:references} for more information.  Here's an example
+of how \LaTeX\ processes what you type into paragraphs:
+
+\medskip\noindent\hskip3em
+\begin{minipage}[t]{2.1in}\rightskip=0pt plus1.5in
+\noindent\textit{Typed as \ldots}\\[5pt]
+\noindent\small\texttt{I am typing a silly\\
+paragraph to see how it
+will turn out.\\
+\\
+And here is the
+next paragraph.}\par
+\end{minipage}
+\hfill
+\begin{minipage}[t]{2.4in}
+\parindent=1em\rightskip=3em
+\noindent\textit{Displayed as \ldots}\\[5pt]
+\indent I am typing a silly paragraph to
+see how it will turn out.
+
+And here is the next paragraph.
+\end{minipage}
+
+\subsection{Special Characters}
+\label{sec:special}
+Certain keyboard characters have special significance to \LaTeX, and
+you must be aware of how they are used as you're preparing your
+document.\index{special characters}  The ten special characters~are:
+\begin{verbatim}
+# $ % & _ { } ^ ~ \
+\end{verbatim}
+If you want to use these characters in your text, you cannot enter them in
+your manuscript as is: they need extra attention.  The first seven may
+be simply prefixed with the backslash character, and the last three
+require a small bit of additional syntax.  Here's how you would type
+the characters in your document to have them printed:
+\begin{verbatim}
+\# \$ \% \& \_ \{ \} \^{} \~{} \textbackslash
+\end{verbatim}
+which, after processing, results in: \# \$ \% \& \_ \{ \} \^{} \~{} \textbackslash
+
+\subsection{Dashes and Quotes}
+Since \LaTeX\ is a high-quality typesetting system, we are given
+additional choices in preparing our document for output.  For example,
+there are four distinct dash-type\index{dash-type characters}
+characters available to us, and we
+should choose the correct dash for the circumstance:
+\begin{center}
+\begin{tabular}{c l l}
+\textit{Dash Type}&\textit{Typed as \ldots}&\textit{Displayed as \ldots}\\[3pt]
+hyphen & \verb|anti-theoretical| & anti-theoretical \\
+N-dash & \verb|pages 23--45| & pages 23--45 \\
+M-dash & \verb|Wait---I'm thinking| & Wait---I'm thinking \\
+minus & \verb|$x-y=z$| & $x-y=z$ \\
+\end{tabular}
+\end{center}
+
+You should also be aware of single- and double-quote characters: in
+well-printed documents, the lefthand-side quotes\index{quote
+  characters} are shaped differently than righthand-side quotes.  The
+\LaTeX-aware editors that come with the distributions usually handle
+this for you automatically when you type the double-quote character
+(\texttt{"}) on your keyboard, translating it into the appropriate
+pair of characters.
+
+Single quotes don't usually get the same automatic treatment, and you
+should type the individual characters yourself.  The left-side
+``backward'' single quote character is usually found beneath the tilde
+(``squiggle'') on your keyboard.  The right-side single quote
+character (apostrophe) is usually found underneath the double-quote
+character.  Sometimes it may be necessary to add a small amount of
+space between sets of quotes using the \verb|\,| command (as in the
+last example below), but this is a more subtle typographic nicety.
+\begin{center}
+\begin{tabular}{l l}
+\textit{Typed as \ldots}&\textit{Displayed as \ldots}\\[3pt]
+\verb|This `word' is single-quoted| & This `word' is single-quoted \\
+\verb|``These words'' are double-quoted| & ``These words'' are double-quoted \\
+\verb|``\,`I' am, I think''| & ``\,`I' am, I think''\\
+\end{tabular}
+\end{center}
+
+\subsection{Macros, Comments, and Ties}
+\label{sec:comments}
+\LaTeX{} macros begin with a `\verb+\+' (backslash) special character,
+followed by the command name.  Depending on the command,
+macros\index{macros}\index{commands|see{macros}} will often require
+one or more arguments, and some will accept additional optional
+arguments.  The template for such \LaTeX\ commands~is:
+\begin{verbatim}
+\commandname[option1,option2]{Required Argument}
+\end{verbatim}
+The optional arguments are included in square brackets (e.g.,
+\verb+[+\textit{option}\verb+]+) immediately following the macro
+invocation.  Required arguments follow the optional arguments (if any)
+between curly braces (e.g., \verb+{+\textit{This is a required
+  argument}\verb+}+).  The letter case of the macro is important:
+you must spell commands exactly as they are presented, or \LaTeX\ will
+complain about unrecognized commands when your document is processed.
+
+The function of the percent sign (\verb|%|) special character is to
+introduce a document comment\index{comments}, which runs to the end of
+the line of the input file.  Commented text is ignored by \LaTeX{}
+entirely, and will not be typeset.  Recall that we may avoid this
+special behavior by prefixing a backslash character:
+\begin{center}
+\begin{tabular}{l l}
+\textit{Typed as \ldots}&\textit{Displayed as \ldots}\\[3pt]
+\verb|total is 23\% of adjusted gross|&
+total is 23\% of adjusted gross\\
+\end{tabular}
+\end{center}
+(Refer to section~\ref{sec:special} for the complete list of special
+characters and how to type them.)
+
+\LaTeX\ attempts to fill up each line of a paragraph optimally, and
+sometimes we need to provide some advice for where \emph{not} to
+create a line break.  The function of the tilde (\verb|~|) special
+character is to tie adjoining words together with an ``unbreakable
+space''\index{space!unbreakable}\index{unbreakable space} so that they
+are not split between lines.  This is often useful to ensure that
+honorific titles don't get separated from their name (e.g.,
+``\verb|Frau.~Blucher|'', ``\verb|Dr.~Frankenstein|''), or after
+certain abbreviations (e.g., ``\verb|a vs.~b|'',
+``\verb|cf.~Fig.~5|''), or where numbered entities are referenced,
+(e.g., ``\verb|page~23|'').
+
+\subsection{Document Divisions} 
+A \LaTeX\ document begins with a division called the
+``preamble''\index{preamble}.  In this section, you specify the
+document type, set up the document-wide processing settings (like page
+margins, or selecting the font size, for example), set the document's
+title, author, and other such parameters, and perhaps load additional
+packages which provide new features for processing your document.
+
+The rest of the document is called the document ``body''.  It begins
+with the \LaTeX\ command
+\verb|\begin{document}|\index{environment!document@\verb+document+},
+and anything that comes before this command is considered part of the
+preamble. Some \LaTeX\ commands are only allowed in the preamble,
+while others are allowed only in the document body.
+
+\section{The \fsuth{} Class}
+\label{sec:class}
+
+A standard \LaTeX{} installation comes with several pre-defined
+document types (called classes), such as \pkg{article},
+\pkg{book}, and \pkg{report}.  The \fsuth{} class is an
+extension of the \LaTeX{} \pkg{report} class.  In essence, the
+\fsuth{} class provides all the features of \pkg{report}, along
+with customizations to meet the standards of FSU's
+\booktitle{Guidelines \& Requirements for Electronic Theses, Treatises
+  and Dissertations}, 2019--2020 edition.  The rest of this
+document describes how to use the features of the \fsuth{} class, and
+introduces a few other functions provided by \LaTeX.
+
+\subsection{Files in the Package}
+
+Packaged along with this \booktitle{User's Guide} and the \fsuth{}
+class file, you will find a folder called
+\complit{thesis-template}\index{fsuthesis@\pkg{fsuthesis}!package!contents}.
+Within the folder is a small collection of files, a skeleton upon
+which you may build your own document.  I suggest that you copy and
+rename this folder in a new location, giving your \emph{magnum opus}
+its own workspace.
+
+For now, we'll assume that you have renamed the folder
+\complit{thesis}.  Inside the folder, you'll find a file called
+\complit{mythesis.tex}.  This will be your document's principal file.
+We will assume that you will create additional files in this folder to
+add to your document, assuming at least one file per chapter.  You are
+free to rename any of these files as you like, as long as they end
+with the \complit{.tex} extension.
+
+The document skeleton constitutes a complete document as it stands,
+and you may run \LaTeX\ on \complit{mythesis.tex} immediately if you
+need to test your installation.  (How you invoke \LaTeX\ is
+platform-dependent, so you may need to refer to
+section~\ref{sec:install} on \textsc{Installation} above for
+references specific to your environment.  In the environments provided
+by \MiKTeX\ and \MacTeX, processing your document is usually
+accomplished by a single button click.)
+
+Besides the \complit{thesis-template} folder, there is a
+\complit{sample}\index{sample document@\complit{sample} document}
+folder which contains a more robust sample document, demonstrating
+features of \LaTeX\ and the \fsuth\ class, as well as a few optional
+features which you may enable if you find them helpful.
+
+\subsection{The Document Preamble}
+
+If you look at the file \complit{mythesis.tex}, you will see that it
+consists primarily of \LaTeX{} macros and ``commented out'' lines
+containing more \LaTeX{} macros.  (Recall section~\ref{sec:comments}.)
+As you add text and flesh out your document, you may ``uncomment''
+additional lines in this primary file by removing the leading percent
+sign, thereby making the line active.
+
+The document setup may look intimidating at first, but don't let this
+deter you.  The template document and the sample document provide you
+with some boiler-plate information: you can just fill in the blanks
+with your own data to get started quickly.  You don't have to know or
+understand all this stuff at first.  I encourage you to look at the
+example files and review the output documents to see how they are
+correlated.
+
+\subsubsection{Document Options}
+\label{sec:docoptions}
+The first line of every \LaTeX{} document declares the type of
+document to be processed, along with a few processing options.  After
+some initial comments, the first line of the document skeleton file
+\complit{mythesis.tex} contains the
+following:\index{documentclass@\verb=\documentclass=}
+\begin{ltxexample}
+\documentclass[11pt,expanded]{fsuthesis}
+\end{ltxexample}
+This line declares the document type to be \fsuth, and that the text
+will be set in 11-point type using \verb|expanded| spacing. (Note the
+optional arguments supplied in square brackets, and required argument
+provided in curly braces.)
+
+Class \fsuth{} is derived from the \pkg{report} class, so all
+the standard document options supported by \pkg{report} will be
+supported by \fsuth.  (See one of the \LaTeX{} references in
+section~\ref{sec:references} for complete lists of document options.)
+The \fsuth{} class provides four additional document options\index{documentclass@\verb=\documentclass=!options}:
+\complit{hardcopy}, \complit{chapterleaders}, \complit{expanded}, and
+\complit{copyright}.
+
+\begin{macrolist}
+\item[10pt, 11pt, 12pt] These options select the font point size for
+  the document.  Without any\index{font size}\index{point size}
+  specifications, \complit{10pt} is the default.  (The standard
+  \LaTeX\ \pkg{report} class supplies these options.)
+
+\optionitems{chapterleaders}
+This option adds leader dots on chapter headings in the \textsl{Table
+  of Contents}.
+\index{chapterleaders@\verb+chapterleaders+}%
+\index{contents, table of!leaders}%
+Normally, chapter headings are displayed in bold type with a page
+number and \emph{without} leader dots, while by default, sections and
+subsections are displayed with leader dots connecting their page
+numbers.  If you write a thesis without sections or subsections, or if
+you suppress their display in the \textsl{Table of Contents}, then you
+might want to specify the \complit{chapterleaders} option.
+
+\optionitems{copyright}
+This option adds a copyright\index{copyright@\verb+copyright+}
+statement at the bottom of the title page.  Though your thesis or
+dissertation is protected by copyright law already, you may wish to
+state the copyright ownership explicitly using this option.
+
+\optionitems{expanded}
+This option expands line
+spacing\index{expanded@\verb+expanded+}\index{line spacing!expanded} by 50\%.
+Some colleges, schools, or departments will prefer expanded spacing to
+allow committee members to pencil in comments.  In addition, ETD
+requires that the document \emph{not} be single-spaced.
+
+\optionitems{hardcopy}
+This option adds extra space along the binding edge of a page.  This
+may be useful for printing hard copies\index{hardcopy@\verb+hardcopy+}
+for review by your thesis committee, or if you want to have a
+professionally bound copy of your thesis or dissertation.  If you also
+include the standard \pkg{report} option
+\complit{twoside}\index{twoside@\verb+twoside+}, then in addition to
+the binding-edge offset, all the chapters of your document will be
+forced to start on odd-numbered (right-hand) pages.
+
+\end{macrolist}
+
+\subsubsection{Thesis/Dissertation Description Macros}
+The next section in \complit{mythesis.tex} contains several macros
+that customize the title page and committee page of your document.  As
+a general rule, these macros require text arguments that should be
+given in mixed case using title capitalization\index{capitalization}
+rules (i.e., each word capitalized, except for articles, prepositions,
+and conjunctions; refer to your discipline's preferred style guide if
+in doubt).  All proper names should be capitalized normally.  If the
+FSU \booktitle{Guidelines} require elements to be displayed
+differently (all-caps, for example), the \fsuth{} class will make the
+adjustments required for you.  These macros all belong in the
+preamble.
+
+\begin{macrolist}
+\macroitems{title}
+This macro declares the title\index{title@\verb+\title+} of your
+thesis or dissertation.  If the title is long, it will be broken over
+several lines on the title page.  You can control how the title
+is broken into lines\index{title!line breaks} two ways:
+using the \LaTeX\ line-separator operator (`\verb+\\+') to force
+a line break, or using the word tie (`\verb+~+') between words
+to prevent a line break.  (The line-separator command is what the
+\LaTeX{} manual calls ``fragile'', and so you must say
+`\verb+\protect\\+' when it is used in the argument of the
+\verb|\title| command. See the example in the box below.)
+
+\macroitems{author}
+This macro stores your name\index{author@\verb+\author+}.  Your name
+should be given as specified in the FSU \booktitle{Guidelines}.
+
+\macroitems{college}
+This macro should contain the official name of your
+school\index{college@\verb+\college+} or college.
+
+\macroitems{department}
+If your degree comes from a school or college with separate academic
+departments\index{department@\verb+\department+} which issue degrees,
+the \verb|\department| macro should declare this name.  Otherwise, you
+should comment-out or delete the \verb|\department| line from your
+document file.
+
+\macroitems{manuscripttype}
+This should be set to one of the following words, as
+appropriate:\index{manuscripttype@\verb+\manuscripttype+}
+\complit{Thesis}, \complit{Treatise}, or \complit{Dissertation}.
+
+\macroitems{degree}
+The title of your degree\index{degree@\verb+\degree+} (e.g., ``Master
+of Arts'' or ``Doctor of Philosophy'') is given by the \verb|\degree|
+macro.
+
+\macroitems{degreeyear}
+The year your degree\index{degreeyear@\verb+\degreeyear+} is awarded
+should be set here.  This must be a full 4-digit year.
+
+\macroitems{defensedate}
+Use the \verb|\defensedate| macro to specify the
+date\index{defensedate@\verb+\defensedate+} of your thesis,
+treatise, or dissertation defense.  Refer to the FSU
+\booktitle{Guidelines} for the appropriate format.
+
+\end{macrolist}
+
+\noindent 
+In your own document up to this point, you could have something like the
+following (after the initial \verb|\documentclass| command):
+\begin{ltxexample}
+\title{This Is My Title:\protect\\ And This Is Its Second Line}
+\author{Viktor Spoyles}
+\college{College of Arts and Sciences}
+\department{Department of Physics}
+\manuscripttype{Dissertation}
+\degree{Doctor of Philosophy}
+\degreeyear{2015}
+\defensedate{October 31, 2015}
+\end{ltxexample}
+
+If you are generating a \acro{PDF} file, you can add a subject and
+search keywords to the document's ``metadata''.\index{metadata} This
+information is not printed in your document at all, but it becomes
+part of the electronic version of the document's internal
+description. The title and author's name will already be included in
+the metadata by default.  Since the document metadata are searchable,
+adding keywords and a subject may assist people who may be looking
+for research like yours.
+\begin{macrolist}
+\macroitems{subject}
+A terse description\index{subject@\verb+\subject+} of the manuscript
+topic.
+
+\macroitems{keywords}
+A comma- or semi-colon-separated list of germane
+keywords\index{keywords@\verb+\keywords+}.
+
+\begin{ltxexample}
+\subject{FTL Propulsion Theory}
+\keywords{warp drive; wormhole travel; subspace geometry}
+\end{ltxexample}
+
+\end{macrolist}
+
+\subsubsection{Committee Macros}
+
+\margcmds{committeeperson}
+The \fsuth{} class provides macros for generating your committee
+information page.  The
+\verb|\committeeperson|\index{committeeperson@\verb+\committeeperson+}
+macro takes two arguments.  The first argument is the name of the
+committee member, given without titles.  The second argument is the
+committee membership status, e.g., ``Professor Directing
+Dissertation'' or ``Committee Member''.  (See the FSU
+\booktitle{Guidelines} about the appropriate options.)  You should
+provide one \verb|\committeeperson| line for each person, in the order
+in which they should appear on the committee page.
+\begin{ltxexample}
+\committeeperson{Arthur Vandelay}{Professor Directing Thesis}
+\committeeperson{Whoopsie Daisy}{Committee Member}
+\committeeperson{Garnet G. Adirolf}{Committee Member}
+\end{ltxexample}
+
+\subsection{The Document Body}
+
+\margenvs{document}
+With the document setup complete, you start the document body with the
+\LaTeX{} command
+\verb|\begin{document}|.\index{environment!document@\verb+document+}
+You will notice that whenever you
+\verb|\begin{|\textit{something}\verb|}|, you should always supply a
+corresponding \verb|\end{|\textit{something}\verb|}| or \LaTeX{} will
+complain.  So at the end of \complit{mythesis.tex}, you will find the
+\verb|\end{document}| command.  Anything beyond this point in the file
+is ignored by \LaTeX{}.  In \LaTeX\ parlance, anything enclosed within
+a
+\verb|\begin{|\textit{something}\verb|}|\,\ldots\verb|\end{|\textit{something}\verb|}|
+pair is called an ``environment''.\index{environment} We'll encounter
+several environments along the way.
+
+\subsubsection{Front Matter}
+
+\begin{macrolist}
+\macroitems{frontmatter}
+The first element after \verb|\begin{document}| should be the macro
+command \verb|\frontmatter|,\index{frontmatter@\verb+\frontmatter+}
+which sets up roman numeral\index{roman numerals} page numbering for
+the document elements that precede the first chapter of your thesis or
+dissertation.  The document skeleton in \complit{mythesis.tex}
+contains place-holders in the proper order for all the optional
+elements of the front matter.  Uncomment those elements that you will
+use, or you may leave commented or delete those elements that you
+don't use.
+
+\macroitems{maketitle,makecommitteepage}
+Once \verb|\frontmatter| has set the stage, the macro command
+\verb|\maketitle|\index{maketitle@\verb+\maketitle+} will generate the
+document title page.  Likewise, the
+\verb|\makecommitteepage|\index{makecommitteepage@\verb+\makecommitteepage+}
+macro will create the committee page.  Information for these pages is
+gathered from the data you have already set in macro calls in the
+preamble.
+\begin{ltxexample}
+\begin{document}
+\frontmatter
+\maketitle
+\makecommitteepage
+\end{ltxexample}
+
+\envitems{dedication}
+If you wish to include an optional dedication in your thesis or
+dissertation, uncomment the
+\verb|\begin{dedication}|
+\index{environment!dedication@\verb+dedication+}%
+\index{dedication@\verb+dedication+}%
+and \verb|\end{dedication}|
+lines, and type your dedication between them. The \booktitle{Guidelines}
+specify that the text should be centered vertically and horizontally
+on the page. You should apply the horizontal centering yourself, as in
+the example below. Any other formatting is up to you.
+\begin{ltxexample}
+\begin{dedication}
+  \begin{center}
+    To my parents
+  \end{center}
+\end{dedication}
+\end{ltxexample}
+
+\envitems{acknowledgments}
+Likewise, if you wish to include acknowledgments in your document,
+uncomment the
+\verb|\begin{acknowledgments}|
+\index{acknowledgments@\verb+acknowledgments+}%
+\index{environment!acknowledgments@\verb+acknowledgments+}%
+and \verb|\end{acknowledgments}| lines, and insert the acknowledgment text
+between these lines.  The resulting page will have the centered
+heading \textbf{ACKNOWLEDGMENTS}, followed by your text.
+\begin{ltxexample}
+\begin{acknowledgments}
+Thanks to my committee, especially my major professor.
+\end{acknowledgments}
+\end{ltxexample}
+
+\macroitems{tableofcontents}
+The next item in the front matter is the \textsl{Table of Contents},
+which is generated for you automatically by the macro
+\verb|\tableofcontents|.
+\index{tableofcontents@\verb+\tableofcontents+}%
+\index{contents, table of}%
+By default, the \textsl{Contents} page(s)
+will contain entries for the remaining front matter material, and
+entries for chapter headings, section headings, and subsection
+headings.  If you find your \textsl{Table of Contents} has too much
+detail, you may adjust the level of headings included.  (See
+section~\ref{sec:tocdetail}.) 
+
+\macroitems{listoftables,listoffigures,listofmusex}
+The FSU \booktitle{Guidelines} state that if you have more than one
+figure
+\index{listoftables@\verb+\listoftables+}%
+\index{listoffigures@\verb+\listoffigures+}%
+\index{listofmusex@\verb+\listofmusex+}%
+or table in your document, the figures and/or tables should be
+contained in their own lists.  Turn each of these options on by
+uncommenting the \verb|\listoftables| and/or \verb|\listoffigures|
+lines in \complit{mythesis.tex}.  These tables will be generated for
+you automatically when your document is processed.  For those
+documents which contain multiple musical examples, a list of these may
+also be generated by uncommenting \verb|\listofmusex|.
+\begin{ltxexample}
+\tableofcontents
+\listoftables
+\listoffigures
+\listofmusex
+\end{ltxexample}
+
+\envitems{listofsymbols,listofabbrevs} If a \textsl{List of Symbols}
+or \textsl{List of Abbreviations} might be helpful to your readers,
+\index{environment!listofsymbols@\verb+listofsymbols+}%
+\index{environment!listofabbrevs@\verb+listofabbrevs+}%
+\index{listofabbrevs@\verb+listofabbrevs+}%
+\index{listofsymbols@\verb+listofsymbols+}%
+\fsuth{} provides these environments.  If you wish to include such
+document elements, uncomment the appropriate
+\verb|\begin|~\ldots\verb|\end| pair, and add any text you may
+require.
+
+These entities would likely consist of tabular material, so you'll
+want to dig into \LaTeX{} table-making using any of the basic
+references mentioned in section~\ref{sec:references}.  Below is a
+simple example of how you might use these environments to create
+tables with some useful information if needed.
+\begin{ltxexample}
+\begin{listofsymbols}
+  \begin{center}\begin{tabular}{r l}
+    $E$   & Energy--Mass equivalence: $mc^2$ \\
+    $R_e$ & Mean Radius of the Earth, ${}\approx 6367.65\,\textup{km}$\\
+    $\pi$ & $3.1415926\ldots$\\
+  \end{tabular}\end{center}
+\end{listofsymbols}
+\end{ltxexample}
+\begin{ltxexample}
+\begin{listofabbrevs}
+  \begin{center}\begin{tabular}{l l}
+    i.e. & \textit{id est}, ``that is''\\
+    e.g. & \textit{exempli gratia}, ``for example''\\
+  \end{tabular}\end{center}
+\end{listofabbrevs}
+\end{ltxexample}
+
+\envitems{abstract}
+The last element of the front matter is a document abstract.
+\index{environment!abstract@\verb+abstract+}%
+\index{abstract@\verb+abstract+}%
+Insert your text between the abstract \verb|\begin|~\ldots\verb|\end| pair.
+The proper heading is included for you automatically.
+\begin{ltxexample}
+\begin{abstract}
+This abstract is a concrete example.
+\end{abstract}
+\end{ltxexample}
+
+\end{macrolist}
+
+\subsection{The Main Text}
+
+\margcmds{mainmatter}
+At last, with the preliminaries out of the way, you may now get to the
+meat of your document.  Following the abstract, the command
+\verb|\mainmatter|\index{mainmatter@\verb+\mainmatter+} restarts page
+numbering at ``1'' in arabic numerals\index{arabic numerals}, ready
+for your first chapter.
+
+The skeleton file \complit{mythesis.tex} has been set up to include
+the first chapter from an external file.  Note the
+command \verb+\input+:\index{input@\verb+\input+}
+\begin{verbatim}
+\input chapter1
+\end{verbatim}
+This tells \LaTeX{} to insert the text of the file
+\complit{chapter1.tex} at this position and continue processing. (The
+file extension is appended automatically.)  There is nothing special
+about the file names\index{file names}, except that they should end
+with the extension \complit{.tex}.  Otherwise, you may call the
+external files whatever you like.  (However, avoid using filenames
+with spaces or special symbols, as these may be difficult for either
+\LaTeX{} or your operating system to handle properly.)  You can break
+up large chapters into even smaller pieces if you like, and then
+change \complit{mythesis.tex} accordingly, e.g.,
+\begin{verbatim}
+\input chapter1a
+\input chapter1b
+\end{verbatim}
+Or you could just continue adding text to \complit{mythesis.tex}
+directly, avoiding having to deal with any other external files
+entirely.  This is all up to you.
+
+\subsubsection{Chapter and Section Headings}
+
+\margcmds{chapter,section,subsection,subsubsection,paragraph,subparagraph}
+Several levels of headings are provided by the \fsuth{} class in the
+heading styles defined by FSU's \booktitle{Guidelines}.
+\index{chapter@\verb+\chapter+}%
+\index{section@\verb+\section+}%
+\index{subsection@\verb+\subsection+}%
+\index{subsubsection@\verb+\subsubsection+}%
+\index{paragraph@\verb+\paragraph+}%
+\index{subparagraph@\verb+\subparagraph+}%
+\index{headings}%
+By default,
+entries down to the subsection level are listed in the \textsl{Table
+  of Contents}.  (See section~\ref{sec:tocdetail} for information on
+changing this default.) Listed from the highest level downward, these
+sectioning commands are:
+\begin{itemize}\addtolength{\parskip}{-7pt}
+\item \verb|\chapter{My Chapter Title}|
+\item \verb|\section{A Main Section Heading}|
+\item \verb|\subsection{The Subsection Heading}|
+\item \verb|\subsubsection{A Subsubsection Title}|
+\item \verb|\paragraph{Do You Need This Many Levels?}|
+\item \verb|\subparagraph{Come On, You're Kidding!}|
+\end{itemize}
+Each of these macros takes a single argument, the text of the heading.
+All headings should be
+capitalized\index{capitalization}\index{headings!capitalization} as
+titles, i.e., mixed case text, each word capitalized except articles,
+prepositions, and conjunctions.  Chapter headings will force the start
+of a new page.  The file \complit{chapter1.tex} in the
+\complit{thesis} folder has some example text to get you started.  (If
+any of your headings include math symbols, you may want to activate
+the \pkg{textcase} package. See section~\ref{sec:packages} for more
+information.)
+
+By default, section and subsection headings are prefixed by section
+and subsection numbers.\index{headings!numbered} Sub-subsections
+produce an unnumbered in-line heading in bold-face type as the opening
+of a paragraph.  Paragraph and sub-paragraph headings also produce
+in-line headings and start new paragraphs, but with progressively
+subtler font selections.  If you like, you may change the level at
+which headings are numbered.  See section~\ref{sec:headnum} for more
+information.
+
+\subsection{Back Matter}
+
+\margcmds{appendix}
+Following the major chapters of your manuscript, you may have
+additional material for one appendix\index{appendix@\verb+\appendix+}
+or more.  To shift from chapter headings to appendix headings, insert
+the macro \verb+\appendix+ at the end of your last chapter, before the
+first appendix.  Then use the \verb+\chapter+ macro just as you have
+for each of your chapters.  (Appendices will be lettered rather than
+numbered.)
+\begin{ltxexample}
+\appendix
+\input appendix1
+\input appendix2
+\end{ltxexample}
+
+\subsubsection{Simple References}
+
+\margenvs{references}
+The \fsuth{} class provides two options to produce a bibliography or
+references section.  The first (and simplest) option is to use the
+\complit{references}
+environment.
+\index{environment!references@\verb+references+}%
+\index{references environment@\verb+references+}%
+Begin this section with
+\verb|\begin{references}|.  Then add each bibliographic entry with a
+blank line between each reference.  Follow the last entry with
+\verb+\end{references}+.  With this option, you will have to format
+each entry according to the style guide you have chosen to follow.
+\begin{ltxexample}
+\begin{references}
+Picaut, J., F. Masia, and Y. du Penhoat, 1997: An advective--reflective
+conceptual model for the oscillatory nature of the ENSO.
+\textit{Science}, \textbf{277}, 663--666.
+
+Yasunari, T., 1990: Impact of Indian monsoon on the coupled
+atmosphere/ocean system in the tropical Pacific.
+\textit{Meteor. Atmos. Phys.}, \textbf{44}, 19--41.
+\end{references}
+\end{ltxexample}
+This example provides two bibliography entries.  I had to specify the
+style-guide preferences myself (such as presenting journal names in italic
+type, volume numbers in bold-face, etc.).  Once these are processed,
+they'll look like the following:
+\begin{narrowref}
+Picaut, J., F. Masia, and Y. du Penhoat, 1997: An advective--reflective
+conceptual model for the oscillatory nature of the ENSO.
+\textit{Science}, \textbf{277}, 663--666.
+
+Yasunari, T., 1990: Impact of Indian monsoon on the coupled
+atmosphere/ocean system in the tropical Pacific.
+\textit{Meteor. Atmos. Phys.}, \textbf{44}, 19--41.
+\end{narrowref}
+
+\subsubsection{B{\small IB}\LaTeX}
+For more sophisticated reference management, the preferred option is
+to create a \BibLaTeX{}\index{biblatex@\BibLaTeX}
+database. \BibLaTeX{} is a newer bibliography system that supercedes
+the functionality of the original \BibTeX{} system that came with
+\LaTeX. For the most part, older \BibTeX{}\index{bibtex@\BibTeX}
+databases will be compatible with \BibLaTeX, but macro packages built
+for \BibTeX{} will not be supported. You should use the older system
+only if you are using a particular bibliography style package that
+requires \BibTeX{} rather than \BibLaTeX.
+
+The references (see section~\ref{sec:references}) can help you get
+acquainted with older \BibTeX. You can find comprehensive
+\href{http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf}%
+     {\BibLaTeX{} package documentation}
+online. And there's also a
+\href{http://mirrors.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf}%
+     {\BibLaTeX{} cheat sheet}
+for quick reference. We will outline only the basics here.
+
+\margcmds{addbibresources}
+The \pkg{biblatex} package has a few dependencies, including packages
+\pkg{babel} and \pkg{csquotes}. (See section~\ref{sec:packages} for
+more on packages.) These packages have many features and options which
+could be useful if your manuscript contains multiple languages, and
+you should read the package documentation for additional information
+should you need it. The following commands provide a bare-bones
+\BibLaTeX{} environment. Go back to your document preamble to add the
+following lines:
+\begin{ltxexample}
+\usepackage[american]{babel}
+\addto\captionsamerican{\renewcommand*{\contentsname}{Table of Contents}}
+\usepackage{csquotes}
+\usepackage{biblatex}
+\addbibresource{myrefs.bib}
+\end{ltxexample}\index{csquotes@\pkg{csquotes}}\index{babel@\pkg{babel}}
+\index{addbibresource@\verb+\addbibresource+} The \pkg{babel} package
+will change the title of the \textsl{Table of Contents} page, so we
+fix that manually in the second line after including the package.
+The last line, \verb|\addbibresource{myrefs.bib}|, specifies the
+\BibLaTeX{} file which contains your bibliography entries. You will
+need to refer to the \LaTeX{} references and \BibLaTeX{} package
+documentation for the information you need to create the
+\complit{myrefs.bib}\index{myrefs.bib@\complit{myrefs.bib}}
+file. Within your discipline, you may find collections of bibliography
+entries already in \BibLaTeX{} (or \BibTeX) format, which may save
+some effort and time. There are also many software applications that
+can manage your references database and output
+\BibTeX/\BibLaTeX-compatible files. Verify that data can be exported
+from an application in \BibTeX-format before investing money and time
+in that application.
+
+\margcmds{cite}
+Once you have set up a file containing your references, within your
+document, you may use the
+\verb+\cite{+\textit{refkey}\verb+}+\index{cite@\verb+\cite+} macro to
+select entries from your \BibLaTeX{} database. (The \textit{refkey} is
+defined as part of the bibliography entry.) The citation will be
+formatted in the appropriate style within the document, and the
+reference is recorded for inclusion in the bibliography. Particular
+\BibLaTeX{} styles may provide additional citation macros to provide
+more options depending on the context of the citation.
+
+\margcmds{printbibliography}
+Now in the backmatter of your document, where the
+bibliography/references should be placed, the single line
+\begin{ltxexample}
+\printbibliography
+\end{ltxexample}\index{printbibliography@\verb+\printbibliography+}
+will generate the bibliography for you.
+
+When it's time to process your document, there will be a few
+extra steps as well:
+\begin{itemize}\addtolength{\parskip}{-7pt}
+\item Run \LaTeX{}\par\nobreak
+\item Run \complit{biber}\index{biber@\complit{biber}}\par\nobreak
+\item Run \LaTeX{} \emph{twice more}
+\end{itemize}
+
+The default citation and bibliography style may not be the preferred
+format for your discipline. The \pkg{biblatex} package has several
+customization options to tailor citation and bibliography
+styles which can be invoked with optional arguments when loading
+the \pkg{biblatex} package:
+\begin{ltxexample}
+\usepackage[style=apa]{biblatex}
+\end{ltxexample}\index{APA style}
+to provide APA-style citations and bibliography, or
+\begin{ltxexample}
+\usepackage[style=chicago]{biblatex}
+\end{ltxexample}\index{Chicago style}
+for a \textit{Chicago Manual of Style} format.  While \BibLaTeX{} has
+built-in options for some styles, APA and Chicago styles are contained
+in their own packages that you'll need to download, \pkg{biblatex-apa}
+and \pkg{biblatex-chicago}. Search for other styles for your
+discipline if these or the built-in options don't meet your needs.
+You should also check out the document in the
+\complit{sample}\index{sample document@\complit{sample} document}
+directory for some more concrete examples.
+
+\subsubsection{B{\small IB}\TeX{}}
+\margcmds{cite,bibliographystyle,bibliography}
+\index{cite@\verb+\cite+}%
+\index{bibliographystyle@\verb+\bibliographystyle+}%
+\index{bibliography@\verb+\bibliography+}%
+If you need to use the older \BibTeX{}\index{bibtex@\BibTeX} system,
+as with \BibLaTeX, you create or download a separate file of reference
+materials.  Then you may cite any of these references within your
+manuscript using the \verb|\cite| macro.  By running \LaTeX{} in
+combination with \BibTeX, citations are resolved, and a list of the
+cited references are pulled into your document automatically. At the
+end of the document, you first select the bibliographic style, and
+then specify the \BibTeX{} database file to generate the bibliography
+or references:
+\begin{ltxexample}
+\bibliographystyle{plain}
+\bibliography{myrefs}
+\end{ltxexample}
+This selects the \complit{plain} bibliography style, and the
+\BibTeX{} database is said to reside in \complit{myrefs.bib}.
+Processing your document now requires a few extra steps as well:
+\begin{itemize}\addtolength{\parskip}{-7pt}
+\item Run \LaTeX{}\par\nobreak
+\item Run \BibTeX{}\par\nobreak
+\item Run \LaTeX{} \emph{twice more}
+\end{itemize}
+
+If you have a relatively small number of bibliographic entries or
+citations, then choosing the \complit{references} environment is
+probably the easiest solution.  However, if you are trying to manage a
+large number of citations or work in a discipline that has already
+established a large \BibLaTeX/\BibTeX{} database, then it may save you
+considerable effort to learn how to use these systems, in which case
+you will certainly need to use one of the \LaTeX{} references
+and the package documentation mentioned earlier. There is also a
+complete working \BibLaTeX{} example in the
+\complit{sample}\index{sample document@\complit{sample} document} folder.
+
+\subsubsection{Biographical Sketch}
+
+\margenvs{biosketch}
+At last, you've reached the final page of your \booktitle{magnum
+  opus}.  It will contain your biographical sketch, starting with
+\verb+\begin{biosketch}+,
+\index{environment!biosketch@\verb+biosketch+}%
+\index{biosketch@\verb+\biosketch+}%
+and ending with \verb+\end{biosketch}+ as usual.  Insert what
+biographical material you wish to include here, but remember not to
+include any personal contact information.
+
+Once the biographical sketch is done, we wrap things up with the
+\verb|\end{document}| command (matching the \verb|\begin{document}|
+earlier in the file).  Anything that follows \verb|\end{document}|
+will be ignored by \LaTeX.
+\begin{ltxexample}
+\begin{biosketch}
+The author was born, educated, and then re-educated
+repeatedly until this document was finally finished.
+\end{biosketch}
+
+\end{document}
+\end{ltxexample}
+
+\section{More \LaTeX\ Features}
+
+\subsection{List Environments}
+
+\margenvs{itemize,enumerate,description}
+Standard \LaTeX\ provides a means of generating lists of things.
+\index{lists}%
+\index{environment!itemize@\verb+itemize+}%
+\index{environment!enumerate@\verb+enumerate+}%
+\index{environment!description@\verb+description+}%
+\index{itemize@\verb+itemize+}%
+\index{enumerate@\verb+enumerate+}%
+\index{description@\verb+description+}%
+A simple bulleted list can be created this way:
+
+\medskip
+\noindent\hskip2em
+\index{lists!bulleted}\begin{minipage}[t]{2.1in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}%
+\small\begin{verbatim}
+\begin{itemize}
+\item Granny Smith Apples
+\item Hominy Grits
+\item Gruy\`ere Cheese
+\end{itemize}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}\small\sloppy
+\begin{itemize}
+\item Granny Smith Apples
+\item Hominy Grits
+\item Gruy\`ere Cheese
+\end{itemize}
+\end{minipage}
+\bigskip
+
+Similarly, an enumerated list is constructed this way:
+
+\medskip
+\noindent\hskip2em
+\index{lists!enumerated}\begin{minipage}[t]{2.1in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}%
+\small\begin{verbatim}
+\begin{enumerate}
+\item Beat eggs until frothy.
+\item Stir in milk.
+\item Whisk in flour.
+\end{enumerate}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}\small\vskip-5pt
+\begin{enumerate}
+\item Beat eggs until frothy.
+\item Stir in milk.
+\item Whisk in flour.
+\end{enumerate}
+\end{minipage}
+\bigskip
+
+Yet another list style is provided by the \complit{description}
+environment.  This looks like the following:
+
+\medskip
+\noindent\hskip2em
+\index{lists!description}\begin{minipage}[t]{2.1in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}%
+\small\begin{verbatim}
+\begin{description}
+\item[Green eggs] A delicacy.
+\item[Ham] Cured pork.
+\item[Sam I Am] Hawker of food.
+\end{description}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}\small
+\begin{description}
+\item[\defaultcolor Green eggs] A delicacy.
+\item[\defaultcolor Ham] Cured pork.
+\item[\defaultcolor Sam I Am] Hawker of food.
+\end{description}
+\end{minipage}
+\bigskip
+
+You may also create lists inside of lists, mixing and matching
+\complit{itemize}, \complit{enumerate}, and \complit{description}
+styles as necessary.  Lists may also be customized in many ways, so if
+you need something fancier, you should read through one of the references.
+
+\subsection{Quotation Environments}
+
+\margenvs{quote,quotation}
+\LaTeX\ provides for another common construction in documents:
+quotations.\index{quotations} Quotations are set off from the rest of
+the text with narrower margins (and smaller line-spacing if the
+\complit{expanded} option has been turned on).  There are two
+varieties of quotation environments.  For shorter quotations, use the
+\complit{quote} environment.  Each paragraph in the \complit{quote}
+\index{environment!quote@\verb+quote+}%
+\index{quote@\verb+quote+}%
+environment is not indented (though the
+margins are narrower), and there's just a small space added between
+them.  This is appropriate for one or two-line quotes, or for a series
+of short quotations.
+
+\medskip
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}%
+\small\begin{verbatim}
+\begin{quote}
+Ars Longa, Vita Brevis.
+
+Wow, that's a short quotation.
+\end{quote}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}\small
+\begin{quote}
+Ars Longa, Vita Brevis.
+
+Wow, that's a short quotation.
+\end{quote}
+\end{minipage}
+\bigskip
+
+For longer quoted passages (one or more paragraphs), use the
+\complit{quotation}
+\index{environment!quotation@\verb+quotation+}%
+\index{quotation@\verb+quotation+}%
+environment.  Each paragraph in the \complit{quotation} environment is
+indented.
+
+\medskip
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.1in}%
+\small\begin{verbatim}
+\begin{quotation}
+This quotation is a bit
+longer, just as a test.
+
+And here's a second
+paragraph now.
+\end{quotation}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}\small
+\begin{quotation}
+This quotation is a bit
+longer, just as a test.
+
+And here's a second
+paragraph now.
+\end{quotation}
+\end{minipage}
+\bigskip
+
+\subsection{Single-Spacing Environment}
+
+\margenvs{singlespaced}
+If our document is being typeset in \complit{expanded} spacing mode,
+\index{singlespaced@\verb+singlespaced+}%
+\index{environment!singlespaced@\verb+singlespaced+}%
+\index{line spacing!single}%
+there may be times when we prefer to typeset something in
+single-spaced mode.  For this purpose, the \pkg{fsuthesis} class
+provides the \complit{singlespaced} environment.
+\begin{ltxexample}
+\begin{singlespaced}
+This paragraph will be typeset
+in single-space mode, even when I've
+asked for expanded spacing.
+\end{singlespaced}
+\end{ltxexample}
+You should not need this environment too often:  lists and quotations
+already reduce their spacing for you.  Also, if you are typing
+algorithms or computer code in \LaTeX's \complit{verbatim} environment, 
+spacing has already been reset to single-space mode.  If you have not
+set the \complit{expanded} spacing document option, then this
+environment formats its contents as a regular paragraph.
+
+\subsection{Insertions: Figures, Tables, Musical Examples}
+
+\margenvs{figure,table,musex}
+Standard \LaTeX\ provides environments for \complit{figure}s and
+\complit{table}s.
+\index{insertions}%
+\index{environment!figure@\verb+figure+}%
+\index{environment!table@\verb+table+}%
+\index{environment!musex@\verb+musex+}%
+\index{figure@\verb+figure+}%
+\index{table@\verb+table+}%
+\index{musex@\verb+musex+}%
+The \pkg{fsuthesis} class provides an additional
+environment called \complit{musex} for those authors who need to
+provide musical examples.  The \complit{musex} environment behaves
+similarly to the \complit{figure} environment, except that captions
+include the heading ``Example'' instead of ``Figure'', and all the
+musical examples can be listed in the front matter in the \textsl{List
+  of Musical Examples}.
+
+By setting material off in a \complit{figure}, \complit{table}, or
+\complit{musex} environment, the material will be allowed to drift
+from its position in the text to the closest available location as
+follows: if there is space for the material at the bottom of the
+current page, it will be placed there; otherwise, it will be placed at
+the top of the next page, or perhaps on a page by itself.  (You have
+some control over the placement of floating elements.  For more
+detail, you'll need to consult one of the \LaTeX{} references in
+section~\ref{sec:references}.)
+
+\margcmds{caption}
+Each \complit{figure}, \complit{table}, or \complit{musex} should
+contain a \LaTeX{} \verb+\caption+
+command\index{caption@\verb+\caption+} whose single argument contains
+the text of the caption.  For figures and musical examples, the
+caption should be placed below the figure or musical example.  For
+tables, the caption should be located above the tabular material.
+Examples of the use of each of these environments can be found in the
+in the \complit{sample}\index{sample document@\complit{sample} document} directory.
+
+\LaTeX{} keeps track of the number of tables, figures, and musical
+examples, and your caption will be labeled and numbered automatically.
+The caption text will also be inserted into the appropriate
+\mbox{\textsl{List of \ldots}} if you requested the list in the
+front matter of your document.
+
+\LaTeX{} has many features to assist you in producing tabular material
+of arbitrary complexity.  Also, simple diagrams may be created using
+the \LaTeX{} \complit{picture} environment.
+\index{picture@\verb+picture+}\index{environment!picture@\verb+picture+}%
+If you want to include graphics generated by external
+software, then you'll need to learn to use the features of the
+\pkg{graphicx} package\index{graphicx@\verb+graphicx+}, and you should
+add the appropriate \verb+\usepackage+ command in
+\complit{mythesis.tex} preamble (see section~\ref{sec:packages}).  You
+are strongly advised to refer to the \LaTeX{} references to learn more
+about figures and tables if you intend to use them in your manuscript.
+
+\subsection{Cross References}
+\label{sec:labels}
+One of the advantages of working with \LaTeX{} is the ability to
+cross-reference\index{cross references} equations, figures, tables,
+musical examples, and section headings.  In writing and revising your
+manuscript, it is likely that references to elements may shift as text
+is added or moved around.  \LaTeX{} addresses this problem by allowing
+you to assign a \textit{label key} to each element.  Then you make a
+reference to an element's label key in your text to retrieve its
+number or page location.  When your document is processed, \LaTeX{}
+replaces all the label key references with their numerical values.
+
+As an example, let's take a look at how this might work if we wish to
+refer to an equation in our text.  The left column is the source text
+we've typed (unimportant text omitted for brevity), and the result is
+in the right column.
+
+\medskip
+\noindent\hskip2em
+\index{label@\verb+\label+}\begin{minipage}[t]{2.0in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip2em
+\begin{minipage}[t]{2.0in}%
+\small\begin{verbatim}
+Leonhard Euler was a prolific
+...
+Equation~\ref{eq:euler-id} on
+page~\pageref{eq:euler-id} is
+...
+\begin{equation}
+e^{i\pi} + 1 = 0
+\label{eq:euler-id}
+\end{equation}
+\end{verbatim}
+\end{minipage}
+\hskip3em
+\begin{minipage}[t]{2.5in}%
+  \small\sloppy
+  Leonhard Euler was a prolific mathematician whose
+  pioneering work in power series helped to develop the field
+  of mathematical analysis.  Equation~\ref{eq:euler-id} on
+  page~\pageref{eq:euler-id} is known as
+  \textit{Euler's Identity}, what physicist Richard Feynman called
+  ``the most remarkable formula in mathematics''.
+  \begin{equation}
+    e^{i\pi} + 1 = 0
+    \label{eq:euler-id}
+  \end{equation}
+\end{minipage}
+\bigskip
+
+\margcmds{label,ref,pageref}
+The \complit{equation} environment
+\index{label@\verb+\label+}%
+\index{ref@\verb+\ref+}%
+\index{pageref@\verb+\pageref+}%
+\index{equation@\verb+equation+}%
+\index{environment!equation@\verb+equation+}%
+automatically numbers equations for us.  The command
+\verb|\label{eq:euler-id}| creates the key
+``\complit{eq:euler-id}'', tying it to the equation
+number.  To access the equation number, we use the
+\verb|\ref{eq:euler-id}| macro, while the macro
+\verb|\pageref{eq:euler-id}| retrieves the page number.  For figures,
+tables, or musical examples, the \verb|\label| command should
+immediately follow the \verb|\caption| macro.  In the example, you
+might also note the use of the tie special character between the
+\verb|\ref| and \verb|\pageref| commands and the text that precedes
+them (see section~\ref{sec:comments}).
+
+Since your text may \verb|\ref| label keys before the corresponding
+\verb|\label| has been encountered, you will need to run your document
+through the \LaTeX{} processor \emph{at least twice}.  The first pass
+will write all the label keys and page numbers out to an auxiliary
+file, and the second pass will then be able to resolve all the
+references properly.  (\LaTeX{} will complain about unresolved or
+changed references, reminding you to run the processor a second time.)
+
+As you're writing your document, you might want to keep a list of the
+label keys you've created so that you don't have to surf through other
+files to recall what a particular label key was.  Keep in mind that
+figures, tables, musical examples, and equations all use the same
+label system, and all label keys must be unique.  You may develop your
+own label key standards (like using \complit{eq:} when referencing an
+equation, \complit{fig:} to label a figure, etc., to avoid label
+``collision'').  If you expect to have lots of figures, tables, etc.,
+you may find it helpful to use descriptive label keys rather than
+generic ones, as they may be easier to remember.  E.g.,
+\complit{fig:map-Europe-pre1914} is probably more mnemonic than
+\complit{fig:MapOne}.
+
+\subsection{A Note on Mathematics}
+\LaTeX{} excels at mathematical
+\index{mathematics}
+typesetting, but to get the best
+results, practice and experience go a long way.  If you have a lot
+of math in your document, you owe it to yourself and to your
+audience to read through some of the \LaTeX{} references on the
+subject (see section~\ref{sec:references}).
+
+Since I've seen this mistake in many documents, I will highlight
+one point here: treat equations as part of a paragraph.
+\index{mathematics!spacing}
+In terms of typing your document, this means that there should be
+no blank lines between text and displayed equations. The example
+which follows is a common idiom.
+
+\medskip
+\noindent\hskip1.75em
+\begin{minipage}[t]{2.4in}
+\textit{Typed as \ldots}
+\end{minipage}
+\hskip1.5em
+\begin{minipage}[t]{2.3in}
+\textit{Displayed as \ldots}
+\end{minipage}
+\par\nobreak\vskip3pt\nobreak
+\noindent\hskip1.75em
+\begin{minipage}[t]{2.4in}%
+\small\begin{verbatim}
+This equation calculates the
+relationship index $r$:
+\begin{equation}
+r = a(N-1)
+    - \left(\sum_{j=1}^a j\right)
+    + b - 1,
+\end{equation}
+where $0 \le a < b < N$, $N$ is the
+count of entities, and $a$ and $b$
+are entity indices.
+\end{verbatim}
+\end{minipage}
+\hskip1.5em
+\begin{minipage}[t]{2.3in}\small
+This equation calculates the
+relationship index~$r$:
+\begin{equation}
+r = a(N-1) - \left(\sum_{j=1}^a j\right) + b - 1,
+\end{equation}
+where $0 \le a < b < N$, $N$ is the
+count of entities, and $a$ and $b$ are
+entity indices.
+\end{minipage}
+\bigskip
+
+Blank lines surrounding the equation in the document source
+tell \LaTeX{} to leave too much vertical space, disconnecting
+it from the paragraph. Worse, the text following the equation
+would be indented as if it started a new paragraph, which is
+\emph{not} the intention in this case.  Of course, if an
+equation actually does begin or end a paragraph, then leave
+a blank line before or after, as appropriate.
+
+\section{Changing Default Settings}
+
+You may change document default settings in the document preamble.
+For example, should you want to change the width of the text column or
+the page margins, the document preamble is where you would do it.
+(Note that you must still adhere to FSU's \booktitle{Guidelines}, so
+be sure you know what you're doing.)
+
+\subsection{Changing \textsl{Table of Contents} Detail}
+\label{sec:tocdetail}
+If listing section or subsection headings provides too
+much detail
+\index{contents, table of!detail}%
+\index{tocdepth@\verb+tocdepth+}%
+for your taste, you may remove these entries by resetting
+the \LaTeX{} counter \complit{tocdepth}.  \LaTeX{} considers chapter
+headings to be Level~0, section headings to be Level~1, and so on.
+The default setting of \complit{tocdepth} is~2 (so subsection
+headings are included).  To include only chapter and section headings
+in the \textsl{Contents}, for example, you could reset
+\complit{tocdepth} in the document preamble with the following line:
+\begin{ltxexample}
+\setcounter{tocdepth}{1}
+\end{ltxexample}
+If you set \complit{tocdepth} to zero, then only chapter titles will
+be listed in the table of contents.  In this case, you may want to
+enable the \complit{chapterleaders} document option. (See
+section~\ref{sec:docoptions}).
+
+\subsection{Changing the Level of Heading Numbering}
+\label{sec:headnum}
+You may change the level at which the heading macros produce numbered
+entries by setting \complit{secnumdepth}.
+\index{headings!numbered}%
+\index{secnumdepth@\verb+secnumdepth+}%
+The default setting is
+level~two, which means that headings up to subsections will be
+numbered automatically.  To stop numbering at the \complit{section}
+level (for example), reduce the value of \complit{secnumdepth} to one
+by issuing the following command in the document preamble:
+\begin{ltxexample}
+\setcounter{secnumdepth}{1}
+\end{ltxexample}
+By setting \complit{secnumdepth} to zero, you may disable all heading
+numbering except at the chapter level.  Or you may increase the value
+up to five to generate heading numbers all the way down to the
+sub-paragraph heading level.
+
+\subsection{Avoiding Club and Widow Lines}
+\LaTeX\ makes some typographic decisions (for example, where to place
+a page break) based on a system of penalties that are calculated while
+the document is processed.
+\index{club lines}%
+\index{widow lines}%
+\index{widowpenalty@\verb+\widowpenalty+}%
+\index{clubpenalty@\verb+\clubpenalty+}%
+The \complit{sample}\index{sample document@\complit{sample} document} document sets
+the penalties for ``widow'' and ``club'' lines\footnote{The last line
+  of a paragraph which occurs at the top of a page is called a
+  ``widow''; the first line of a paragraph which occurs at the bottom
+  of a page is called a club.  These are relatively ugly,
+  typographically speaking.} as follows:
+\begin{ltxexample}
+\widowpenalty=9999
+\clubpenalty=9999
+\end{ltxexample}
+To \LaTeX, the value 10,000 is the maximum penalty.  By setting these
+values to almost the maximum, \LaTeX\ will avoid generating widow or
+club lines in all but the most extreme cases.
+
+\subsection{Adjustments to Titles}
+Any of the headings in your document may be re-labeled, should you
+need to do so.\index{headings!default}
+The following is a table of heading variables and
+the default setting in the \pkg{fsuthesis} class.
+\begin{center}\small
+\begin{tabular}{l l l l}
+\textit{Variable Name}&\textit{Default Text}&
+  \textit{Variable Name}&\textit{Default Text}\\[3pt]
+\verb|\abstractname| & Abstract\index{abstractname@\verb+\abstractname+} &
+   \verb|\listabbrevname| & List of Abbreviations\index{listabbrevname@\verb+\listabbrevname+} \\
+\verb|\acknowledgename| & Acknowledgments\index{acknowledgename@\verb+\acknowledgename+} &
+  \verb|\listfigurename| & List of Figures\index{listfigurename@\verb+\listfigurename+} \\
+\verb|\appendixtocname| & Appendix\index{appendixtocname@\verb+\appendixtocname+} &
+  \verb|\listtablename| & List of Tables\index{listtablename@\verb+\listtablename+} \\
+\verb|\bibname| & Bibliography\index{bibname@\verb+\bibname+}  &
+  \verb|\listmusexname| & List of Musical Examples\index{listmusexname@\verb+\listmusexname+} \\
+\verb|\biosketchname| & Biographical Sketch\index{biosketchname@\verb+\biosketchname+} &
+  \verb|\listsymname| & List of Symbols\index{listsymname@\verb+\listsymname+} \\
+\verb|\contentsname| & Table of Contents\index{contentsname@\verb+\contentsname+} &
+  \verb|\musexname| & Example\index{musexname@\verb+\musexname+} \\
+\end{tabular}
+\end{center}
+
+Should you wish to change any of these defaults~--- for example, you need
+to change ``Bibliography'' to ``References''~--- you would add the
+following to the document preamble:
+\begin{ltxexample}
+\renewcommand*{\bibname}{References}
+\end{ltxexample}
+Similarly, if you have more than one appendix, you may want to change
+\verb|\appendixtocname| so that the entry in the table of contents is
+correct. 
+\begin{ltxexample}
+\renewcommand*{\appendixtocname}{Appendices}
+\end{ltxexample}
+
+There's another way that this mechanism could be useful.  Let's say
+that your document has a lot of maps associated with it, and you'd
+like to keep the lists of maps and figures separate.  Further, you'd
+like to have a ``List of Maps'' included in the front matter of your
+document.  You can do this by renaming some other environment that
+you're not using, say the List of Musical Examples.
+\begin{ltxexample}
+\renewcommand*{\musexname}{Map}
+\renewcommand*{\listmusexname}{List of Maps}
+\end{ltxexample}
+Having done this, whenever you invoke the \complit{musex} environment,
+the caption will be labeled with ``Map'' rather than
+``Example''.  If you include the \verb|\listofmusex| in the front
+matter of your document, then ``List of Maps'' will be the heading of
+that page instead of ``List of Musical Examples''.
+
+\subsection{Extra Packages}
+\label{sec:packages}
+\LaTeX{} has many document feature add-ons.
+\index{packages}%
+If you wish to load additional packages, these options should follow
+the document class selection.  Be warned that some packages may not be
+compatible with the \fsuth{} class.  Many optional packages may
+already come installed with your \TeX/\LaTeX{} distribution, or you
+can download and install them from the \acro{CTAN} website
+(\url{http://www.ctan.org}).  The skeleton document does not enable
+any additional packages.  However, the \complit{sample}
+\index{sample document@\complit{sample} document} folder
+provides several examples of external packages you may wish to use.
+
+You enable features by adding a \verb+\usepackage+
+command\index{usepackage@\verb+\usepackage+} to the document preamble.
+Some packages provide sets of features or configuration options which
+can be enabled via the command line.  Here are some~examples:
+\begin{ltxexample}
+\usepackage{amsmath}
+\usepackage[round]{natbib}
+\end{ltxexample}
+This loads the \pkg{amsmath} package with its default settings and
+options, and it loads the \pkg{natbib} package with the
+\complit{round} option (which sets citations off in parentheses rather
+than square brackets).  Read the package documentation! Packages may
+rely on other packages and options, and some combinations of packages
+may be incompatible.
+
+The following list is by no means exhaustive.  There are hundreds of
+packages available, but a few may be generally useful (or harmful) to
+a wide number of users, and so I highlight them here.
+\begin{description}
+\item[\pkg{geometry}, \pkg{setspace}, \pkg{tocloft}] \emph{Do not use these packages
+  with \fsuth!} (unless you really know what you're doing). These
+  packages will change page layouts and spacing, undoing a lot of
+  the hard work that \fsuth{} has done for you. In many cases,
+  interactions between settings in \pkg{geometry} or \pkg{setspace}
+  and \fsuth{} will cause ugly or non-compliant spacing. You have
+  been warned!
+
+\item[\pkg{amsmath}] The American Mathematical Society has
+  developed a large set of symbols and macros to assist you in
+  producing high-quality mathematics.\index{mathematics!package}
+
+\item[\pkg{textcase}] If you have title, chapter, or section
+  headings which include mathematic symbols,\index{headings!math symbols}
+  or if letter casing needs special attention\index{headings!letter
+    case control}, you may want to install the
+  \pkg{textcase} package with the \complit{overload} option. 
+  This will prevent upper-casing mathematical symbols and
+  offer more control in formatting headings:
+\begin{ltxexample}
+\usepackage[overload]{textcase}
+\end{ltxexample}
+
+\item[\pkg{graphicx}] If you will be inserting figures into
+  your document electronically, you should investigate the
+  \pkg{graphicx} package.  You can find some simple examples of
+  figure inclusion in the \complit{sample}
+  \index{sample document@\complit{sample} document} directory, but for the
+  highest quality output, you owe it to yourself to learn more about
+  this topic.  Searching the web for ``latex figure inclusion'' or
+  other similar terms will turn up some useful links.
+
+\item[\pkg{biblatex}, \pkg{biblatex-apa}, \pkg{biblatex-chicago},
+  \pkg{natbib}, \pkg{apacite}] These packages
+  provide alternatives for formatting citations and bibliographic
+  reference lists.  The document in the \complit{sample}
+  \index{sample document@\complit{sample} document} folder
+  provides more citation examples, and provides links to other
+  information regarding bibliography creation.
+
+\item[\pkg{hyperref}] If you are generating an electronic version of
+  your document for which you'd like to have hyperlinks automatically
+  connecting cross-references and entries in the \textsl{Table of
+    Contents}, you should activate the \pkg{hyperref} package.  The
+  \pkg{hyperref} package has lots of configuration options, and you
+  should refer to its documentation for helpful information.  The use
+  of external hyperlinks within your document is discouraged. If
+    you enable this package, be sure to turn color links \emph{off},
+  as the \booktitle{Guidelines} prohibit multi-colored text in your
+  document.
+\end{description}
+
+\section{Keeping Things in Order}
+
+If you have lots of figures or musical example files in your document,
+you may want to keep these files in the sub-folder already created for
+you.  This helps to keep your thesis folder a little less cluttered.
+Then if you have a chart called \complit{pie.eps} stored in the
+\complit{figures} folder, you just need to include the folder name
+when issuing the \verb|\includegraphics|
+command\index{includegraphics@\verb+\includegraphics+}, e.g.,
+\begin{ltxexample}
+\includegraphics{figures/pie.eps}
+\end{ltxexample}
+You can create any number of folders and sub-folders to help keep
+your files organized.
+
+\section{More Examples}
+The files in the \complit{thesis-template} directory are only a
+bare-bones template to help you get started on your own manuscript.
+You will find a more complete example of a thesis manuscript in the
+\complit{sample}\index{sample document@\complit{sample} document}
+directory.\index{examples} The \LaTeX{} source files in this directory
+contain explanatory comments and many more examples of useful code.
+The file \complit{thesis.pdf} in the \complit{sample}
+\index{sample document@\complit{sample} document} directory is the result of
+processing the source files, so you can easily compare the source
+files to the output to see how everything works.  You'll find some
+simple examples of equations, figures, tables, and bibliographic
+citations to help you create your own document.  You can find much
+more help from the web should you need more sophisticated examples.
+
+\section{Bugs, Corrections, Improvements}
+
+Should you discover what you think is a bug in the way that \fsuth{}
+formats your document, you may e-mail me at \texttt{bwhissel@fsu.edu}.
+It would be helpful to send the portion of your document which you
+believe is misbehaving.  Likewise, if you think that the appearance
+of theses or dissertations may be improved in some way, or if you have
+some macro definitions that you think may be generally useful and
+could be added to \fsuth, I am happy to hear your ideas.
+
+Also, if you think that any of this documentation is misleading or
+unclear, \emph{please} let me know.  I wish to make this
+\booktitle{User's Guide} and the \fsuth{} class as helpful as
+possible.
+
+Please note that I cannot help you to learn features of \LaTeX: there
+are many resources and tutorials that are freely available, and I am
+unable to support individual requests for help with anything that does
+not pertain directly to the \fsuth{} class.
+
+\bigskip
+\noindent
+Best wishes, and good luck!
+
+
+\newpage
+
+\addcontentsline{toc}{section}{Index}
+\printindex
+
+
+\end{document}

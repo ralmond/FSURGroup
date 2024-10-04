@@ -1,0 +1,276 @@
+%%% Authors are free to create their own special-purpose macros and
+%%% environments as required.  Below, a new macro called "\square"
+%%% will draw a small box, 5 points high and 5 points wide.  The
+%%% environment "finalsquare" is intended for a single paragraph which
+%%% ends with a right-justified \square.  If there's no room at the
+%%% end of the line, then the square is moved down to the end of the
+%%% next line.  Learning to write your own macros can be fun, if
+%%% there's a bit of a computer programmer in you. :-)
+
+\newcommand\square{\vbox{\hrule{\hbox{\vrule height5pt\kern5pt\vrule}}\hrule}}
+\newenvironment{finalsquare}%
+  {\ifvmode\relax\else\par\fi\parfillskip=0pt}%
+  {\linebreak[0]\hspace*{\fill}\square\par}
+
+%%% Here begins our chapter.  All heading texts should be capitalized
+%%% as if they are titles.  The class file will handle any special
+%%% formatting as required.  Note that I use a LaTeX tie between "for"
+%%% and "Amortization" here, which prevents LaTeX from inserting a
+%%% line break at this location when splitting the chapter title into
+%%% multiple lines.  This was a bit of fine-tuning that I added as I
+%%% was reviewing the output.  Sometimes even LaTeX needs a little
+%%% help. ;-)
+
+\chapter{A Derivation of a Formula for~Amortization}
+
+This chapter contains several examples of the equation environment and
+equation references.  There are also examples of every level of
+heading, from \verb|\chapter| to \verb|\subparagraph| (though these
+headings are somewhat artificial).  The \pkg{amsmath} package is required
+to process this chapter, and so the \lit{thesis.tex} file in this
+directory contains the package line \verb|\usepackage{amsmath}|.
+The text of this file is located in the file \lit{math.tex}.
+If you're new to \LaTeX, you may find it instructive to look at the
+source text (which contains some extra documentation written as
+\LaTeX{} comments) while reviewing this printed output.
+
+The text and mathematics in this document are my own work, written in
+the mid-1980s when I was trying to figure out how long it would take
+to pay off my credit card debt after I had graduated.  (This work is
+the basis of my on-line amortization calculator at the following
+web address:
+\lit{http://bretwhissel.net/amortization/amortize.html}.)  This
+material became a convenient test bed as I developed the FSU thesis
+macros.
+
+\section{Definitions}
+This is my derivation of the formula for amortization.  The goal is to
+find a payment amount, $x$, which pays off the loan principal, $P$,
+after a specified number of payments, $N$.  Variable definitions are
+listed in table~\ref{tab:varlist}.
+
+%%% The following is an example of a LaTeX table, using the 'tabular'
+%%% environment.  It is enclosed within a 'center' environment, which
+%%% is also enclosed with the LaTeX 'table' environment.  The 'table'
+%%% environment is specified with the placement options '[htpb]'.
+%%% Each of these letters indicates a potential placement for this
+%%% table.  First, it will be placed [h]ere, if there is room.
+%%% Otherwise, the table may float to the [b]ottom of a page, to the
+%%% [t]op of a page, or placed on a [p]age by itself.
+
+%%% The 'table' environment can include a '\caption', which should be
+%%% placed above the table data.  The \caption is labeled with
+%%% '\label{tab:varlist}', which means that I may reference this table
+%%% elsewhere in my document.  In fact, the previous paragraph of text
+%%% includes a '\ref{tab:varlist}', which will be replaced with the
+%%% actual table number when processed by LaTeX. There's a whole
+%%% chapter on tables elsewhere in this document
+
+\begin{table}[htbp]
+\caption{The List of Variables\label{tab:varlist}}
+\begin{center}
+\begin{tabular}{cl}
+$P$&The principal borrowed\\
+$N$&The number of payments\\
+$i$&The fractional (periodic) interest rate\\
+$P_j$&The principal part of payment $j$\\
+$I_j$&The interest part of payment $j$\\
+$B$&A final balloon payment\\
+$x$&The regular payment
+\end{tabular}
+\end{center}
+\end{table}
+
+%%% Equations can be "inline" or "display" style.  Typically short-ish
+%%% equations like $E=mc^2$ may be inlined, or mentions of a single
+%%% expression or variable like $x_i$.  More complicated equations are
+%%% typically contained in 'equation' or 'align' environments, which
+%%% provide a little surrounding vertical space and center equations
+%%% in the text column.  Even though these "displayed" equations take
+%%% up more space, they should be treated as if they're parts of
+%%% sentences, and as such, normal paragraphing rules apply.  I.e., a
+%%% blank line before a \begin{equation} will start a new paragraph,
+%%% and a blank line following an \end{equation} will end the
+%%% paragraph and prepare a new one, which affects white space and
+%%% indentation.  Displayed equations usually do not begin
+%%% a paragraph, so DON'T leave a blank line before the beginning of
+%%% an equation.  Likewise, if you have a line like 'where
+%%% x=something...' following a displayed equation, then a blank line
+%%% should not precede the 'where...'.
+
+%%% If reference needs to be made to an equation number elsewhere in
+%%% the text, then use a \label command in the 'equation' or 'align'
+%%% environment so that the label may be referenced later.  There's an
+%%% example of a \label command in the equation below.  The required
+%%% argument to the \label command is a key, an arbitrary name that
+%%% I've assigned to it.
+
+\subsection{Payment Schedule}
+Assuming that all payments (excluding an optional final balloon payment)
+are the same amount, a payment~$x$ consists of its interest part and
+its principal part:
+\begin{equation}
+\label{amort:components}
+x=I_j + P_j
+\end{equation}
+\begin{align*}
+I_1 &= iP               & P_1 &= x - I_1 \\
+I_2 &= i(P - P_1)       & P_2 &= x - I_2 \\
+I_3 &= i(P - P_1 - P_2) & P_3 &= x - I_3,\mbox{ etc.}
+\end{align*}
+
+This schedule states that the payment~$x$ includes interest on all
+of the remaining principal, including that which is part of the
+current payment.  The first payment, therefore, includes
+an interest payment on the total borrowed, which defines the minimum
+payment.  (If we are to make any progress toward paying off the loan,
+we must pay more than the amount $iP$.)
+
+%%% Learning to type equations in TeX/LaTeX is a bit of an art.  The
+%%% TeXbook by Donald Knuth, the creator of TeX, has several examples
+%%% and guidelines for typesetting mathematics.  In fact, setting
+%%% equations is the reason that TeX was created.  If you have
+%%% complicated equations to include in your thesis, you owe it to
+%%% yourself to learn more about mathematics typesetting.  Your thesis
+%%% is forever, and you want it to look its best. :-) You may find
+%%% other references which may be helpful in this regard, such as the
+%%% book 'Math into LaTeX' by George Gratzer which provides
+%%% comprehensive examples.  You'll probably find many more examples
+%%% in on-line resources as well.
+
+The $P_j$'s may be rewritten into a recurrence relation:
+\begin{align*}
+P_1 &{}= x - iP\\
+\noalign{\smallskip}
+P_2 &{}= x - i(P - P_1)\\
+&{}= x - i\left[P - (x - iP)\right]\\
+&{}= x - iP + ix - i^2P\\
+&{}= (x - iP)(1 + i)\\
+\noalign{\smallskip}
+P_3 &{}= x - i(P - P_1 - P_2)\\
+&{}= x - i\left[P - (x - iP) - (x - iP + ix - i^2P)\right]\\
+&{}= x + 2ix + i^2x - iP - 2i^2P - i^3P\\
+&{}= x(1 + i)^2 - iP(1 + i)^2\\
+&{}= (x - iP)(1 + i)^2
+\end{align*}
+In general, we will find that
+\begin{equation}
+\label{amort:recurrence}
+P_j = (x - iP)(1 + i)^{j-1}.
+\end{equation}
+
+\section{Balloon Payment}
+If there is to be a balloon payment, then the final payment will
+consist of the final principal payment $P_f$ and interest on that
+principal $i P_f$ so that $B = P_f + iP_f$.  Rewriting $P_f$ in terms
+of $B$ gives $P_f = B/(1+i)$.
+
+\section{Finding a Solution}
+\subsection{Defining the Equation}
+Next, we define an equation which uses these ideas:
+\begin{equation}
+\label{amort:sums}
+B + Nx = P + \sum_{j=1}^N I_j + i\left(\frac{B}{1+i}\right),
+\end{equation}
+or in English, the sum of all the payments (left side) is equal to the
+principal borrowed plus all of the interest paid with regular payments
+plus interest paid on the balloon payment (right side).
+Note that if there will be no balloon payment ($B=0$), then the $B$
+terms drop out.
+
+%%% Note the use of the '\ref' macro below.  There must be
+%%% corresponding '\label' commands elsewhere in the document.  The
+%%% label/ref keys are arbitrary text.  The keys should probably be
+%%% something easy to remember, so that one need not scroll back
+%%% through the document to recall what key was used.  All labels
+%%% throughout a document must be unique.  A \ref may occur before its
+%%% corresponding \label has been defined in the text (i.e., forward
+%%% and backward references are allowed).
+
+\subsection{Breaking It Down}
+Now we glue some more pieces together: replace $I_j$ of
+equation~(\ref{amort:sums}) using the relationship given by
+eq.~(\ref{amort:components}) and then substitute the recurrence identity
+of eq.~(\ref{amort:recurrence}):
+\begin{align}
+B - \frac{iB}{1+i} + Nx &{}= 
+  P + \sum_{j=1}^N \left[x - (x - iP)(1 + i)^{j-1}\right] \nonumber \\
+B - \frac{iB}{1+i} + Nx &{}= 
+  P + Nx - (x - iP)\sum_{j=1}^N (1 + i)^{j-1} \nonumber \\
+P - B\left(1 - \frac{i}{1+i}\right) &{}= (x - iP)\sum_{j=1}^N (1 + i)^{j-1}
+\end{align}
+
+\subsubsection{Initial Solution}
+Now we can see our way clear to solve for $x$:
+\begin{equation}
+\label{amort:series-form}
+x = \frac{P - B\left(1-\frac{i}{1+i}\right)}{\displaystyle\sum_{j=1}^{N} (1+i)^{j-1}} 
+  + iP.
+\end{equation}
+
+\subsubsection{Finding a Closed Form}
+While a computer program could be written to solve the problem as
+it is, a closed-form solution (i.e., without the iteration) is
+preferable.
+\paragraph{Isolation} 
+The series form of eq.~(\ref{amort:series-form}) can be rewritten
+without the series after a little transformation.  First, we separate
+the summation and rewrite its limits:
+\begin{equation}
+x = \left[P - B\left(1 - \frac{i}{1+i}\right)\right]
+    \frac{1}{\displaystyle\sum_{j=0}^{N-1}(1+i)^j} + iP.
+\end{equation}
+\paragraph{Transformation}
+To simplify the transformation, we can substitute by letting
+$g = 1 + i$ so that the summation looks like $\sum_{j=0}^{N-1} g^j$.  
+Next we multiply the series by $(1-g)/(1-g)$, which causes all
+but the first and last terms to drop out:
+\begin{equation}
+\frac{(1-g)\displaystyle\sum_{j=0}^{N-1} g^j}{1-g}=
+\frac{\displaystyle\sum_{j=0}^{N-1} g^j - \sum_{j=0}^{N-1} g^{j+1}}{1-g}
+  = \frac{1 - g^N}{1-g}.
+\end{equation}
+\paragraph{Result}
+Since the series is originally in the denominator, we invert the transformed
+result, and then undo the substitution:
+\begin{equation}
+\label{amort:closed-form}
+x = \left[P-B\left(1-\frac{i}{1+i}\right)\right]\frac{1-(1+i)}{1 - (1+i)^N}
+ + iP.
+\end{equation}
+\paragraph{Rearranged}
+Now we can expand and rearrange to taste:
+\begin{equation}
+\label{amort:rearranged}
+x = i \left[\frac{P(1+i)^N}{(1+i)^N - 1} 
+  + \frac{B}{(1+i) - (1+i)^{N+1}}\right].
+\end{equation}
+
+%%% We created the 'finalsquare' environment at the beginning of this
+%%% chapter.  Here's where we use it.
+
+\begin{finalsquare}
+\noindent\textit{Quod erat demonstrandum} (``That which was to be
+shown''), recognized in most mathematical circles as the initials Q.E.D.
+\end{finalsquare}
+
+\section{Application}
+\subparagraph{Two forms}
+Equations~(\ref{amort:closed-form}) and~(\ref{amort:rearranged})
+solve for the payment amount, but either can be re-arranged to solve
+for any of the other variables, with the exception of $i$, the
+periodic interest rate.  To date I have been unable to find an
+analytic solution for this variable, so the program invokes an
+iterative method to find successive approximations to the solution.
+
+\subparagraph{Computation}
+To reduce the number of computations, $1+i$ can be stored in 
+single variable, as well as a single calculation of $(1+i)^N$.
+Then the calculation of $(1+i)^{N+1}$ merely requires multiplying the two
+previously-calculated values, i.e., $(1+i)^{N+1} = (1+i)^N \cdot (1+i)$.
+
+%%% The chapter ends here.  Actually, it ends wherever the
+%%% next \chapter command appears, which is not in this file.  Note
+%%% that cross-references using \label, \ref and \pageref aren't
+%%% restricted by chapter or file boundaries.  You may make reference
+%%% to labels that occur anywhere in your document.

@@ -1,0 +1,31 @@
+/*-- scss:defaults --*/
+$border-color-cadetblue: #5f9ea0 !default;
+$border-color-burlywood: #8b7355 !default;
+$dbicon: url('data:image/svg+xml,<svg width="120" height="160" xmlns="http://www.w3.org/2000/svg"> <g transform="scale(2, -2) translate(5, -35)"> <rect x="23" y="-39.6" width="4" height="68" fill="gray" stroke="black" stroke-width="1.44" stroke-linejoin="round"></rect> <path d="M21 23 Q25 27 29 23 L48 4 Q52 0 48 -4 L29 -23 Q25 -27 21 -23 L2 -4 Q-2 0 2 4 Z" fill="yellow" stroke="black" stroke-width="1.44"></path> <line x1="9" y1="-39.6" x2="41" y2="-39.6" stroke="black" stroke-width="1.44" stroke-linecap="round"></line> <path d="M17 12 L33 9 A 3.027605014567413 3.027605014567413 0 0 0 33.50511019963996 3.1894163248649843 L16.494889800360042 -3.1894163248649843 A 3.027605014567413 3.027605014567413 0 0 1 17 -9 L33 -12" fill="none" stroke="black" stroke-width="5" stroke-linecap="butt"></path> </g> </svg>') !default;
+
+$background-color-cadetblue: #98f5ff !default;
+$background-color-burlywood: #ffd39b !default;
+
+
+/*-- scss:rules --*/
+
+div.callout-db.callout {
+  border-left-color: $border-color-cadetblue;
+}
+
+div.callout-db.callout-style-default>.callout-header {
+  background-color: $background-color-cadetblue;
+}
+
+.callout-db.icon .callout-icon {
+  display: unset !important;
+}
+
+div.callout-db.icon.callout-captioned .callout-icon::before {
+  background-image: $dbicon;
+}
+
+.callout-db.callout-style-default div.callout-icon-container {
+  padding-top: 0.1em;
+  padding-right: 0.35em;
+}

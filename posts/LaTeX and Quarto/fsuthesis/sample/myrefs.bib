@@ -1,0 +1,402 @@
+@Preamble{"\ifx \manfnt \undefined \font\manfnt=logo10 \fi"
+ # "\ifx \METAFONT \undefined \def \METAFONT {{\manfnt META}\-{\manfnt FONT}\spacefactor1000 } \fi"
+ # "\ifx \MF \undefined \let \MF=\METAFONT \fi"
+ # "\ifx \POSTSCRIPT \undefined \def \POSTSCRIPT {{\scshape Post}\-{\scshape Script}\spacefactor1000 } \fi"
+ # "\ifx \MP \undefined \def \MP {{\manfnt META}\-{\manfnt POST}\spacefactor1000 } \fi"
+ # "\ifx \noopsort \undefined \def \noopsort#1{} \fi"
+ # "\ifx \emdash \undefined \def \emdash{---} \fi"
+}
+
+@String{j-CJ                    = "The Computer Journal"}                  
+
+@String{pub-APA                 = "American Psychological Association"}
+@String{pub-APA:adr             = "Washington, DC, USA"}
+
+@String{pub-AW                  = "Ad{\-d}i{\-s}on-Wes{\-l}ey"}
+@String{pub-AW:adr              = "Reading, MA, USA"}
+
+@String{pub-MLAA                = "Modern Language Association of America"}
+@String{pub-MLAA:adr            = "New York, NY, USA"}
+
+@String{pub-U-CHICAGO-PRESS     = "University of Chicago Press"}
+@String{pub-U-CHICAGO-PRESS:adr = "Chicago, IL, USA"}
+
+@String{ack-nhfb = "Nelson H. F. Beebe,
+                    University of Utah,
+                    Department of Mathematics, 110 LCB,
+                    155 S 1400 E RM 233,
+                    Salt Lake City, UT 84112-0090, USA,
+                    Tel: +1 801 581 5254,
+                    FAX: +1 801 581 4148,
+                    e-mail: \path|beebe@math.utah.edu|,
+                            \path|beebe@acm.org|,
+                            \path|beebe@computer.org| (Internet),
+                    URL: \path|http://www.math.utah.edu/~beebe/|"}
+ 
+@Book{Anonymous:1993:CMS,
+  author =       "Anonymous",
+  key =          "Chicago",
+  title =        "The {Chicago} Manual of Style",
+  publisher =    pub-U-CHICAGO-PRESS,
+  address =      pub-U-CHICAGO-PRESS:adr,
+  edition =      "14th",
+  pages =        "ix + 921",
+  year =         "1993",
+  ISBN =         "0-226-10389-7",
+  ISBN-13 =      "978-0-226-10389-1",
+  LCCN =         "Z253 .U69 1993",
+  bibdate =      "Mon Sep 23 08:57:34 1996",
+  price =        "US\$40.00",
+  acknowledgement = ack-nhfb,
+  annote =       "The standard American work on typesetting style etc.
+                 (CHe)",
+  bibliography = "yes",
+  glossary =     "yes",
+  history =      "First edition 1906, 12th edition 1969, 13th edition
+                 1982, 14th edition 1993",
+  index =        "yes",
+  inprint =      "yes",
+  keywords =     "authorship handbooks; authorship manuals; practical
+                 style manuals; printing",
+  printermarks = "yes",
+  subtitle =     "The Essential Guide for Writers, Editors and
+                 Publishers",
+}
+
+@Book{Anonymous:2009:PMA,
+  author =       "Anonymous",
+  key =          "APA",
+  title =        "Publication Manual of the {American Psychological Association}",
+  publisher =    pub-APA,
+  address =      pub-APA:adr,
+  edition =      "sixth",
+  pages =        "272",
+  year =         "2009",
+  ISBN =         "1433805618",
+  ISBN-13 =      "978-1433805615",
+  acknowledgement = ack-fm,
+  annote =       "The book contains style guidelines known as the APA
+                 style. This ranges from spelling conventions to table
+                 formatting. The guidelines assume that papers are
+                 produced using a typewriter. The book itself shows a
+                 very unpleasant design making reading are hard task.",
+  bibliography = "yes",
+  index =        "yes",
+  keywords =     "document preparation guidelines, style guidelines,
+                 communications in psychology, psychology authorship,
+                 American Psychological Association, publication manual,
+                 writing",
+}
+
+@Book{Anonymous:1984:PMA,
+  author =       "Anonymous",
+  key =          "APA",
+  title =        "Publication Manual of the {American Psychological Association}",
+  publisher =    pub-APA,
+  address =      pub-APA:adr,
+  edition =      "third",
+  pages =        "208",
+  year =         "1984",
+  ISBN =         "0-912704-57-8",
+  ISBN-13 =      "978-0-912704-57-9",
+  LCCN =         "BF76.7 .P83 1983",
+  bibdate =      "Tue Mar 1 11:52:52 1994",
+  acknowledgement = ack-fm,
+  annote =       "The book contains style guidelines known as the APA
+                 style. This ranges from spelling conventions to table
+                 formatting. The guidelines assume that papers are
+                 produced using a typewriter. The book itself shows a
+                 very unpleasant design making reading are hard task.",
+  bibliography = "yes",
+  index =        "yes",
+  keywords =     "document preparation guidelines, style guidelines,
+                 communications in psychology, psychology authorship,
+                 American Psychological Association, publication manual,
+                 writing",
+}
+
+@Book{Gibaldi:1996:MHW,
+  author =       "Joseph Gibaldi",
+  title =        "{MLA} Handbook for Writers of Research Papers",
+  publisher =    pub-MLAA,
+  address =      pub-MLAA:adr,
+  edition =      "Fourth",
+  pages =        "xviii + 293",
+  year =         "1996",
+  ISBN =         "0-87352-565-5",
+  ISBN-13 =      "978-0-87352-565-7",
+  LCCN =         "LB2369.G53 1995",
+  bibdate =      "Sat Sep 28 17:22:14 1996",
+  price =        "US\$16.75",
+  acknowledgement = ack-nhfb,
+}
+
+@Book{Adobe:1985:PLR,
+  author =       "{Adobe Systems Incorporated}",
+  title =        "{\POSTSCRIPT} Language Reference Manual",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "ix + 321",
+  year =         "{\noopsort{1985a}}1985",
+  ISBN =         "0-201-10174-2",
+  ISBN-13 =      "978-0-201-10174-4",
+  LCCN =         "QA76.73.P67 A33 1985",
+  bibdate =      "Tue Dec 14 23:18:17 1993",
+}
+
+@Book{Adobe:1985:PLT,
+  author =       "{Adobe Systems Incorporated}",
+  title =        "{\POSTSCRIPT} Language Tutorial and Cookbook",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "x + 243",
+  year =         "{\noopsort{1985b}}1985",
+  ISBN =         "0-201-10179-3",
+  ISBN-13 =      "978-0-201-10179-9",
+  LCCN =         "QA76.73.P67 A34 1985",
+  bibdate =      "Tue Dec 14 23:18:32 1993",
+}
+
+@Book{Lamport:1985:LDP,
+  author =       "Leslie Lamport",
+  title =        "{\LaTeX}\emdash {A} Document Preparation System\emdash
+                 User's Guide and Reference Manual",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "xiv + 242",
+  year =         "1985",
+  ISBN =         "0-201-15790-X",
+  ISBN-13 =      "978-0-201-15790-1",
+  LCCN =         "Z253.4.L38 L35 1986",
+  bibdate =      "Thu Jul 21 23:00:50 1994",
+  price =        "US\$26.95",
+  acknowledgement = ack-nhfb,
+  keywords =     "documentation; languages; performance",
+  review =       "ACM CR 9001-0030",
+  subject =      "I.7.2 Computing Methodologies, TEXT PROCESSING,
+                 Document Preparation, LaTeX \\ D.2.3 Software, SOFTWARE
+                 ENGINEERING, Coding, Pretty printers",
+}
+
+@Book{Lamport:1994:LDP,
+  author =       "Leslie Lamport",
+  title =        "{\LaTeX}: {A} Document Preparation System: User's
+                 Guide and Reference Manual",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  edition =      "Second",
+  pages =        "xvi + 272",
+  year =         "1994",
+  ISBN =         "0-201-52983-1",
+  ISBN-13 =      "978-0-201-52983-8",
+  LCCN =         "Z253.4.L38L35 1994",
+  bibdate =      "Sat Mar 07 09:39:20 1998",
+  note =         "Reprinted with corrections in 1996.",
+  acknowledgement = ack-nhfb,
+}
+
+@Book{Mittelbach:2004:LC,
+  author =       "Frank Mittelbach and Michel Goossens and Johannes
+                 Braams and David Carlisle and Chris Rowley and
+                 Christine Detig and Joachim Schrod",
+  title =        "The {\LaTeX} Companion",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  edition =      "Second",
+  pages =        "xxvii + 1090",
+  year =         "2004",
+  ISBN =         "0-201-36299-6",
+  ISBN-13 =      "978-0-201-36299-2",
+  LCCN =         "Z253.4.L38 G66 2004",
+  bibdate =      "Thu May 20 13:23:24 2004",
+  price =        "US\$59.99, CAN\$86.99",
+  series =       "Tools and Techniques for Computer Typesetting",
+  acknowledgement = ack-nhfb,
+  remark =       "Authors listed as: Frank Mittelbach and Michel
+                 Goossens with Johannes Braams, David Carlisle, and
+                 Chris Rowley, and with contributions by Christine Detig
+                 and Joachim Schrod.",
+}
+
+@Book{Kopka:2004:GLT,
+  author =       "Helmut Kopka and Patrick W. Daly",
+  title =        "Guide to {\LaTeX}: Tools and Techniques for Computer
+                 Typesetting",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  edition =      "Fourth",
+  pages =        "xii + 597",
+  year =         "2004",
+  ISBN =         "0-321-17385-6",
+  ISBN-13 =      "978-0-321-17385-0",
+  LCCN =         "Z253.4.L38 K66 2004",
+  bibdate =      "Wed Jan 21 05:16:54 2004",
+  note =         "Includes CD-ROM.",
+  price =        "US\$49.99, CAN\$75.99",
+  acknowledgement = ack-nhfb,
+}
+
+@Book{Goossens:2008:LGC,
+  editor =       "Michel Goossens and Frank Mittelbach and Sebastian
+                 Rahtz and Denis Roegel and Herbert Vo{\ss}",
+  title =        "The {\LaTeX} graphics companion",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  edition =      "Second",
+  year =         "2008",
+  ISBN =         "0-321-50892-0",
+  ISBN-13 =      "978-0-321-50892-8",
+  LCCN =         "Z253.4.L38G663 2008",
+  bibdate =      "Thu Sep 20 12:02:17 MDT 2007",
+  bibsource =    "z3950.bibsys.no:2100/BIBSYS",
+  series =       "Addison-Wesley series on tools and techniques for
+                 computer typesetting",
+  acknowledgement = ack-nhfb,
+}
+
+@Book{Knuth:1984:TB,
+  author =       "Donald E. Knuth",
+  title =        "The {\TeX}book",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "ix + 483",
+  year =         "1986",
+  ISBN =         "0-201-13448-9 (paperback), 0-201-13447-0 (hardcover)",
+  ISBN-13 =      "978-0-201-13448-3 (paperback), 978-0-201-13447-6
+                 (hardcover)",
+  LCCN =         "Z253.4.T47 K58 1984",
+  bibdate =      "Fri Jul 22 09:08:51 1994",
+  price =        "US\$15.95 (paperback), US\$32.95 (hardcover)",
+}
+
+@Article{Knuth:1984:LP,
+  author =       "Donald E. Knuth",
+  title =        "Literate Programming",
+  journal =      j-CJ,
+  volume =       "27",
+  number =       "2",
+  pages =        "97--111",
+  month =        may,
+  year =         "1984",
+  CODEN =        "CMPJA",
+  bibdate =      "Mon Jul 25 08:37:04 MDT 1994",
+  acknowledgement = ack-nhfb,
+  keywords =     "design; human factors; languages",
+  review =       "ACM CR 8501-0018",
+  subject =      "D.2.7 Software, SOFTWARE ENGINEERING, Distribution and
+                 Maintenance, Documentation \\ I.7.1 Computing
+                 Methodologies, TEXT PROCESSING, Text Editing, Languages
+                 \\ H.1.2 Information Systems, MODELS AND PRINCIPLES,
+                 User/Machine Systems, Human factors \\ D.3 Software,
+                 PROGRAMMING LANGUAGES, Language Constructs \\ I.7.1
+                 Computing Methodologies, TEXT PROCESSING, Text Editing,
+                 WEB",
+}
+                  
+@Book{Knuth:1986:MB,
+  author =       "Donald E. Knuth",
+  title =        "The {\METAFONT}book",
+  volume =       "C",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "xi + 361",
+  year =         "{\noopsort{1986c}}1986",
+  ISBN =         "0-201-13445-4 (hardcover), 0-201-13444-6 (paperback)",
+  ISBN-13 =      "978-0-201-13445-2 (hardcover), 978-0-201-13444-5
+                 (paperback)",
+  LCCN =         "Z250.8.M46 K58 1986",
+  bibdate =      "Fri Jul 22 09:06:26 1994",
+  price =        "US\$32.95 (hardcover), US\$16.95 (paperback)",
+  series =       "Computers and Typesetting",
+  keywords =     "design; languages",
+  review =       "ACM CR 9004-0282",
+  subject =      "I.7.2 Computing Methodologies, TEXT PROCESSING,
+                 Document Preparation, Metafont",
+}
+
+@Book{Knuth:1986:MP,
+  author =       "Donald E. Knuth",
+  title =        "{\METAFONT}: The Program",
+  volume =       "D",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "xv + 560",
+  year =         "{\noopsort{1986d}}1986",
+  ISBN =         "0-201-13438-1",
+  ISBN-13 =      "978-0-201-13438-4",
+  LCCN =         "Z250.8.M46 K578 1986",
+  bibdate =      "Fri Jul 22 09:06:27 1994",
+  price =        "US\$32.95",
+  series =       "Computers and Typesetting",
+}
+
+@Book{Knuth:1986:TP,
+  author =       "Donald E. Knuth",
+  title =        "{\TeX}: The Program",
+  volume =       "B",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "xv + 594",
+  year =         "{\noopsort{1986b}}1986",
+  ISBN =         "0-201-13437-3",
+  ISBN-13 =      "978-0-201-13437-7",
+  LCCN =         "Z253.4.T47 K578 1986",
+  bibdate =      "Fri Jul 22 09:03:46 1994",
+  price =        "US\$32.95",
+  series =       "Computers and Typesetting",
+}
+
+@Manual{Beebe:1987:TDD,
+  author =       "Nelson H. F. Beebe",
+  title =        "A {\TeX DVI Driver Family} --- ({Revision}~2.07)",
+  address =      "University of Utah, Salt Lake City, UT 84112, USA",
+  month =        apr,
+  year =         "1987",
+  acknowledgement = ack-nhfb,
+}
+
+@Book{Bryan:1988:SAG,
+  author =       "Martin Bryan",
+  title =        "{SGML}\emdash{}An Author's Guide to the Standard
+                 Generalized Markup Language",
+  publisher =    pub-AW,
+  address =      pub-AW:adr,
+  pages =        "xvii + 364",
+  year =         "1988",
+  ISBN =         "0-201-17535-5",
+  ISBN-13 =      "978-0-201-17535-6",
+  LCCN =         "QA76.73.S44 B79 1988",
+  bibdate =      "Tue Dec 14 23:35:58 1993",
+  acknowledgement = ack-nhfb # " and " # ack-fm,
+  annote =       "Complete description of SGML including example DTDs.",
+  keywords =     "SGML, DTD, document representation",
+}
+
+@Unpublished{English:1987:UMO,
+  author =       "Paul M. English",
+  title =        "Using {\MF} for Original Font Design",
+  institution =  "University of Massachusetts at Boston",
+  address =      "Boston, MA, USA",
+  month =        "August",
+  year =         "1987",
+}
+
+@Article{Picaut:1997,                  
+  author = "J. Picaut and F. Masia and Y. du Penhoat",
+  title = "An advective-reflective conceptual model for the oscillatory
+ nature of the {ENSO}",
+  volume = "277",
+  year = "1997",
+  journal = "Science",
+  pages = "663--666"
+}
+
+@Article{Yasunari:1990,                  
+  author = "T. Yasunari",
+  title = "Impact of Indian monsoon on the coupled atmosphere/ocean
+ system in the tropical Pacific",
+  volume = "44",
+  year = "1990",
+  journal = "Meteorology and Atmospheric Physics",
+  pages = "19--41",
+}

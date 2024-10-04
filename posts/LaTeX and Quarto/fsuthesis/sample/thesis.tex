@@ -1,0 +1,497 @@
+%%% This is a sample thesis showing how to use the FSU Thesis Class.
+%%% This file is the main LaTeX source file.  It contains all the
+%%% front matter and back matter of the document.  The main text
+%%% (chapters and appendices) are '\input'd from this file.  Lines
+%%% that begin with a '%' are "comments", and they are completely
+%%% ignored by LaTeX.
+
+%%% The document begins by declaring the document class as 'fsuthesis'
+%%% to be set in 11pt type.  I also turn on the copyright notice, for
+%%% testing purposes.  The 'expanded' option enables wider baseline
+%%% spacing throughout the document, except where it needs to be
+%%% single-spaced.  This is now required by FSU.
+
+\documentclass[11pt,expanded,copyright]{fsuthesis}
+
+%%% You can turn off "double-spacing" by eliminating the 'expanded'
+%%% option.  This might be handy if you want a working version of
+%%% your document that consumes less paper.  You can use this instead:
+%%%
+%%%   \documentclass[11pt,copyright]{fsuthesis}
+%%%
+%%% See the User Guide and the references for additional document
+%%% options that may be useful to you.
+
+%%% Many hundreds of additional packages extend the basic LaTeX
+%%% features and functionality.  They are included by the command
+%%% '\usepackage{packagename}'.  "The LaTeX Companion" is a great
+%%% resource for delving into some advanced formatting and
+%%% functionality among LaTeX's many packages.
+
+%%% Be aware that some packages may break some of the formatting
+%%% features provided by by 'fsuthesis' class. In particular, DO
+%%% NOT USE 'geometry' or 'setspace' packages with 'fsuthesis':
+%%% these will mess up the spacing badly.
+
+%%% I'll be using some of the math formatting options from the
+%%% American Mathematical Society math package, so I include a line
+%%% for that here.
+
+%\usepackage{lmodern}
+\usepackage{amsmath}
+
+%%% The mflogo package provides the METAFONT logo characters. Most
+%%% people won't need this (unless you're writing about METAFONT).
+
+\usepackage{mflogo}         % (not needed for general use)
+
+%%% The textcase package is useful if I have math formulas or symbols
+%%% in any chapter or section headings, preventing lower-case math
+%%% symbols from being upper-cased.
+
+\usepackage[overload]{textcase}
+
+%%% Newer LaTeX bibliography functionality is moving away from BibTeX
+%%% altogether, switching to using 'biblatex' package along with the
+%%% 'biber' back-end processor. The recommended invocation includes
+%%% specifying several dependencies:
+
+\usepackage[american]{babel}
+\usepackage{csquotes}
+\usepackage[backend=biber]{biblatex}
+\addbibresource{myrefs.bib}
+
+%%% The 'biber' processor is assumed to be the backend by default,
+%%% so it does not need to be specified explicitly.
+%%%
+%%% Other bibliography and citation styles can be invoked by
+%%% changing the [style=<stylename>] package option:
+%%%
+%%%   APA style:     \usepackage[style=apa]{biblatex}
+%%%   Chicago style: \usepackage[style=chicago]{biblatex}
+%%%
+%%% The styles are usually contained in packages labeled with biblatex
+%%% and the style name. E.g., biblatex-apa, biblatex-chicago, etc.
+%%% These packages will need to be installed on your machine before
+%%% they can be used.
+
+%%% The 'babel' package overrides the title of the Table of Contents,
+%%% so we need to set it again here. If some other language is chosen,
+%%% then you should adjust this value as well. (You'll need to refer
+%%% to the 'babel' documentation.)
+
+\addto\captionsamerican{\renewcommand*{\contentsname}{Table of Contents}}
+
+%%% The default citation and bibliography styling provided by LaTeX
+%%% may not be the standard in your discipline.  The 'natbib' package
+%%% extends the formatting options for citations and bibliographic
+%%% references common in the sciences, and many disciplines define
+%%% their own style guides for bibliographies and citations through
+%%% 'natbib'.  If you choose to use 'natbib' here, you'll also need to
+%%% select the proper 'natbib' style file in the bibliography portion
+%%% of this file later on.  See the 'natbib' package documentation for
+%%% more information. (This is for the older BibTeX system only.)
+
+%\usepackage[round]{natbib}       % an alternative bibliography package
+
+%%% Yet another bibliography alternative for people who need APA-style
+%%% citations and bibliography formatting is the 'apacite' package.
+%%% Most people will want to use the 'natbibapa' compatibility option.
+%%% (You must have the 2012 or later version of the 'apacite' package
+%%% to use this option. If you use the hyperref package, you *must*
+%%% use the 'natbibapa' option, or there will be citation errors.) See
+%%% the 'apacite' manual for more detailed information on using this
+%%% package and formatting your bibliography. (This is for the older
+%%% BibTeX system only.)
+
+%\usepackage[natbibapa]{apacite}  % an alternative bibliography package
+
+%%% The following few lines are a little different: if I want to
+%%% typeset my thesis using 'pdflatex', I need to use the 'pdftex'
+%%% driver to insert figures, and I'll also turn on hyperlinks in my
+%%% document.  If instead I'll be producing a DVI or PostScript
+%%% document (which I can convert to PDF later), I will want to use
+%%% the 'dvips' driver for the graphicx package, and I won't turn on
+%%% hyperlinks.  I can accomplish this by testing whether or not I'm
+%%% running in PDF mode using the '\ifpdf' test below.  If I'm in PDF
+%%% mode, then all my figures will need to be either PDF files, PNG
+%%% files, or JPEG files.  If I'm using the 'dvips' driver, then any
+%%% figures I include should be EPS (Encapsulated PostScript).  (This
+%%% sample document provides figure files in both formats for testing
+%%% purposes, so I can select either driver here.)  These days, most
+%%% people will probably want to use 'pdflatex' to create a PDF file
+%%% directly, so this extra logic is not essential; you may just enter
+%%% '\usepackage[pdftex]{graphicx}' in your document directly.
+
+\ifpdf   % We execute this part (up to \else) if we are in PDF mode.
+  \usepackage[pdftex]{graphicx}
+  % We can create color text in our document using the color package.
+  % We load it here so that we can tweak the default colors used in
+  % the links created by hyperref, as the defaults are a bit too
+  % bright and gaudy for an austere document such as this. ;-)
+  % Note that the Manuscript Clearance Advisors will not allow any
+  % colored text at all, so if you're using hyperref, you'll need to
+  % set all the colors to black (or set colorlinks=false below).
+  \usepackage{color}
+  \definecolor{mygreen}{rgb}{0,0.6,0}
+  \definecolor{myblue}{rgb}{0.3,0.2,0.8}
+  \definecolor{myred}{rgb}{0.8,0.1,0.1}
+  % The hyperref package has lots of features and options.  If you
+  % are interested in creating a state-of-the-art PDF document out
+  % of your thesis/dissertation, you should read more about this
+  % extremely useful package.
+  \usepackage[colorlinks=true,bookmarks=true,pdfborder={0 0 0},
+    linkcolor=myblue,urlcolor=myred,citecolor=mygreen,
+    breaklinks=true,bookmarksnumbered=true]{hyperref}
+\else    % Otherwise we'll run this part if we are not in PDF mode.
+  \usepackage[dvips]{graphicx}
+\fi
+
+%%% As a test of plain page margin tolerances, I'll use the Lorem Ipsum
+%%% package to generate some pages without headings. This will let me
+%%% verify that the text height and page numbers meet specs. The macro
+%%% \lipsum is invoked as one of the appendices.
+
+\usepackage{lipsum}
+
+%%% The following lines increase LaTeX's default penalties for club
+%%% lines and widow lines, which will discourage creating clubs and
+%%% widows in all but the most extreme cases.  (If the last line on a
+%%% page is the first line of a new paragraph, it's called club line.
+%%% If the first line of a page is the last line of a paragraph, it
+%%% is called a widow line.  Either of these conditions look a little
+%%% ugly, typographically speaking.)
+
+\widowpenalty=9999
+\clubpenalty=9999
+
+%%% Normally, the fsuthesis class will allow the bottom line of the
+%%% text column on each page to float up and down as necessary to keep
+%%% the vertical spacing on the page consistent.  You can disable this
+%%% behavior and force the baseline of every page to be stretched to
+%%% fill the allotted page boundaries by enabling \flushbottom.  (It's
+%%% commented out here, so the default behavior 'raggedbottom' is in
+%%% effect.)
+
+%\flushbottom
+%\raggedbottom  % This is the default.  However, if you have specified
+                % the 'twoside' document option, you'll need to turn on
+                % '\raggedbottom' to keep the same behavior, since
+                % '\flushbottom' becomes the the default with 'twoside'.
+
+%%% By default, section headings down to the \subsection level will be
+%%% entered into the Table of Contents.  If that is too much detail, I
+%%% can limit the entries to just the \section-level headings (for
+%%% example) by resetting the 'tocdepth' parameter to '1'. (The User
+%%% Guide explains this in more detail.)
+
+%\setcounter{tocdepth}{1}
+
+%%% Next, we set up some of the document description elements for use
+%%% on the title and committee pages.  If the college or school does
+%%% not sub-divide into departments for thesis/dissertation
+%%% publication purposes, then you should delete the '\department{}'
+%%% macro below.  Note that we use standard title capitalization
+%%% conventions here.
+
+\title{Of Cabbages and Kings:\protect\\
+  An Analysis of the Use of the Colon in Dissertation Titles}
+                                      %% Manuscript title
+\author{V\`\i ct\"or \'E. I\c smyne}  %% Testing accented characters in name
+\college{College of Arty Science}     %% School or College
+\department{Department of Furtive Studies}  %% Delete if no department
+\manuscripttype{Thesis}               %% [Thesis, Dissertation, Treatise]
+\degree{Master of Science}            %% Name of the degree
+\degreeyear{2015}                     %% Graduation Year
+\defensedate{May 5, 2015}             %% Date of Defense
+
+%%% The following options insert additional metadata into a PDF file if
+%%% you are using 'pdflatex' to process your document.  This information
+%%% is not printed in the paper, but the information will be available
+%%% in the document properties tab of Acrobat Reader (for example).
+%%% The document title and the author name are already inserted
+%%% automatically.  Metadata can help search engines locate your
+%%% document in searches.  The "subject" should be a concise
+%%% description of the paper's topic. The "keywords" should be
+%%% relevant terms that would help other researchers in your field
+%%% locate your paper.  Keywords should be separated by semicolons.
+
+\subject{Dissertation Formatting}     %% PDF document metadata subject
+\keywords{latex; fsuthesis; etd; tables; figures; bibtex; document formatting}
+				      %% PDF document metadata search
+                                      %%   keywords, separated by semicolons
+
+%%% Assuming I have five professors on my committee, I will need five
+%%% lines here, one for each committee member.  The professors should
+%%% be specified in the order in which they should appear on the
+%%% committee page.  The first argument of the \committeeperson macro
+%%% is the professor's name (without title), and the second argument
+%%% is the professor's committee membership position.
+
+\committeeperson{Faux Causson Yorverk}{Professor Directing Thesis}
+\committeeperson{Verda Boizaar}{University Representative}
+\committeeperson{Beauxeau D'Claune}{Committee Member}
+\committeeperson{Arlip Zarseeld}{Committee Member}
+\committeeperson{Tumen Enoats}{Committee Member}
+%committeeperson{Deb O'Nair}{Committee Member}
+\committeeperson{Auss M'Pauers}{Committee Member}
+
+%%% Here I am defining some additional LaTeX macros for use throughout
+%%% my document.  These are intended to simplify some typing and to
+%%% encourage uniformity, since I won't always have to remember, for
+%%% example, that acronyms should be in a smaller ALLCAPS font: I can
+%%% just type '\acro{text}'.  Note that though I am defining these
+%%% macros here, they will be accessible to any other source text
+%%% which follows, even if the source text is in a completely
+%%% different file that I'll be \input-ing later. You are free to
+%%% define your own macros in a similar fashion. You'll probably want
+%%% to read one of the references for more detailed information about
+%%% creating your own macros.
+
+\newcommand*{\acro}[1]{{\small\textsc{#1}}}
+\newcommand*{\lit}[1]{\texttt{#1}}
+\newcommand*{\pkg}[1]{\textsf{#1}}
+
+%%% The initial document setup is done.  Now we tell LaTeX that our
+%%% text will begin.
+
+\begin{document}
+
+\frontmatter          %% Establish small roman numeral numbering
+\maketitle            %% Create the title page
+\makecommitteepage    %% Create the committee page
+
+%%% If I wish to have a dedication, then I will use the dedication
+%%% environment. This is optional, so if you don't need a dedication
+%%% page, you may delete everything between (and including)
+%%% the \begin{dedication} and \end{dedication} text. The format of
+%%% the page is entirely up to you. The dedication page creates no
+%%% heading.
+
+\begin{dedication}
+\centering
+To my parents, who always suspected I'd end up here
+\end{dedication}
+
+%%% Likewise, I use the acknowledgments environment to create an
+%%% acknowledgments page. Delete this section if there will be no
+%%% acknowledgments page. The heading is inserted automatically.
+
+\begin{acknowledgments}
+Many thanks are due to many people. My major professor didn't
+know what she was getting herself into when she took me on as
+a student, and I will always be grateful for her support and
+guidance. The other members of my committee deserve hazard pay,
+and this paper would not be the same without their diligence:
+many thanks.
+\end{acknowledgments}
+
+%%% I will need all the contents here except the list of musical
+%%% examples. (These pages will be generated automatically by LaTeX
+%%% as it encounters captions and table and figure environments later
+%%% in the document.)  I only need to specify the figure and table
+%%% lists here if I have more than one figure or table,
+%%% respectively. My sample document does have just one musical
+%%% example, so I don't need to turn on that option.
+
+\tableofcontents
+\listoftables
+\listoffigures
+%\listofmusex
+
+%%% I would like to present a short list of symbols. By using the
+%%% listofsymbols environment, the proper entry will be made in the
+%%% Table of Contents. Other than the heading, the rest of the page
+%%% is entirely up to me. I will use a LaTeX tabular environment to
+%%% list the data.
+
+\begin{listofsymbols}
+The following short list of symbols are used throughout the document.
+The symbols represent quantities that I tried to use consistently.
+\begin{center}
+\begin{tabular}{ll}
+$\pi$&$3.1415926\ldots$\\
+$E$&$mc^2$\\
+$F$&$ma$\\
+$R_e$&Mean Radius of the Earth${}\approx 6367.65\,\textup{km}$\\
+$e$&Base of Natural Logarithms${}\approx 2.71828\ldots$\\
+$P$&The principal borrowed\\
+$N$&The number of payments\\
+$i$&The fractional (periodic) interest rate\\
+$P_j$&The principal part of payment $j$\\
+$I_j$&The interest part of payment $j$\\
+$B$&A final balloon payment\\
+$x$&The regular payment\\
+$R$&The principal remaining after $r$ payments \\
+$r$&Some number of payments such that $0 < r < N$ \\
+$R_j$&The principal remaining after $j$ payments \\
+$A_j$&The total interest paid out after $j$ payments
+\end{tabular}
+\end{center}
+\end{listofsymbols}
+
+%%% You may also create a list of abbreviations if it may be of use to
+%%% your readers. Otherwise, this section may be deleted or remain
+%%% commented. Instead, if you need another frontmatter environment
+%%% for some other use (besides a list of abbreviations or symbols),
+%%% you could rename the heading to suit your purposes. For example,
+%%% if I need an Index of Scary Movies, I can steal the
+%%% 'listofabbrevs' environment and rename its heading. (The
+%%% environment name stays the same, but heading will be changed on
+%%% the page and in the table of contents. The 'listofsymbols'
+%%% environment above may also be co-opted in this way.) Here's how I
+%%% might do this:
+
+%\renewcommand*{\listabbrevname}{Index of Scary Movies}
+%\begin{listofabbrevs}
+%  [... insert scary movie index material here ...]
+%\end{listofabbrevs} 
+
+%%% Now I use the abstract environment to create an abstract page.
+%%% The heading is created automatically.  The rest of the content
+%%% is up to you.
+\begin{abstract}
+The FSU Thesis Class is a \LaTeX\ document class useful for writing
+Theses, Dissertations, and Treatises.  It has several custom macros
+and environments which are intended to ease the burden of formatting
+for writers of these documents so that they may focus more on the
+research and presentation rather than on the page layout. This sample
+document is intended to provide a few examples of how most of the
+class features may be used.
+
+The main source file for this document is \lit{thesis.tex}, and this
+is where you should start reading.  The document's source is spread
+over several files.  Many of the files contain helpful
+\LaTeX\ comments which are not printed out here.  It may be
+instructive to look at the source files as you read this ``output'' to
+see how the document was created.
+\end{abstract}
+
+%%% The abstract is the last element of the so-called "front matter"
+%%% of the document.  We now move on to the "main matter" --- the
+%%% chapter material (and optional appendices).  By calling the
+%%% \mainmatter macro, we reset page numbering to arabic numerals
+%%% beginning with '1'.
+
+\mainmatter
+
+%%% I have chosen to create one new LaTeX file for each chapter of my
+%%% document.  This decision is arbitrary.  I may break the document
+%%% into as many or as few pieces as I like.  I may name the chapter
+%%% and appendix files anything I like (though I might have some
+%%% trouble if I use spaces or odd characters in my file names).  The
+%%% only requirement is that the file name ends with the extension
+%%% '.tex'.  For the \input lines below, I can leave out the '.tex'
+%%% extension.  If instead I prefer to create one long file containing
+%%% my entire thesis, I may just continue on here by starting with the
+%%% first \chapter command of my document.  (In this case, I would not
+%%% need the following '\input' commands at all.)  I have chosen to
+%%% name my chapter files by the concepts they contain.
+
+\input math
+\input citations
+\input figures
+\input tables
+
+%%% Having finished the main text of my document, I will move on to
+%%% the appendices (or my one appendix, in this case).  An appendix
+%%% will look exactly like a chapter, even including a \chapter macro
+%%% call.  By first calling the \appendix macro, I will cause all
+%%% subsequent chapter headings to be labeled "Appendix" and to be
+%%% enumerated by letters rather than numbers.  I.e., the first
+%%% appendix will be titled 'Appendix A', then 'Appendix B', and so
+%%% on.  This also adds a heading entry to the Table of Contents
+%%% labeled 'Appendix'.  If you have more than one appendix, you may
+%%% want to change the ToC heading to read 'Appendices'.  If you need
+%%% to do this, you may reset the value of '\appendixtocname' before
+%%% the call to the \appendix macro:
+
+%\renewcommand*{\appendixtocname}{Appendices} % For more than one appendix
+\appendix
+\input appendix
+
+%%% I use the following chapters to test how things look when printed
+%%% in 'expanded' spacing and to try out other LaTeX and FSUthesis
+%%% class features not presented previously. They're not included in
+%%% the sample document by default, but you may uncomment them if you
+%%% like. Including these chapters also causes the Table of Contents
+%%% to exceed a single page in size, so it's helpful for testing those
+%%% aspects. If uncommenting the \lipsum line, be sure to uncomment
+%%% the \usepackage{lipsum} line in the preamble. (The one macro
+%%% generates several pages, and I didn't think it was necessary to
+%%% put these two lines in a separate file, like 'test' and 'history'
+%%% below.)
+
+%\chapter{Lorem Ipsum}
+%\lipsum[1-17]
+
+%\input tests
+%\input history  % just for fun
+
+%%% At this point, we are moving into the document's "back matter".
+%%% The first element is the references/bibliography section.
+%%% According to the FSU "Guidelines & Requirements for Thesis,
+%%% Treatise, and Dissertation Writers", this section should be called
+%%% "References" if it contains only source material cited in the
+%%% document; and it should be called "Bibliography" if it contains a
+%%% broader scope of material than that actually cited.  Because this
+%%% document only lists cited materials, I will need to be sure the
+%%% heading is labeled "References".  The FSU Thesis Class "User
+%%% Guide" tells me to use \renewcommand to accomplish this:
+
+\renewcommand*{\bibname}{References}
+
+%%% The skeleton document in the thesis-template folder gives an
+%%% example of the "simple" 'references' environment.  In that
+%%% document, you must format all of your own references and manage
+%%% your own citation styling.  In contrast, this document assumes
+%%% that I will be using BibLaTeX to format my references.  I'll be
+%%% using the default plain format style, and the bibliographic data
+%%% are kept in the file 'myrefs.bib'. This is specified in the
+%%% document preamble above.
+
+%%% If using biblatex/biber, then this is the command required
+%%% to render the bibliography/references section correctly.
+
+\printbibliography
+
+%%% If you're using the older BibTeX system, then selecting the
+%%% styling and the bibliography invocation are a little different.
+
+%%% Plain LaTeX with BibTeX provides just a few citation and
+%%% bibliography styles.  Many more styles are available using
+%%% 'natbib', 'apacite', or other packages. A quick web search with
+%%% 'bibtex' and your own discipline as keywords may help you locate
+%%% both references and the appropriate style files for you to
+%%% download. If you '\usepackage{natbib}' or '\usepackage{apacite}'
+%%% at the top of this file, then you should uncomment the appropriate
+%%% alternative style for the package you've chosen. Uncomment only
+%%% one of these:
+
+%\bibliographystyle{plain}    % This is the default LaTeX/BibTeX style
+%\bibliographystyle{plainnat} % If using 'natbib', use this line instead
+%\bibliographystyle{apacite}  % If using 'apacite', use this line instead
+
+%%% For BibTeX, the following line actually generates the bibliography
+%%% using the data supplied in 'myrefs.bib', the citations in my
+%%% document, and the style I've selected above.
+
+%\bibliography{myrefs}
+
+%%% The last element of the document is the biographical sketch.  The
+%%% heading and table of contents entry are automatically created by
+%%% using the biosketch environment.  The rest of the content is up to
+%%% you.  Remember not to include any personal contact info.
+
+\begin{biosketch}
+The author was born, and then the author was ``educated,'' at least to
+some degree.  After finishing high school in Florida, the author
+completed a Bachelor of Arts degree at Florida State University.
+Following a decade in the work force in his discipline, the author
+returned to FSU to pursue graduate work.
+\end{biosketch}
+
+%%% Here endeth the document.  LaTeX will ignore anything that follows
+%%% the \end{document} command.
+
+\end{document}

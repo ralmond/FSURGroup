@@ -1,0 +1,121 @@
+\chapter{Tabular Data and Tables}
+
+Most graduate students will come to a place in their career where they
+must create a table of some kind.  Many simple layouts are a breeze
+with \LaTeX.  Here's a brief example:
+
+\begin{quote}
+\begin{tabular}{ r r || c | l }
+  1  & a      & $3^1$                      &     3 \\
+  2  & abb    & $3\times 3^2$              &    27 \\ \hline
+  33 & abbccc & $3^3 \times 3^3 \times 3^3$ & 19683 \\
+\end{tabular}
+\hskip12pt and the source text that created it:
+\begin{verbatim}
+\begin{tabular}{ r r || c | l }
+  1  & a      & $3^1$                       &     3 \\
+  2  & abb    & $3\times 3^2$               &    27 \\ \hline
+  33 & abbccc & $3^3 \times 3^3 \times 3^3$ & 19683 \\
+\end{tabular}
+\end{verbatim}
+\end{quote}
+
+When the \lit{tabular} environment begins, the next required parameter
+specifies the layout of the table.  In this case, the table layout
+specifies two right-justified columns (\lit{r r}), a double-vertical
+separator (\lit{||}), a centered column (\lit{c}), a single-vertical
+separator (\lit{|}), and a left-justified column (\lit{l}).  The next
+rows provide the data for the table, with columns separated by the
+ampersand (\verb|&|) character.  The end of the row is indicated by
+the double backslash (\verb|\\|).  As you can see, the columns may
+contain text, numeric data, and even some math.  A horizontal line may
+be drawn between rows using the \verb|\hline| command.  As always with
+\LaTeX, multiple spaces within columns are ignored.  In addition,
+\LaTeX{} also ignores spaces immediately following the \verb|&| character.
+
+For many people, this may be all the information on tables that's
+required (for now, anyway).  But at some point, you may need even more
+options to create just the right layout.  There are several additional
+packages that add functionality to \LaTeX's table-formatting
+capability.  A quick web search for \lit{latex table} will turn up a
+wealth of usable information, samples, examples, packages, and
+tutorials.
+
+The \lit{tabular} environment provides the layout mechanism for
+placing text and data into row and column form.  But it's the
+\lit{table} environment that allows you to automatically number your
+table and to add a heading (caption).  The \lit{table} environment
+works just like the \lit{figure} environment as far as floating
+placement is concerned.  However, the FSU thesis guidelines state that
+table captions should appear \emph{before} the table, while
+\lit{figure} captions appear \emph{after} the figure.  The text in
+Figure~\ref{sonnet-text} generates Table~\ref{sonnets} as an example.
+(And I used \verb|Table~\ref{sonnets}| in the previous sentence to
+retrieve the table number.)  This demonstrates how one can create
+paragraphs of text as part of a table by using the \verb|p{5cm}|
+format specifier.  Additional space was inserted after each row by
+adding a dimension to the linebreak specification, i.e., \verb|\\[5pt]|.
+
+However, just because you put some text or data into a multi-column
+form, it doesn't necessarily mean that it's a table as far as your
+thesis or dissertation is concerned.  If the tabular-form data is part
+of your text and flows in the order of your presentation, it may not
+be necessary to set it off as a table.  The layout example at the
+beginning of this chapter is an example of tabular data which is not
+set off as a table.
+
+Other than the unfortunately confusing similarity in their names, the
+\lit{tabular} environment and the \lit{table} environment have
+independent functionality: while the \lit{tabular} environment is
+often used inside the \lit{table} environment, either environment can
+be used without the other.  And while we're at it, figures don't
+necessarily need to contain graphics.  Figure~\ref{sonnet-text} is an
+example of a figure which contains ordinary text, but the text has
+been wrapped within a \lit{figure} environment so that it can be
+allowed to float outside the main flow of text.
+
+If you have a particularly wide table, you may want to turn the table
+sideways on the page.  To do this, add \verb|\usepackage{rotating}| to
+the document preamble.  When it is time to insert the rotated table,
+type \verb|\begin{sidewaystable}| instead of \verb|\begin{table}|.
+This also works for figures, by the way, so instead of
+\verb|\begin{figure}|, you may use \verb|\begin{sidewaysfigure}| for
+diagrams and images that you want rotated.  Sideways figures and
+tables will always be floated to their own page.
+
+\begin{figure}
+% Centering doesn't work in a verbatim environment (it takes up the
+% entire line-width), so we fake it by prefixing spaces to each line.
+\begin{verbatim}
+    \begin{table}
+    \caption{Shakespeare Sonnets, First Lines, IIX --- XII}
+    \label{sonnets}
+    \begin{center}
+      \begin{tabular}{r p{5cm} }
+        8 & Music to hear, why hear'st thou music sadly? \\[5pt]
+        9 & Is it for fear to wet a widow's eye \\[5pt]
+       10 & For shame deny that thou bear'st love to any \\[5pt]  
+       11 & As fast as thou shalt wane, so fast thou grow'st \\[5pt]
+       12 & When I do count the clock that tells the time \\
+      \end{tabular}
+    \end{center}
+    \end{table}
+\end{verbatim}
+\caption{\LaTeX{} source that generates Table~\ref{sonnets} on 
+page~\pageref{sonnets}.}
+\label{sonnet-text}
+\end{figure}
+
+\begin{table}
+\caption{Shakespeare Sonnets, First Lines, IIX --- XII}
+\label{sonnets}
+\begin{center}
+\begin{tabular}{r p{5cm} }
+  8 & Music to hear, why hear'st thou music sadly? \\[5pt]
+  9 & Is it for fear to wet a widow's eye \\[5pt]
+ 10 & For shame deny that thou bear'st love to any \\[5pt]  
+ 11 & As fast as thou shalt wane, so fast thou grow'st \\[5pt]
+ 12 & When I do count the clock that tells the time \\
+\end{tabular}
+\end{center}
+\end{table}

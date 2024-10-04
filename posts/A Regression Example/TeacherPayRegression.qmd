@@ -1,0 +1,300 @@
+---
+title: "Regression Example"
+author: "Russell Almond"
+---
+
+## Package Loading
+
+```{r}
+library(tidyverse)
+library(DescTools)
+library(plotly)
+```
+
+# The data
+
+
+The data were originally published in the _Albaquerque Tribune_ in 
+1986-11-07.  It consists of data from 1985, from the 50 states plus the 
+District of Columbia[^1].  It consists of the "average" (which average is
+unspecified, presumably the mean) teacher salary, and the per pupil spending
+on education in each space.
+
+[^1]:  Taxation without representation.
+
+The data originally come from 
+[https://lib.stat.cmu.edu/StatDat/Datafiles/teacherpaydat.html](https://web.archive.org/web/20110104102707/http://lib.stat.cmu.edu/DASL/Datafiles/teacherpaydat.html) (original link has gone, so this sends you to the Internet Wayback Machine).  From this site:
+
+
+1. PAY (`Pay`): Average public school teacher annual salary (\$)
+2. SPEND (`Spend`): Spending on public schools per pupil [sic] (\$)
+3. AREA (`Region`): Region 1 Northeast and North Central, 2 South, 3 West 
+
+```{r firstAttempt}
+teacherPay <- read_delim("TeacherPay0.txt")
+summary(teacherPay)
+```
+Need to edit file:
+
+1. Spaces used instead of tabs in first row.
+2. Labels for Spening and Pay columns reversed.  (Even in 1985, annual 
+salaries were in the 10's of thousands. 
+
+
+```{r loadTeacherPay}
+teacherPay <- read_delim("TeacherPay.txt",trim_ws = TRUE)
+teacherPay$Region <- factor(teacherPay$Region,1:3,
+                            c("Northeast/North Central","South","West"))
+summary(teacherPay)
+```
+
+## Exploratory Analysis
+
+### Unidimensional
+
+```{r pay}
+Desc(teacherPay$Pay)
+```
+
+```{r spending}
+Desc(teacherPay$Spend)
+```
+
+We can find outliers by looking at the highest Pay (or spending) levels.
+
+```{r outlier}
+filter(teacherPay, Pay > 40000)
+```
+
+### Exploratory By Groups
+
+```{r groups0}
+teacherPay %>% group_by(Region) %>%
+  summarise(mPay = mean(Pay), sdPay = sd(Pay), 
+            skPay=Skew(Pay),
+            mSpend = mean(Spend), sdSpend=mean(Spend),
+            skSpend=Skew(Spend)) 
+```
+
+Too many digits obscure what is going on.  Used `round()` to round to the
+nearest dollar.  Round the skewness to two digits.
+
+
+
+```{r groups}
+teacherPay %>% group_by(Region) %>%
+  summarise(mPay = round(mean(Pay)), sdPay = round(sd(Pay)), 
+            skPay=round(Skew(Pay),2),
+            mSpend = round(mean(Spend)), sdSpend=round(mean(Spend)),
+            skSpend=round(Skew(Spend),2)) 
+```
+
+```{r histByRegion}
+ggplot(teacherPay,aes(x=Pay)) + geom_histogram() +
+  facet_grid(rows=teacherPay$Region)
+```
+```{r histByRegion2}
+ggplot(teacherPay,aes(x=Spend)) + geom_histogram() +
+  facet_grid(rows=teacherPay$Region)
+```
+
+
+### Scatterplots
+
+```{r scatterplots0}
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
+  geom_smooth()
+```
+
+```{r IDPoints}
+ggplotly()
+```
+```{r scatterplotslin}
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
+  geom_smooth(method="lm")
+```
+
+
+```{r scatterplots}
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
+  geom_smooth() + 
+  geom_text(data=teacherPay[teacherPay$Pay>30000,],vjust=-1) +
+  geom_text(data=teacherPay[teacherPay$Pay<20000,],vjust=1)
+```
+Use the chunk option `warning: false` to suppress the warning message.
+
+```{r scatterplots1}
+#| warning: false
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
+  geom_smooth() + 
+  geom_text(data=teacherPay[teacherPay$Pay>30000,],vjust=-1) +
+  geom_text(data=teacherPay[teacherPay$Pay<20000,],vjust=1)
+```
+
+There is still an unwanted informational message.  Use the chunk option
+`message: false` to suppress the message.
+
+```{r scatterplots1}
+#| warning: false
+#| message: false
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
+  geom_smooth() + 
+  geom_text(data=teacherPay[teacherPay$Pay>30000,],vjust=-1) +
+  geom_text(data=teacherPay[teacherPay$Pay<20000,],vjust=1)
+```
+
+```{r scatterplotsC}
+ggplot(teacherPay,aes(x=Spend,y=Pay,label=State,color=Region)) +
+  geom_point() +
+  geom_smooth()
+```
+# The Regression
+
+## First Regression
+```{r regression}
+tp_lm <- lm(Pay ~ Spend, data=teacherPay)
+summary(tp_lm)
+```
+
+## Diagnostic Plots
+
+```{r lmPlot}
+plot(tp_lm)
+```
+Use `par(mfrow=c(2,2))` to put plots in a 2x2 grid, save the old `par` values
+to `oldpar`.  Then use `par(oldpar)` to undo your changes.
+```{r lmPlotfourGrid}
+oldpar <- par(mfrow=c(2,2))
+plot(tp_lm)
+par(oldpar)
+```
+
+```{r plotwithlabels}
+plot(tp_lm,labels.id=teacherPay$State)
+```
+
+```{r histResid}
+hist(residuals(tp_lm))
+```
+
+
+
+## Log-log scale
+
+Both `Pay` and `Spend` are in dollars, and logging dollar values frequently helps.
+
+
+```{r scatterplot}
+ggplot(teacherPay,aes(x=log(Spend),y=log(Pay))) + geom_point() + geom_smooth()
+```
+```{r scatterplot}
+ggplot(teacherPay,aes(x=Spend,y=Pay)) + 
+  scale_x_log10() + scale_y_log10() + 
+  geom_point() + geom_smooth()
+```
+
+```{r logloglm}
+tp_lllm <- lm(log(Pay) ~ log(Spend), data=teacherPay)
+summary(tp_lllm)
+```
+
+```{r loglogdiag}
+plot(tp_lllm,labels.id = teacherPay$State)
+```
+
+## Leverage points.
+```{r dfbetas}
+tp_dfb <- dfbetas(tp_lm)
+summary(tp_dfb)
+```
+
+```{r highValues}
+tp_dfb$State=teacherPay$State
+filter(tp_dfb,abs(Spend)>.3)
+```
+```{r highVals1}
+tp_dfb <- data.frame(dfbetas(tp_lm))
+tp_dfb$State=teacherPay$State
+filter(tp_dfb,abs(Spend)>.3)
+```
+Save the row numbers for sensitivity analysis.
+
+```{r highLev}
+highLev <- which(abs(tp_dfb$Spend)>.3)
+highLev
+```
+
+
+## Sensitivity Analysis 1, no Alaska
+
+```{r lmnoAK}
+tp_lm_noAK <- lm(Pay ~ Spend, data=teacherPay, 
+                 subset=teacherPay$State != "AK")
+summary(tp_lm_noAK)
+```
+```{r diagnoAK}
+plot(tp_lm_noAK,labels.id = teacherPay$State)
+```
+
+
+## Take out all four high leverage points
+
+R trick:  using a negative index will select everything but selected values.
+
+```{r lmLowLev}
+tp_lm_lowLev <- lm(Pay ~ Spend, data=teacherPay, 
+                   subset = -highLev)
+summary(tp_lm_lowLev)
+```
+
+```{r diaglowlev}
+plot(tp_lm_lowLev,labels.id = teacherPay$State)
+```
+
+
+## Making a Table of Results.
+
+```{r resTabexp}
+names(summary(tp_lm))
+```
+```{r resTabcoef}
+summary(tp_lm)$coefficents
+```
+
+```{r coef}
+coef(tp_lm)
+```
+
+```{r extract}
+stats1 <- c(coef(tp_lm),df=summary(tp_lm)$df, 
+            r.squared=summary(tp_lm)$r.squared,
+            sigma=summary(tp_lm)$sigma)
+stats1
+```
+```{r df}
+summary(tp_lm)$df
+```
+```{r extract}
+stats1 <- c(coef(tp_lm),df=summary(tp_lm)$df[2], 
+            r.squared=summary(tp_lm)$r.squared,
+            sigma=summary(tp_lm)$sigma)
+stats1
+```
+
+```{r extractor}
+extractor <- function(lm_mod) {
+   c(coef(lm_mod),df=summary(lm_mod)$df[2], 
+            r.squared=summary(lm_mod)$r.squared,
+            sigma=summary(lm_mod)$sigma)
+}
+extractor(tp_lm)
+```
+
+```{r table}
+stattab <- rbind(
+  All=extractor(tp_lm),
+  noAK=extractor(tp_lm_noAK),
+  lowLev=extractor(tp_lm_lowLev)
+)
+stattab
+```

@@ -1,0 +1,124 @@
+
+ \begin{theglossary} 
+
+    \makeatletter\scan@allowedfalse
+
+  \item v2.0.0\efill 
+ \subitem General:\ Initial release of new design.\pfill 1
+  \item v2.1.0\efill 
+ \subitem \verb*+\maketitle+:\ Fixed titling with accented/foreign characters.\pfill 7
+  \item v2.2.0\efill 
+ \subitem \verb*+\maketitle+:\ Fixed distribution of vertical spacing.\pfill 7
+  \item v2.3.0\efill 
+ \subitem \verb*+\if@hyperloaded+:\ Added test for \textsf  {hyperref}\pfill 6
+    \subitem \verb*+\makecommitteepage+:\ if openright, force recto\pfill 9
+    \subitem \verb*+\maketitle+:\ Added \texttt  {pdfbookmark} to title page.\pfill 7
+    \subitem \verb*+\tableofcontents+:\ Redefined from \textsf  {report} class to add \texttt  {pdfbookmark} for table of contents\pfill 
+		12
+    \subitem \verb*+dedication+:\ if openright, force recto\pfill 11
+  \item v3.0.0\efill 
+ \subitem \verb*+\committeeperson+:\ Removed signature lines for new ETD format.\pfill 9
+    \subitem \verb*+\commskip+:\ Renamed width and skip, removing reference to signatures.\pfill 8
+    \subitem \verb*+\if@keywords+:\ Explicitly set PDF metadata.\pfill 10
+    \subitem \verb*+\makecommitteepage+:\ changed from ``Signature Page'' to ``Committee Page'', removing signature lines and college-level approvals.\pfill 
+		9
+    \subitem General:\ Added \textsf  {ifpdf} package\pfill 2
+      \subsubitem Added definitions for \texttt  {\char '134@subject} and \texttt  {\char '134@keywords}\pfill 
+		7
+      \subsubitem Change to FSU Guidelines bumps major version number; Enhanced PDF metadata.\pfill 
+		1
+  \item v3.1.0\efill 
+ \subitem \verb*+\listspenalty+:\ Added new penalty item to allow long captions to be split between pages\pfill 
+		12
+    \subitem \verb*+\tableofcontents+:\ Prevent entries from being split between pages, restoring default \LaTeX  {} behavior\pfill 
+		12
+    \subitem \verb*+\topmargin+:\ Removed the \texttt  {\char '134 flushbottom} option from the default configuration.\pfill 
+		2
+    \subitem General:\ Improve handling of long table and figure captions.\pfill 1
+  \item v3.2.0\efill 
+ \subitem General:\ Make special accommodations for the optional \textsf  {natbib} package.\pfill 
+		15
+  \item v3.3.0\efill 
+ \subitem \verb*+\appendix+:\ Modified standard report macro to insert an extra ToC element\pfill 18
+    \subitem \verb*+\appendixtocname+:\ Added a new symbol name to hold the Table of Contents heading for an appendix or appendices.\pfill 
+		10
+    \subitem \verb*+\l@appendix+:\ New formatting macro for the ToC appendix class\pfill 18
+    \subitem \verb*+\l@backmatter+:\ Added a backmatter ToC class to handle References and Biographical Sketch separately from frontmatter\pfill 
+		13
+    \subitem \verb*+\l@frontmatter+:\ Added test for first frontmatter item to avoid extra vertical space after ToC header\pfill 
+		12
+    \subitem \verb*+\maketitle+:\ Added layout for \texttt  {copyright} option.\pfill 7
+    \subitem General:\ Make special accommodations for the optional \textsf  {apacite} package.\pfill 
+		15
+    \subitem \verb*+copyright+:\ Added new document option to add copyright declaration to the title page.\pfill 
+		2
+    \subitem \verb*+references+:\ Changed \texttt  {\char '134parskip} to use \texttt  {\char '134refitemsep}. Changed indentation to be consistent with \texttt  {apacite}.\pfill 
+		14
+    \subitem \verb*+verbatim+:\ Set \texttt  {verbatim} environment to revert to standard spacing when using \texttt  {expanded} spacing.\pfill 
+		6
+    \subitem \verb*+thebibliography+:\ Set \texttt  {\char '134itemsep} to \texttt  {\char '134refitemsep} and set \texttt  {\char '134parsep} to 0pt\pfill 
+		15
+    \subitem \verb*+singlespaced+:\ New environment providing single-spacing.\pfill 6
+  \item v3.4.0\efill 
+ \subitem \verb*+\chapheadskip+:\ Changed spacing before chapter header to 0in.\pfill 17
+    \subitem \verb*+\evenoddoffset+:\ Adjusted text width for hardcopy option since the text column is now wider.\pfill 
+		3
+    \subitem \verb*+\makecommitteepage+:\ Adjusted vertical spacing of the committee page and moved name column closer to center.\pfill 
+		9
+    \subitem \verb*+\maketitle+:\ Altered spacing for copyright on title page to be consistent with \textit  {Guidelines~2013}\pfill 
+		7
+      \subsubitem Removed ``THE'' from FLORIDA STATE UNIVERSITY.\pfill 
+		7
+    \subitem \verb*+\textwidth+:\ Set text column to 6.5\,inches.\pfill 3
+  \item v3.5.0\efill 
+ \subitem \verb*+\bibsection+:\ Added \texttt  {\char '134interlinepenalty} to prevent page breaks mid-item.\pfill 
+		16
+    \subitem \verb*+\refindent+:\ Increased stretchiness of \texttt  {\char '134refitemsep} to facilitate un-breakable bibliography entries\pfill 
+		14
+    \subitem General:\ Add \texttt  {\char '134interlinepenalty} to prevent page breaks mid-item.\pfill 
+		15
+    \subitem \verb*+references+:\ Added \texttt  {\char '134interlinepenalty} to prevent page breaks mid-item.\pfill 
+		14
+    \subitem \verb*+thebibliography+:\ Added \texttt  {\char '134interlinepenalty} to prevent page breaks mid-entry.\pfill 
+		15
+  \item v3.6.0\efill 
+ \subitem \verb*+\maketitle+:\ Removed \texttt  {\char '134@semester} element to comply with change to FSU format.\pfill 
+		7
+    \subitem \verb*+\semester+:\ Made \texttt  {\char '134semester} macro a no-op to comply with change in FSU format.\pfill 
+		7
+    \subitem General:\ Removed \texttt  {\char '134@semester} macro since it's no longer needed.\pfill 
+		7
+  \item v3.7.0\efill 
+ \subitem \verb*+\@dottedtocline+:\ If pagenumbers exceed the allotted width, use the natural box width instead of the predefined width\pfill 
+		12
+    \subitem \verb*+\commskip+:\ Increased the name column width, moving column to the left to center it better.\pfill 
+		8
+    \subitem \verb*+\listbaselineskip+:\ New macro to replace previously hard-coded value\pfill 4
+  \item v3.8.0\efill 
+ \subitem \verb*+\@dottedtocline+:\ Added grouping around \texttt  {\char '134normalcolor} commands to prevent pdftex warnings\pfill 
+		12
+  \item v3.9.0\efill 
+ \subitem General:\ Updated layout requirements for dedication page.\pfill 1
+    \subitem \verb*+dedication+:\ text on page should be vertically centered\pfill 11
+  \item v3.9a.0\efill 
+ \subitem \verb*+\makecommitteepage+:\ Added \texttt  {0.4\\baselineskip} to top of page for consistent \texttt  {\\baselineskip} spacing throughout.\pfill 
+		9
+  \item v4.0.0\efill 
+ \subitem \verb*+\f@biblatex+:\ Make minor adjustments to bibliography environment to support default biblatex structure\pfill 
+		16
+    \subitem General:\ Add the \texttt  {\char '134f@biblatex} macro for \textsf  {biblatex} environment compatibility.\pfill 
+		15
+  \item v4.1.0\efill 
+ \subitem \verb*+\footskip+:\ Reset \texttt  {\char '134 footskip} to display the page number 3/4\,inch from page bottom.\pfill 
+		2
+    \subitem \verb*+\maketitle+:\ Adjusted spacing for copyright to since the footer location was dropped 1/4\,inch.\pfill 
+		7
+    \subitem \verb*+\topmargin+:\ Simplified \texttt  {\char '134 topmargin} calculation.\pfill 2
+  \item v4.2.0\efill 
+ \subitem \verb*+\section+:\ Disabled hanging indent for centered section headings that take up multiple lines\pfill 
+		17
+  \item v4.3.0\efill 
+ \subitem \verb*+\paragraph+:\ Replaced \textsc  {Small Caps} headings with \sffamily  \textsl  {Slanted Sans Serif} headings.\pfill 
+		17
+
+ \end{theglossary}

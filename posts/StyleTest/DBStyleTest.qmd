@@ -1,0 +1,15 @@
+---
+title: "DB Test"
+---
+
+::: {.callout-db}
+A dangerous bend
+:::
+
+::: {.callout-db .icon}
+A db with icon
+:::
+
+::: {.callout-db .icon .callout-note collapse=true}
+A collapsible db.
+:::
