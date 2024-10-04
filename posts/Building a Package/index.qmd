@@ -1,0 +1,60 @@
+---
+title: "Building a package" 
+author: "Russell Almond"            
+date: "2024-10-04"                  
+categories: \[development\]         
+---
+
+We are going to work on the IRTF package:
+
+<https://github.com/ralmond/IRTF>
+
+(Watch the package and send me a message if you want to be added).
+
+# Building The Package Shell
+
+## Creating the package in RStudio
+
+## Creating a repository on Github
+
+### Picking a license
+
+## Setting github origin
+
+# Picking a toolkit
+
+## `devtools` package
+
+## `usethis` package
+
+## `testthat` package
+
+## `rmarkdown`, `knittr` and `vignettes`
+
+# Anatomy of a package
+
+## `DESCRIPTION`
+
+## `NAMESPACE`
+
+## `NEWS`, `Changelog`
+
+## `README.md`
+
+## `.gitignore`, `.Rbuildignore`
+
+## `R`
+
+## `man`
+
+## `data`
+
+## `tests`, `tests/testthat`
+
+## `vignettes`
+
+## `inst`
+
+# Documentation strategies
+
+## Rd and `prompt`

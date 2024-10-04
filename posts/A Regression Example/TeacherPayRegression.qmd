@@ -31,7 +31,7 @@ The data originally come from
 3. AREA (`Region`): Region 1 Northeast and North Central, 2 South, 3 West 
 
 ```{r firstAttempt}
-teacherPay <- read_delim("TeacherPay0.txt")
+teacherPay <- try(read_delim("TeacherPay0.txt"))
 summary(teacherPay)
 ```
 Need to edit file:
@@ -134,7 +134,7 @@ ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
 There is still an unwanted informational message.  Use the chunk option
 `message: false` to suppress the message.
 
-```{r scatterplots1}
+```{r scatterplots1a}
 #| warning: false
 #| message: false
 ggplot(teacherPay,aes(x=Spend,y=Pay,label=State)) + geom_point() +
@@ -187,7 +187,7 @@ Both `Pay` and `Spend` are in dollars, and logging dollar values frequently help
 ```{r scatterplot}
 ggplot(teacherPay,aes(x=log(Spend),y=log(Pay))) + geom_point() + geom_smooth()
 ```
-```{r scatterplot}
+```{r scatterplot1}
 ggplot(teacherPay,aes(x=Spend,y=Pay)) + 
   scale_x_log10() + scale_y_log10() + 
   geom_point() + geom_smooth()
@@ -209,8 +209,8 @@ summary(tp_dfb)
 ```
 
 ```{r highValues}
-tp_dfb$State=teacherPay$State
-filter(tp_dfb,abs(Spend)>.3)
+tp_dfb$State <- teacherPay$State
+try(filter(tp_dfb,abs(Spend)>.3))
 ```
 ```{r highVals1}
 tp_dfb <- data.frame(dfbetas(tp_lm))
@@ -274,7 +274,7 @@ stats1
 ```{r df}
 summary(tp_lm)$df
 ```
-```{r extract}
+```{r extract1}
 stats1 <- c(coef(tp_lm),df=summary(tp_lm)$df[2], 
             r.squared=summary(tp_lm)$r.squared,
             sigma=summary(tp_lm)$sigma)
