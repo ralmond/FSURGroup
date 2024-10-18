@@ -1,0 +1,198 @@
+---
+title: "Objects in R" 
+author: "Russell Almond"            
+date: "2024-10-18"                  
+categories: [development]         
+---
+
+We are going to work on the IRTF package:
+
+<https://github.com/ralmond/IRTF>
+
+(Watch the package and send me a message if you want to be added).
+
+# Types of Object Models
+
+Group related data in an object.
+
+Can write *generic functions* with specific *methods* for different classes (kinds of objects).
+
+– Some object systems, methods belong to objects (C++, Java)
+
+– Some have explicit generic functions (S/R, CLOS)
+
+– Java has *interface* which is similar
+
+Classes can be determined at compile time (static types) or runtimes (dynamic types)
+
+Classes can "inherit" fields (slots) and methods from "parent" classes.
+
+-   There can be single or multiple inheritance of classes.
+
+Some object systems have *meta-objects* (class and generic function are objects). (CLOS, S4, Java).
+
+In a *functional* programming language like S/R, modifying an object creates a new (cloned) object.
+
+# The pre-object S2 model
+
+A `structure()` is an object with (named) attributes. Accessed through `attr()` function.
+
+The `dims()` and `names()` functions are based on attributes.
+
+Often want to make the implementation of the class `private` or `protected` to hide from users.
+
+# The S3 (informal, functional) object model
+
+## Lists as containers for fields/slots
+
+Named lists provide a mechanism for storing objects of different types.
+
+Can access fields with `$` or `[[` operators.
+
+Can add `class()` attribute to set expectations.
+
+## Generic Functions and Methods
+
+Can make a function *generic* with the `UseMethods()` function.
+
+```{r}
+summary
+```
+
+```{r}
+methods(summary)
+```
+
+Method is chosen based on class. `.default` is the default method. Methods with \* are not exported.
+
+## The `class()` attribute
+
+The `class()` argument contains the name of the class. This is a character vector, there can be multiples.
+
+In some cases, the primitive R types (`numeric`, `character`, `integer`, `logical`, `complex`) act like classes.
+
+```{r}
+methods("+")
+```
+
+## Constructors
+
+Generally to define an object, write a constructor function which returns the object.
+
+```{r}
+Position <- function (x,y,z=NA_real_) {
+  if(!is.numeric(x) || !is.numeric(y) || !is.numeric(z))
+    stop("Position co-ordinates must be numbers.")
+  pos<- list(x=x,y=y,z=z)
+  class(pos) <- "Position"
+  pos
+}
+```
+
+## Accessors
+
+Can access slot with `$`, but we would rather have user use a function.
+
+```{r}
+x_coord <- function(p) UseMethod("x_coord")
+x_coord.Position <- function(p) {p$x}
+"x_coord<-" <- function(p,value) UseMethod("x_coord<-")
+"x_coord<-.Position" <- function (p,value) {
+  p$x <- value
+  p
+}
+```
+
+Note, setter methods need to return the modified object.
+
+So `x_coord(p) <- 5` creates a copy of `p`, sets its `x` co-ordinate to 5 and then saves the new `p` in the environment.
+
+## Key methods
+
+Want methods for certain built-in R functions: `print`, `show`, `toString`, `summary`, `plot`, ...
+
+```{r}
+toString.Position <- function(x,...) {
+  if (is.na(x$z)) paste("(",x$x,",",x$y,")")
+  else paste("(",x$x,",",x$y,",",x$z,")")
+}
+show.Position <- function(object) {toString(object)}
+print.Position <- function(x,...) {print(toString(x),...)}
+Position(1,2)
+```
+
+```{r}
+a <- Position(1,2)
+b <- a
+x_coord(a)
+x_coord(b) <- 7
+b
+a
+```
+
+## Validation
+
+Often need a function to check if the object is consistent.
+
+## Inheritance
+
+One class can "inherit" stuff from a parent or superclass.
+
+This often goes in the opposite direction of the "mathematical" inheritance model:
+
+`glm` is a subclass of `lm`
+
+```{r}
+Square <-  function (x,y,width,...,colour="black") {
+  sq <- list(pos=Position(x,y),width=width,colour=colour)
+  class(sq) <- "Square"
+  sq
+}
+Rectangle <- function(x,y,width,length,...,colour="black"){
+  rect <- Square(x,y,width,...,colour=colour)
+  rect$length <- length
+  class(rect) <- c("Rectangle",class(rect))
+  rect
+}
+area <- function (s) UseMethod("area")
+area.Square <-  function(s) {s$width^2}
+area.Rectangle <- function (s) {s$length*s$width}
+area(Square(1,1,2))
+area(Rectangle(1,1,2,3))
+```
+
+## Refactoring
+
+Make an abstract "Shape" class
+
+```{r}
+Shape <- function(x,y,...,colour="black") {
+  shp <- list(pos=Position(x,y),colour=colour)
+  class(shp) <- "Shape"
+  shp
+}
+area.Shape <- function(s) 
+  stop("Don't know how to compute the area of a",class(s))
+Square <- function(x,y,width,...,colour="black"){
+  sq <- Shape(x,y,...,colour=colour)
+  sq$width <- width
+  class(sq) <- c("Square",class(sq))
+  sq
+}  
+class(Rectangle(1,2,3,4))
+```
+
+## Containment
+
+Can also do a "mixin" by adding a class as a field.
+
+Delegate methods to the component.
+
+```{r}
+x_coord.Shape <- function(p) {x_coord(p$pos)}
+x_coord(Rectangle(1,2,3,4))
+```
+
+# The S4 (formal, functional) object model
+
+# The Ref and R6 (formal, persistant) object model
