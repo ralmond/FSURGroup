@@ -1,0 +1,326 @@
+---
+title: "Introduction to MCMC"
+format: beamer
+---
+
+# Outline
+
+1)  Monte Carlo Integration. (Stan Ulam)
+
+2)  Rejection Sampling
+
+3)  Metropolis--Hastings
+
+4)  Gibbs Sampling
+
+5)  Metropolis--Hastings--Green
+
+# Monte Carlo Integration
+
+Simple trick
+
+Want to know $\int h(\theta) dF(\theta)$
+
+$\theta$ may be multidimensional.
+
+Let $\theta^{(1)}, \ldots, \theta^{(R)}$ be a sample of size $R$ from $F(\cdot)$; call its distribution $F_R(\theta)$.
+
+$$ lim_{R\rightarrow\infty} \int h(\theta)dF_R(\theta) = \lim_{R\rightarrow\infty} \sum_{r=1}^R \frac{1}{R}h(\theta^{(r)}) = 
+\int h(\theta) dF(\theta)$$
+
+Approximation accuracy is related to $sd(\theta)/\sqrt{R}$
+
+## Example, Emergency Cooling System.
+
+-   The emergency cooling system for a nuclear reactor has 4 pumps.
+
+    -   1 and 3 are on the left and 2 and 4 are on the right.
+    -   At least one pump on each side needed in an emergence.
+
+-   Let $\lambda$ be the average (geometric mean) of the probability of failure during an emergency.
+
+    -   Let the median failure rate be .0001.
+    -   Let the upper 97.5% bound be .001
+    -   This is an *error factor* of 10.
+
+```{r lambda dist}
+lambda.mu <- log (.0001)
+lambda.sigma <- (log(.001)-log(.0001))/2
+cat("lambda ~ Lognormal(",round(lambda.mu,3),
+    ",", round(lambda.sigma,3),")")
+```
+
+```{r}
+curve(dlnorm(x,lambda.mu,lambda.sigma),xlim=c(0,.001))
+```
+
+## Continued: different failure rates for the pumps.
+
+Let $\lambda_1, \lambda_2, \lambda_3, \lambda_4$ be the failure rate of the four pumps.
+
+$$\lambda_i = \phi_i \lambda ; \ \phi_i \sim LogNorm(0,log(2)/2)$$
+
+(error factor of 2).
+
+```{r phi}
+phi.mu <- 0
+phi.sigma <- log(2)/2
+cat("phi ~ Lognormal(",round(phi.mu,3),
+    ",", round(phi.sigma,3),")")
+```
+
+## Simulation
+
+```{r}
+R <- 1000
+h <- function (lam) {
+  1-(1-lam[1]*lam[3])*(1-lam[2]*lam[4])
+}
+randPumps <- function(lam.mu, lam.sig, phi.mu, phi.sig, npumps) {
+  lambda <- rlnorm(1,lam.mu,lam.sig)
+  phi <- rlnorm(npumps,phi.mu,phi.sig)
+  lambda*phi
+}
+sample <- sapply(1:R, function (r) 
+  h(randPumps(log(.001),lambda.sigma,
+              phi.mu,phi.sigma,4)))
+hist(sample)
+round(mean(sample),9)
+round(median(sample),9)
+h(rep(.0001,4))
+```
+
+## Rejection Sampling
+
+Want to draw samples from $f(\cdot)$, which is hard to sample from.
+
+Pick another distribution $g(\cdot)$ which is easy to sample from.
+
+Pick $M$ such that $\frac{f(x)}{Mg(x)}$ is always less than 1.
+
+-   For $r=1, \ldots, R$:
+    -   Draw $Y^{(*)}$ from $g(x)$
+    -   Draw $u$ from a unit uniform.
+    -   If $u < \frac{f(x)}{Mg(x)}$ then $X^{(r)} = Y^{(*)}$.
+    -   Else, repeat.
+
+Need to draw $MR$ values for $Y$ and $u$ (on average) to get $R$ samples for $X$.
+
+## Example, drawing from a gamma distribution.
+
+Gamma distributions with (small) integer parameters is easy: sum of exponentials.
+
+Gamma distributions with non-integer parameters is hard.
+
+$X \sim Gamma(3.5,1)$ Proposal $Y \sim Gamma(3,1)$.
+
+```{r GammaDist}
+curve(dgamma(x,3.5),xlim=c(0,10))
+curve(dgamma(x,3),add=TRUE,lty=2)
+```
+
+Pick an M.
+
+```{r GammaDistM}
+M <- 1.5
+curve(dgamma(x,3.5),xlim=c(0,10))
+curve(M*dgamma(x,3),add=TRUE,lty=2)
+xx <- 5
+segments(c(xx,xx),c(0,dgamma(xx,3)),
+         c(xx,xx),c(dgamma(xx,3),M*dgamma(xx,3.5)),
+         lwd=c(1.2,1.0),col=c("red","cyan"))
+```
+
+```{r samGamma}
+sampleGamma <- function (shape=3.5,
+                         k = floor(shape),
+                         M=1.5) {
+  Y <- sum(rexp(k))
+  u <- runif(1)
+  if (M*u < dgamma(Y,shape)/dgamma(Y,k)) 
+    return (Y)
+  else 
+    sampleGamma(shape,k,M)
+}
+N <- 1000
+gammaSamp <- sapply(1:N,function(r) sampleGamma())
+mean(gammaSamp)
+sd(gammaSamp)
+qqplot(qgamma((1:N)/(N+1),3.5),gammaSamp)
+```
+
+## Importance Sampling
+
+Suppose $f(X)$ is hard to sample from, but $g(X)$ (with same support) is straightforward.
+
+Let $X_1, \ldots, X_R$ be a sample from $g(\cdot)$
+
+$E_F[h(X)] \approx \frac{1}{R} \sum_{r=1}^{R} h(X_r)\frac{f(X_r)}{g(X_r)}$
+
+## Fully Bayesian Models
+
+Every random variable needs a probability distribution. These can have parameters.
+
+Every parameter must be either fixed and known, or have a distribution (*law*).
+
+Laws can have hyperparameters. Every hyperparameter must be fixed and known or have another law.
+
+If a parameter is a design factor in the experiment, it can either have different fixed values or different distributions.
+
+## Example
+
+IRT model with item groups and student groups.
+
+### Simple IRT
+
+Observed variables $Y_{ij}$ (Person $i$, Item $j$).
+
+Latent Abilities $\theta_i$
+
+Difficulty & Discrimination $a_j$, $b_j$
+
+
+```{r}
+pY <- function (theta,a,b) {
+  inv.logit(a*(theta-b))
+}
+rY <- function(theta,a,b) runif(1) < pY(theta,a,b)
+rTheta <- function(N,tmean,tsd) rnorm(N,tmean,tsd)
+rb <- function(J,bmean,bsd) rnorm(N,bmean,bsd)
+ra <- function(J,amed,aef) {
+  rlnorm(J,log(amed),log(aef)/2)
+}
+```
+
+At this point, we have hyperparameters, `tmean`, `tsd`, `bmean`,`bsd`, `amed`, `alsd`.
+
+```{r}
+tmean <- 0
+tsd <- 1
+bmean <- 0
+bst <- 1
+amed <- 1
+aef <- 1.5
+```
+
+```{r}
+N <- 100
+J <- 10
+Y <- matrix(NA_real_,N,J)  ## Pre-allocating space for results
+thetas <- rtheta(N,tmean,tsd)
+bs <- rb(J,bmean,bsd)
+as <- ra(J,amed,aef)
+for (n in 1:N) {
+  for (j in 1:J) {
+    Y[n,j] <- rY(theta[n],a[j],b[j])
+  }
+}
+```
+
+
+
+### Add Student Groups
+
+$M$ groups of students, and $N_m$ in each group.
+
+$tmean$ and $tsd$ will be vectors.
+
+```{r}
+rtmean <- functon(M,t0mean,t0sd) rnorm(M,t0mean,t0sd)
+rtsd <- function(M,tsd0,tsdef) rlnorm(M,log(tsd0),log(tsdef)/2)
+```
+
+```{r}
+M <- 2
+t0mean <- c(0,-1)
+t0sd <- .3
+tsd0 <- 1
+tsdef <- 1.1
+```
+
+
+
+```{r}
+N <- c(50,50)
+J <- 10
+Y <- matrix(NA_real_,N,J)  ## Pre-allocating space for results
+tmean <- rtmean(M,t0mean,t0sd)
+tsd <- rtsd(M,tsd0,tsdef)
+thetas <- c(rtheta(N[1],tmean[1],tsd[1]),rtheta(N[2],tmean[2],tsd[2]))
+bs <- rb(J,bmean,bsd)
+as <- ra(J,amed,aef)
+for (n in 1:sum(N)) {
+  for (j in 1:J) {
+    Y[n,j] <- rY(theta[n],a[j],b[j])
+  }
+}
+```
+# General Bayesian Inference
+
+Statistics of the posterior distribution:
+
+$$\int h(\boldsymbol{\Theta})f(\boldsymbol{\Theta}|{\boldsymbol{Y}})d\boldsymbol{\Theta} \propto
+\int h(\boldsymbol{\Theta})f(\boldsymbol{Y}|{\boldsymbol{\Theta}})dF(\boldsymbol{\Theta})$$
+
+When $h(\cdot)=1$ this is normalization constant (prior predictive probability)
+
+Two sources of error:\
+- posterior variance - Approximation Error
+
+## Markov Chain Monte Carlo
+
+Want to sample from $F(\boldsymbol{\Theta}|\boldsymbol{Y}$.
+
+Note: sample does not need to be *independent* just identicially distributed.
+
+Trick: create a Markov Chain, - $\boldsymbol{\Theta}^{(r+1)}$ is independent of $\boldsymbol{\Theta}^{(r-s)}$ given $\boldsymbol{\Theta}^{r}$ for $s \in {1, 2, \ldots, r}$. - Defined through transition kernel $P(\boldsymbol{\Theta}^{(r)}|\boldsymbol{\Theta}^{(r-1)})$ - Stationary distribution is the target posterior.
+
+## Stationary Distribution
+
+![Markov Chain Example (Wikipedia)](https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Markovkate_01.svg/260px-Markovkate_01.svg.png)
+
+If you run the chain for infinite length, the there is a limiting probability
+
+$$\lim_{r\rightarrow\inf} P(\boldsymbol{\Theta}^{(r)})$$
+
+The starting point is arbitrary, but once the chain "converges" to the stationary distribution, it stays there.
+
+Want this to go to the target distribution.
+
+Question: How big does $r$ need to be to be approximately infinity.
+
+## Metropolis et al.
+
+Metropolis, Rosenbluth, Rosenbluth, Teller and Teller.
+
+Track movement of a gas.
+
+Current position is $x^{(r)}$
+
+-   Propose a new position $y$ with probability $g(y|x)$.
+    -   Uniform random number around $x$.
+    -   Normal random number around $x$
+    -   Step size (width of uniform or ball) is tuning parameter.
+-   Calculate Acceptance Ratio $$ \alpha = f(y)/f(x^{(r)})$$
+    -   If $u < \alpha$, $x^{(r+1)} = y$
+    -   else $x^{(r+1)} = x^{(r)}$
+
+$x^{(b)}, x^{(b+1)}, \ldots$ are distributed according to $f(\cdot)$.
+
+## Metropolis--Hastings
+
+## Gibbs Sampling
+
+## Autocorrelation
+
+Autocorrelation lag $\ell$ is $\text{Cor}(X_t,X_{t+\ell})$
+
+`acf` is autocorrelation function.
+
+Effective Sample Size (ESS) is related to autocorrelation.
+
+Two sample sizes: - $N$ -- how much data - $R$ -- size of the MC sample
+
+## Gibbs is not better than Metropolis
+
+## Dealing with changing parameter space
