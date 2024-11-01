@@ -195,4 +195,65 @@ x_coord(Rectangle(1,2,3,4))
 
 # The S4 (formal, functional) object model
 
-# The Ref and R6 (formal, persistant) object model
+Encapsulate the data. Ensure the data integrity.
+
+## Formal class definition `setClass`
+
+https://github.com/ralmond/Proc4/R/Messages.R
+
+```{r}
+```
+
+`getClassDef`, `classRepresentation`
+
+## Identify and co-ersion `is` and `as`
+
+## Generic functions and methods
+
+`setGeneric` and `setMethod`
+
+### Accessors
+
+Use `@` to access slots.
+
+Remember setter must return object.
+
+```{r}
+setGeneric("app",function(x) standardGeneric("app"))
+setGeneric("app<-",function(x, value) standardGeneric("app<-"))
+setMethod("app","P4Message", function(x) x@app)
+setMethod("app<-","P4Message", function(x, value){
+  x@app <- value
+  x
+})
+```
+
+### Calling next method
+
+## Equality Tests
+
+## Constructors and Initialization
+
+`new`
+
+`initialize`
+
+`finalize`
+
+## Serialization
+
+Can use R functions `save` and `load`.
+
+Often want to use a more neutral format, e.g., JSON or XML.
+
+`mongolite` has serialization methods, `serializeJSON` and `unserializeJSON`, but these produce R formatted codes.
+
+Often need to write custom code for how to handle all of the fields.
+
+## S3 classes and class unions
+
+`setS3Class`
+
+`setClassUnion`
+
+# The Ref and R6 (formal, persistent) object model
