@@ -2,7 +2,7 @@
 title: "Building a package" 
 author: "Russell Almond"            
 date: "2024-10-04"                  
-categories: \[development\]         
+categories: [development]         
 ---
 
 We are going to work on the IRTF package:
@@ -25,36 +25,80 @@ We are going to work on the IRTF package:
 
 ## `devtools` package
 
+`devtools` has many R building commands.
+
 ## `usethis` package
+
+The `usethis` package has lots of tools for building template code.
 
 ## `testthat` package
 
-## `rmarkdown`, `knittr` and `vignettes`
+The `testthat` package creates a unit testing framework.
+
+## `rmarkdown`, `knitr` and `vignettes`
+
+The `rmarkdown` and `knitr` packages can be used to build vignettes.
+
+## `Roxygen` for documentation
+
+This allows the `.Rd` files (help pages) to be generated from comments in the code.
 
 # Anatomy of a package
 
 ## `DESCRIPTION`
 
+Metadata about the package. [(See Writing R Extensions\@CRAN)](https://cran.r-project.org/doc/manuals/r-release/R-exts.html "R Manual pages").
+
 ## `NAMESPACE`
+
+This lists all of the advertised functions, objects, data, methods, in a package.
+
+Here you `import` symbols (functions, classes) from other packages, and `export` symbols from your package. Only exported functions are visible.
+
+Developers promise to not break exported functions, but not internal functions (ones accessed by three colons).
 
 ## `NEWS`, `Changelog`
 
+This is a list of what has changed in the package.
+
+NEWS is for users, Changelog is for developers.
+
 ## `README.md`
+
+Readme that appears on github.
 
 ## `.gitignore`, `.Rbuildignore`
 
+Files to ignore.
+
 ## `R`
+
+R code goes here.
 
 ## `man`
 
+Man pages (.Rd files) go here.
+
 ## `data`
+
+Data sets to be loaded go here.
 
 ## `tests`, `tests/testthat`
 
+Test scripts are put here. (Also in .Rd files).
+
 ## `vignettes`
 
+These are for walkthroughs about the package.
+
 ## `inst`
+
+Extra things to install with the package. Test/example files, scripts, &c.
 
 # Documentation strategies
 
 ## Rd and `prompt`
+
+Use `prompt(function,"man/function.Rd")` to create skeleton file.
+
+`roxygen`
