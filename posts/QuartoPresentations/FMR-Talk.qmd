@@ -1,0 +1,368 @@
+---
+title: "A Filter-Map-Reduce Framework for Extracting Features from Log Files"
+short-title:  "Filter-Map-Reduce Framework"
+author:  "Russell G. Almond"
+format: 
+  beamer:
+    theme: CambridgeUS
+    institute:  "Educational Psychology and Learning Systems, FSU"
+    titlegraphic:  img/EvidenceStream.108.png
+    logo: img/fsu-seal-3d.54-0.png
+    include-in-header: img/beamercolorthemefsu.sty
+    keep-tex: true
+
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+```{r echo=FALSE}
+#| warning: false
+#| message: false
+library(tidyverse)
+```
+
+## Work Products and Work Process
+
+Work Product
+
+:   Final product that the learner produces. - Answer to question -
+    Essay - Simulator state
+
+Work Process
+
+:   Steps learner takes to get to (candidate) solution - Action
+    sequence - Pauses - Event log
+
+-   Often have advice about problem solving strategy
+    -   Science and Engineering Practices
+    -   Writing and Revision
+
+## Case Study: Physics Playground
+
+Use knowledge of physics to get ball to balloon.
+
+:::: columns
+::: {.column width="50%"}
+![Sketching Level](img/Shark.jpg) Draw objects (e.g., lever) on screen.
+:::
+
+::: {.column width="50%"}
+![Manipulation Level](img/CookieMonster.png) Adjust parameters (mass of
+ball, gravity, air resistance).
+:::
+::::
+
+Players earn gold, silver or no trophy.
+
+Learning support videos.
+
+## Four-Processes Architecture
+
+::: columns
+::: {.column width="30%"}
+![Four-Process Architecture for Assessments](img/Proc4.png)
+:::
+
+::: {.column width="70%"}
+-   Context Determination (aka Activity Selection)
+    -   Rules for what activity (task, problem, game level,
+        item) to do next
+    -   Rules for when to stop
+-   Evidence Capture (aka Presentation)
+    -   Converts physical events (e.g., mouse click)
+        into logical events
+        (e.g., move slider)
+    -   Logs logical events
+    -   Determines *scoring context*
+-   Evidence Identification
+    -   Summarizes events *within* a scoring context
+    -   Produces a vector of *observeable outcomes* for 
+        each scoring context
+-   Evidence Accumulation
+    -   Accumulates evidence *across* scoring contexts
+    -   Produces the *scores*
+
+:::
+:::
+
+## Message Format is like Email message
+
+To:\
+From:\
+Topic:\
+Date:\
+Context:\
+------\
+_Body_ (Contains topic dependent data)\
+------\
+Signature & 
+Watermarks
+
+
+## Scoring Contexts and Windows
+
+```{r}
+#| echo: false
+#| warning: false
+#| label: "Events within Scoring Contexts within Assessment Window"
+Ncontexts <- 5
+Nevents <- rnbinom(Ncontexts,5,.5)+2
+Context <- rep(1:Ncontexts,Nevents+1)
+Wevents <- unlist(sapply(Nevents,function(ne) c(0,rgamma(ne,3,1/2))))
+Tevents <- cumsum(Wevents)
+Eventdf <- data.frame(Context,Wevents,Tevents)
+Cdf <- 
+  group_by(Eventdf,Context) |>
+    summarise(Cstart=min(Tevents),Cend=max(Tevents))
+ggplot(Eventdf,aes(x=Context,y=Tevents)) + geom_blank() + 
+  geom_segment(aes(x=4,xend=4.75,y=Tevents,yend=Tevents)) +
+  geom_rect(data=Cdf,aes(xmin=2.5,xmax=5,y=Cstart,ymin=Cstart,ymax=Cend,alpha=100,fill=Context)) + guides(alpha="none",fill="none") +
+  geom_text(data=Cdf,aes(label=paste("Context",Context),x=3,y=(Cstart+Cend)/2)) +
+  geom_path(data=data.frame(xx=c(0,3.5,3.5,0,0),
+                              yy=c(0,0,max(Tevents),max(Tevents),0)),
+              aes(x=xx,y=yy)) +
+  geom_text(data=data.frame(xx=1,yy=max(Tevents)/2),
+            aes(label="Assessment Window", x=xx,y=yy)) +
+  scale_x_continuous(name="Process",breaks=c(1.25,3,4.325),
+                     labels=c("EA","EI","EC")) +
+  labs(y="Timestamp")
+
+
+```
+
+## Observable Outcomes
+
+-   Output of EI is a row in a data table, with key
+    `(Learner ID, Task ID)`
+
+-   Columns are *observable outcomes*
+
+Goal is to have educators design these without needing programmers to
+implement them.
+
+1.  "Which trophy (if any) was earned?"
+
+2.  Did the player try to draw a lever?
+
+3.  How many times did the player adjust the gravity slider?
+
+4.  How much time did the player spend viewing support videos?
+
+## Context Sets
+
+Most observables are meaningful in more than one scoring context.
+
+Many observables are only meaningful in some scoring contexts.
+
+Associate observables with sets of contexts:
+
+-   All Game Levels
+
+    1.  Trophy
+    2.  Time spent on learning supports
+
+-   Sketching Level
+
+    2.  Lever drawn
+
+-   Manipulation Level
+
+    3.  Gravity slider manipulation count
+
+## Filter-Map-Reduce
+
+Algorithm for most observables can be partitioned into three phases:
+
+Pre-filter
+:  Only observables related to the context are computed.
+
+Filter
+:   Remove events which are not relevant (e.g., "Ball moved")
+
+Map
+:   Extract relevant datum from event message. (e.g., 1 if gravity
+    slider, 0 if not)
+
+Reduce
+:   Reduce the mapped values to a single outcome (e.g., `sum()`,
+    `count()`, `any()`)
+
+Filter and mapping operations are inherently parallel and can 
+exploit cluster computing. Reduction can be partitioned if the
+operator is commutative and associative.
+
+## A Graphical View of the algorithm
+
+```{r}
+#| echo: false
+Nevents <- 25
+timestampe <- cumsum(rgamma(Nevents,3))
+filterpass <- rbinom(Nevents,1,.3)
+values <- rbinom(Nevents,1,.3)*filterpass
+evdf <- data.frame(timestamp=timestampe,passed=filterpass,value=values,y=NA)
+evdf[1:4,"y"] <- 1:4
+ggplot(evdf,aes(x=timestamp,y=y)) + geom_blank() +
+  geom_segment(aes(xend=timestamp,y=0.25,yend=1.25)) +
+  geom_segment(data=evdf[as.logical(filterpass),],
+               aes(xend=timestamp,y=1.5,yend=2.5),
+               arrow=arrow(length=unit(1,"char"))) +
+  geom_text(data=evdf[as.logical(filterpass),],
+            aes(x=timestamp,y=3,label=paste(value))) +
+  geom_text(data=evdf[as.logical(filterpass),],
+            aes(x=timestamp,y=3.5,label=paste(cumsum(value)))) +
+  scale_y_continuous(name="Step",breaks=c(.75,2,3,3.5),
+                     labels=c("Raw","Filter","Map","Reduce")) +
+  labs(x="Timestamp")         
+  
+
+```
+
+## Filtering: Focusing on what is relevant
+
+Three kinds of filtering:
+
+-   Certain observables only relevant in certain context sets (implicit
+    filter).
+
+-   Only certain message topics are interesting
+
+-   Value of data field must be certain value or in a certain range.
+
+Separating out the conditions allows optimizing computations.
+
+## Mapping: Extracting Key Values
+
+Takes an event and returns *value* and *timestamp*.
+
+Value could be:
+
+-   Constant
+-   Field from the data
+-   Transformed field from the data (common numerical operators)
+-   Conditional Rule:
+    -   If *condition 1* then *value expression 1*
+    -   If *condition 2* then *value expression 2*
+    -   Otherwise *default value expression*
+
+## Reduction: Summarizing Across Scoring Window
+
+Takes vector of values and generate final observable values.
+
+-   Logical summaries: `any()` or `all()`
+-   Numerical summaries: `count()`, `sum()`, `mean()`
+-   Ordinal summaries: `min()`, `max()`
+-   Position order: `first()`, `last()`
+
+## Example 1: What trophy did the player earn?
+
+**Filter**:   `topic` in `{"Level Start", "Trophy Awarded"}`
+
+**Map**:   
+
+-   If `topic == "Level Start"` then `none`
+-   If `topic == "Trophy Awarded"` then `data.trophy`
+
+**Reduction**: `max()`
+
+## Example 2: Did the player draw a lever?
+
+Note that the EC process does the classification of 
+drawings as engines because it requires access to the 
+physics engine.
+
+**Filter**:   `topic` in `{"Agent Identified"}`
+
+**Map**:
+
+-   If `data.agent == "Lever"` then `TRUE`
+-   Otherwise `FALSE`
+
+**Reduction**: `any()`
+
+## Example 3: How many times did the player adjust the gravity slider
+
+**Filter**:
+
+-   `topic` in `{"Adjusted Slider"}`
+-   `data.control == "Gravity Slider"`
+
+**Map**:
+-   Always `1`
+
+**Reduction**:  `count()`
+
+## Example 4: For how long did the player use learning supports
+
+System logs start and stop times. Convert to number of 
+seconds, and make start times negative. Then take sum.
+
+**Filter**: 
+
+-   `topic` in `{"Learning Support Start", "Learning Support Stop"}`
+-   `data.support` in `{<Physics Videos>}`
+
+**Map**:
+
+-   If `topic %contains% "Start"` then `-((int) timestamp)`
+-   If `topic %contains% "Stop"` then `(int) timestamp)`
+
+**Reduction**: `sum()`
+
+## How far we have come
+
+-   **Goal**: Get algorithm directly from the 
+specification by content author.
+
+-   Algorithm can be naturally partitioned to take 
+advantage of parallel computing
+
+    -   `Kafka` -- Queuing algorithm
+    -   `Apache Spark` -- Distributed Computing
+    -   `jq` and `MongoDB` pipelines
+
+-   Watermarks allow system to reason about 
+completeness of data.
+
+-   Specification, not yet implementation.
+
+-  May need labeling preprocessing for some 
+applications (e.g., text analysis).
+
+## Future Direction
+
+-   Big issue is maintaining consistencey between EC, EI and EA
+    processes.
+
+-   Need to better capture possible data fields output from EC.
+
+-   Maybe possible to work with analyses of audio/video recordings (typically NVivo).
+
+
+## Thanks
+
+![](img/EvidenceStream.108.png)
+
+<https://ralmond.net/EvidenceStream>
+
+
+## Message Format (JSON)
+
+``` json
+{
+  messageType: "ESEvent",
+  app: <Application GUID>,
+  uid: <Unique learner ID within app>,
+  window:  <Scoring Context (Task) ID>,
+  timestamp: <ISO Time>,
+  sender: <ProccessName>,
+  topic: <Message Topic>| <verb>/<object>,
+
+  data: { <JSON OBJECT>},
+
+  processed: <logical>,
+  pError: [<error message>],
+  watermarks: {<mark>:<timestamp>,...}
+  signatures: [<encrypted checksums>]
+}
+```

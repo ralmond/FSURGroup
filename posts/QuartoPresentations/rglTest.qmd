@@ -1,0 +1,20 @@
+---
+title: "RGLTest"
+format: pdf
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| include: false
+library(rgl)
+setupKnitr(autoprint=TRUE)
+```
+
+Here is a 3d plot
+
+```{r}
+plot3d(rnorm(100),rnorm(100),rnorm(100))
+```
+

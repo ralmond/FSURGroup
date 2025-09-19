@@ -1,0 +1,571 @@
+---
+title: "A Cloud Computing Architecture for  Scoring of Product and Process data"
+author: "Russell Almond"
+format: 
+  pdf: 
+   header-includes:
+     - \usepackage{annotate-equations}
+---
+
+## Introduction
+
+assessment spread across time and space
+
+process data
+
+cloud computing and distributed computing
+
+handling incomplete and late data
+
+## Background
+
+### Evidence-centered Assessment Design (ECD)
+
+Evidence-centered assessment design [@onthestructure] is a colleciton
+of design objects which lay out the details of an assesment system
+which must be specified, explicitly or implicitly, to make an
+assessment.  In the original structure, each design element was called
+a _model_[^In hindsight, this was a mistake.  The word "model" is used
+in far too many contexts in the field of science, making its easy to
+confuse is technical use in ECD with its use in other contexts.]
+(with a corresponding _paradigm_, a less detailed version of the same
+design object used in earlier phases of the design process).  The idea
+of the project is from conception through finalization of the
+assessment design, the question of how much evidence, and of what
+kinds, was needed to make valid claims about the learner.
+
+The target of the design project is the _Conceptual Assessment
+Framework_ (CAF).  This framework has four kinds of design objects, as shown
+in Figure @fig{ReCAF}.  These have been renamed from the original ECD
+paper, both the old and new names are given below.
+
+![Reconceptualized Conceptual Assessment Framework]{ReCAF.png}
+
+* _Assessment Plan_ (aka Assembly Model).  This design object is
+  responsible for defining both how much and what kinds of evidence
+  must be made to support the claims.  Thus it is concerned with both
+  the types and quantities of assessment tasks needed in an
+  assessment.
+  
+* _Proficiency Map_ (aka Proficiency Model, Competency Model).  This
+  defines the possible locations a learner can be in the space of
+  constructs measured in the assessment.  Usually, this is expressed
+  by an assignment of values of proficiency variables to values called
+  a _proficiency profile_ for a given learner.  Note that although the
+  design language speaks about proficiecies (or competencies[^The word
+  "competency" was subsituted for "proficiency" when proficiency
+  acquired new meanings with the _No Child Left Behind Act_ of
+  2001.]), the variables might also represent other psychological
+  constructs, such as frustration.  A _learning progression_ is a
+  route through the proficiency map, and often certain areas of the
+  map have no learners because of pre-requisite structures among the
+  proficiencies. 
+  
+If a Bayesian scoring model is used, there also needs to be a
+probability distribution over the possible locations on a learner on
+the map.  This is usually based on the distribution of map locations
+in the target population of the assessment.  In the Bayesian scoring
+model, the scores are usually statistics of the posterior distribution
+over the proficiency map given the evidence collected from a learner.
+  
+* _Evidence Rules_ (aka Evidence Model).  This design object describes
+  how evidence from tasks should be used to update the location of a
+  learner in the proficiency map.  There are two phases, _evidence
+  identification_ and _evidence accumulation_.
+  
+  - _Evidence Identification Rules_ (aka Rules of Evidence).  These
+    describe how a scorer (human or computer) should go from the _work
+    product_ produced by a learner interacting with a task, to a
+    collection of _observable_ outcomes which summarize the performan
+    _within that task_.  The vector of observables is passed on to the
+    Evidence Accumulation step.
+	
+  - _Evidence Accumulation Rules_ (aka Weights of Evidence).  These
+    describe how the scorer should update estimates of a learners
+    location in the proficiency map given the observed evidence
+    vector.  In the weighted-sum model, this is just a sum of the
+    observed outcomes (often a simple right-wrong).  The weights allow
+    different tasks to contribute differently to the final score. In
+    a Bayesian scoring model, the evidence accumulation rule provides
+    the likelihood of the observations given the location in the
+    proficiency map;  updating is then done using Bayes' rule.
+	
+* _Task Specifications_ (aka Task Models).  Note that this model does
+  not directly specify tasks, but rather classes of tasks in which
+  there can be one or more instances.  In particular, it specifies
+  features of the task which impact is difficutly and discrimination
+  (and hence the weight it should recieve).  A _radical_ task feature
+  is one that changes its evidentiary value, and an _incidential_
+  feature is one that does not [@irvine??].  Incidental features are
+  important for randomly creating variants of texts.
+  
+The original CAF also contained a delivery system model and
+presentation models which described other aspects of the environment
+in which the task was presented.  These often provided "task
+features", which could be radical (e.g., whetheror not the students
+are allowed to use calculators).  They also defined things
+eligibility, which defines the target population, and test security,
+which is an important part of validity for high-stakes assessments.
+
+In designing an assessment, the design team generally follows along
+the direction of the arrows.  Starting with the goals (_claims_ of the
+assessment) defined in the Assessment Plan, they build a Proficiency
+Map, sketch Evidence Rules for locating a learner on that map, design
+tasks which provide the evidence needed for the Evidence Rules, and
+then write plans in terms of how many tasks of what types are needed.
+The process is iterative, as the assesment is designed earlier design
+decisions need to be adapted for decisions made (and constraints
+learned) later in the design process.
+
+The _task_ is the central unit of evidence collected from the
+learner.  A task is usually marked by a set of _presentation material_
+(including the prompt) given to the learner, and a _work product_
+collected at the end.  @onthestructure introduced it as an alternative
+to the commonly used term _item_ as it could encompass traditional
+item types like mutliple choice and other short answer formats, sets
+of simple items with shared stimulus material, extended constructed
+response tasks (like essays), and a set of interactions with a game or
+simulator.  This model, however, breaks down in the face of extended
+simulations [@mislevy??]
+
+### Proc4 and Event Stream
+
+The `Proc4` architecture [@proc4] came about in response to the IMS
+Project's Question and Test Interoperibility specification process
+[@qti]. The goal was to identify the phases of the scoring process, at
+any point of which there may be information to be captured. The
+`EventStream` architecture reimangines the four process as part of a
+streaming system[@almond2020].
+
+![Streaming Four-process architecture]{Proc4.svg}
+
+The _Context Determination_ system schedules the activities that are
+used to collect data.  The _Evidence Capture_ system (often the game
+or simulation engine) captures events and work product as the learner
+progresses through a tasks.  The _Evidence Identification_ process is
+responsible for scoring within a context or scoring window, and the
+_Evidence Accumulation_ is responsible for scoring across multiple
+scoring windows.  In an adaptive situation, the statistics reported
+from Evidence Accumulation are used to determine the next activity.
+(These processes are described in more detail below.)  Note that all
+of the processes may also send their data to a data score which will
+be used for other kinds of analysis.
+
+Note that the Evidence Capture process captures both the _work
+products_ (artifacts such as documents, audio or video), and _work
+process_ (a collection of events that the describe the process of
+creating the work product.  This is potentially a raw stream of
+messages, and it must be partitioned into _scoring windows_.  Evidence
+Identification summarizes messages coming from a single scoring
+window: its output is a collection of _observable_ outcome
+variables. Evidence Accumulation acts across scoring windows, it
+produces _statistics_ of the learner's proficiency varaibles.
+
+The four process architecture defines a message format for
+communicating among the messages.  The `P4Message` contains a
+collection of envelope information, and a data field which contains
+the actual information.  Both the envelope information and data are
+specified in key--value pairs, which can easily be stored in common
+formats such as `JSON` (java-script object notation) and `XML`
+(eXtensible Markup Language) and a number of other formats.  Listing
+@list-P4 gives the general structure.
+
+```{#lst-P4 .json lst-cap="Evidence Stream Event Schema"}
+{
+  messageType: "ESEvent",
+  app: <Application GUID>,
+  uid: <Unique learner ID within app>,
+  window:  <Task ID>,
+  timestamp: <ISO Time>,
+  sender: <ProccessName>,
+  topic: <Message Topic>| <verb>/<object>,
+  data: { <JSON OBJECT>},
+  processed: <logical>,
+  pError: [<error message>],
+  watermarks: {<mark>:<timestamp>,...}
+  signatures: [<encrypted checksums>]
+}
+```
+
+The first field is just a type identifier.  The `app`, `uid`,
+`context`, `timestamp`, `sender` and `topic` (called `mess` in Proc4)
+fields are the envelope fields.  A message server process should be
+able to send the message to a process which want the information based
+on the envelope information.  The `processed`, `pError` and
+`watermarks` fields are processing status information.  They are used
+to control the process information.  For example, a simple message
+queue is implemented by searching the message collection for the
+oldest (timestamp) unprocessed message.  The `signatures` field allows
+various certifying authorities to sign the message.
+
+Note that the `context` field of the messages marks a _scoring
+window_.  In particular, the Evidnece Identification process
+summarizes across all tasks with the same context to create a vector
+of observables.  When the scoring window is closed---all events and
+work product elements have been received by the Evidence
+Identification process---it can pass its message on to the Evidence
+Accumulation process.  The Evidence Accumulation process, in turn, has
+an _assessment window_.  When that window closes, it can issue it
+final scores.
+
+
+### Various Scoring Models
+
+
+Let $\boldsymbol{\theta}_u$ represent the proficiency profile for the
+learner with `uid` (user identifier) $u$.  Let $\boldsymbol{y}_{c,u}$ be the
+vector of observations from the task with `context` $c$ from learner
+$u$.  Let ${\cal A}_u$ be the set of scorable tasks available for
+$u$, and let $\boldsymbol{y}_{*,u} = (\boldsymbol{y}_{c_1,u},\ldots,
+\boldsymbol{y}_{c_N,u})$ be the complete set of evidence.  If $A_u$ is a subset of
+tasks, then let $\boldsymbol{y}_{A_u,u}$ is the observations from just those
+subsets.  
+
+Let $L(\boldsymbol{\theta}_u|\boldsymbol{y}_{A_u,u})$ be the estimated location
+of Learner $u$ after observing tasks from $A_u$.  Suppose that a new
+task, $c$ is observed, let $A'_u = A_u \cup \{c\}$.  The evidence
+accumulation rule describes how to go from
+$L(\boldsymbol{\theta}_u|\boldsymbol{y}_{A_u,u})$ to
+$L(\boldsymbol{\theta}_u|\boldsymbol{y}_{A'_u,u})$.  The proficiency map
+defines the initial location estimate
+$L(\boldsymbol{\theta}_u|\emptyset)$. 
+
+A basic assumption of most scoring models is _task
+independence_, i.e., that the contributions to the total score from
+each task is seperable from the the others. In this case, the
+assumption is that contributions to the final location from each task
+are communitive and associative, that is they will reach the same
+answer no matter which order they are accumulated.  
+
+In the case of a Bayesian scoring model, _task independence_ is
+achieved if the the observable outcomes from different tasks are
+independent given the proficiency profile of the learner.  (Task
+boundaries can be redesigned to model dependent observations.)
+Under these assumptions, the posterior distribution for Learner $u$ is:
+
+$$ P(\boldsymbol{\theta}_u|\boldsymbol{y}_{*,u}) \propto 
+P(\boldsymbol{\theta}_u) \prod_{c \in {\cal A}_u} P(\boldsymbol{y}_{c,u} |
+\boldsymbol{\theta}_u)\ . $$
+
+The first term on the right hand side is the population distribution
+over locations from the proficiency map.  Each term of the product is
+a likelihood from the evidence rules for a task. The initial
+population probability distribution is a _potential_ (an unnormalizing
+probability distribution).  The likelihoods from a given task are also
+potentials.  Multiplying the two together produces a new potential
+which contains the joint information about the learner from both the
+initial population distribution and the observed evidence. The update
+rule for a Bayesian scoring engine is simply multiplying new
+likelihood potential with the potential that represents the current state.
+
+* _Weighted-sums:_One of the oldest models for testing is to score
+  each item (task), and then simply add up the number of right answers (or
+  equvalently, subtract the number of wrong answers from a total).
+  This can be modelled by an initial value (defined in the proficiency
+  map), and then adding the points
+  from each item (task).  Sometimes, a different number of points is
+  given to each task; this can be done by weighting the sum.  Partial
+  credit scoring is define the Evidence Identification Rules,
+  which sets up the criteria for different score categories.
+  Subscores can also be calculated by assigning different set of
+  weights (in particular, assigning a weight of 0 to tasks which do
+  not target the desired proficiency.
+
+* _Item Response Theory (IRT):_The simplest form of item response
+  theory has a signle continuous latent proficiency variable,
+  $\theta_u$ and a it assumes that the item responses ($Y_{c,u}$) are
+  dichotomously scored. As the scale and location of the latent
+  variable are not identified, often the distribution of the target
+  population is taken to be a unit normal distribution. (An
+  alternative is a uniform distribution over a certain range.)  There
+  are many parametric forms for the likelihood.  One of the most
+  common is the 2 parameter logistic, $\Pr(Y_{c,u}=1|\theta_u,a_c,b_c) =
+  \mathord{\text{logit}^{-1}}(a_c(\theta_u-b_c))$.  The likelihood
+  parameters $a_c$ and $b_c$ are called the _discrimination_ and
+  _difficulty_ respectively. This can be implemented as a Bayesian
+  scoring model.  (This is true even for maximum-likelihood approaches
+  to IRT; in this case, the population model is a uniform distribution
+  and the summary statistic used for reporting is the mode of the
+  combined potential.)  There are a number of IRT models which include
+  extra parameters for guessing, and provisions for partial credit or
+  graded responses.
+
+* _Multivariate IRT:_This extends the IRT model to proficiency models
+  where $\boldsymbol{\theta}_u$ has more than one component.  Often
+   a multivariate normal distribution is used for the initial
+  population distribution.  The means and variances are not
+  identifiable, and can be set to 0 and 1 respectively in the referenc
+  population to identify the model.  The correlation matrix, however,
+  needs some care.  Often the proficiency variable are correlated,
+  either because the skills are related, or because hte skills are
+  frequntly taught together and more training on one implies more
+  training on the other.
+
+* _Cognitively Diagnostic Models_ (aka Diagnostic Classification
+  Models):  In this model the proficiency variables (often called
+  _attributes_[^@tatusoka1984 note that corresponding to a particular
+  feature of a tasks, the leaners had an ability to solve tasks with
+  with that feature, and chose the name "attribute" to recognize these
+  were attributes of both tasks and learners.] are dichotomous (or
+  occsionally ordered categories).  Again, there are a number of
+  parametric forms [@hensen??]; one of simplest and most illustrative
+  is the DINA (deterministic input, noisy-and) model.  A matrix $Q$ is
+  used to indicate which proficiencies are needed for each tasks, with
+  $q_{ck}=1$ if Proficiency $k$ is needed for Task $c$.  A function
+  $\eta_c(\boldsymbol{\theta}_u)$ is one if Learner $u$ has all of the
+  required skills and 0 if they lack one or more skills.  Usuall a
+  guessing (probability of getting the task right even if lacking one
+  or more skills) and slipping parameter (probability of getting it
+  wrong despite having the required skills) is defined for each task.
+  Most of these models fit into the Bayesian framework.
+  
+Note that the population distribution of the attributes in cognitive
+diagnosis is a bit of an afterthought.  Again, the proficiency
+variables are often correlated in the population of interest, so it
+worth spending some time capturing that correlation.  I particular, if
+it is known that two proficiencies are correlated, direct evidence of
+one provides indirect evidence of the other.
+  
+* _Bayesian Netowrks:_A Bayesian network is a factorization of a
+  probability distribution according to a graph.  Although there has
+  been a separate strand of research related to Bayesian networks
+  [@bninea], it is really a representational system.  In particular,
+  most MIRT and CDM models can be represented with Bayesian networks.
+  
+A key feature of the Bayesian netowrk models is that separation in
+the graph implies statistical independence.  In particular, the joint
+probability distribution can be represented as the product of
+potentials the cliques in the graphical structure, and the
+calculations involved in scoring can be defined through passing
+messages between the cliques.
+
+* _Dynamic Bayesin Networks:_A dynamic Bayesian network is one that
+  unfolds across time.  In particular, nodes in the proficiency model
+  represent values of the proficiency variables at particular
+  measurement occasions.  In addition to the population correlation
+  structure, the dynamic model needs a _growth model_ that describes
+  how the proficiencies change across time (this should be
+  parameterized by the instruction given between the time points).
+  This model can improve the estimation of learner location at each
+  time point by using the entire history, and forcast the learner's
+  position at a futuer time.
+
+* _General Machine Learning:_A large number of different machine
+  learning models have been proposed.  In these models, the
+  observables from each task are put into a larger feature vector.
+  This is then fed into a classifier or predeiction mdoel which
+  produces an estimate location.  An example of this is the Rule Space
+  method [@tatsuoka1984].  In this method, each possible proficiency
+  profile is mapped (using the $Q$-matrix) to a position in the
+  feature space.  The leaner is assigned the proficiency profile which
+  an ideal response pattern closest to the learner's observed response
+  pattern.
+  
+Some machine learning models factor nicely according to the task
+structure (this is generally true of Bayesian methods, in which each
+task contributes another factor to the posterior).  Others may not, in
+which case the actually classification of the student's ability must
+wait until all evidence has been assembled.
+
+For all of the methods, the scoring engine usually defines some method
+of identifying unusual observations and problems with the model.  For
+Bayesian models, it is possible to predict the probability of
+observing the given response pattern in the target population.
+Similarly, the whole model probability can be calculated by
+multiplying across individuals.
+
+Similarly, most of these scoring contexts needs a way of calibraring
+the models (often called training the in the machine learning
+context).  Both the initial proficiency model and the parameters of
+the evidence model need to be calibrated.  
+
+### Tasks, Contexts, and scoring windows.
+
+The original ECD and Four-process papers assumes that messages were
+all associated with tasks (assignments given to the learner which will
+produce work products).  This was a generalization of an item in a
+traditional test.  In this framework, the term _Context_ was a synonym
+for _Task_.  This system expanded naturally to certain game-based
+assessments, like _Physics Playground_, _E-rebuild_, and _Zoombinis_.
+These games had a collection of levels--a unit of gameplay with its
+own objectives.  In this situation, the _Context_ = _Task_ rule still
+makes sense.
+
+However, there are some natural groups among the tasks.  For example,
+in _Physics Playground_, the game levels could be divided into
+"Drawing levels", in which the method of solution was drawing new
+objects in the 2d-world, and "Manipulation levels", in which the
+method of solution was adjusting sliders controlling parameters of the
+2d-world.  Naturally, there are different types of data coming from
+each type of level, and different evidence rules needed for each one.
+
+In _Physics Playground_, the solution was to define a scoring context
+as a set of tasks which use some rules of evidence.  Thus, "Drawing
+levels" and "Maipulation levels" are context sets.  Now each task must
+be labeled as to which context sets it belongs. Any particular
+evidence rule can be marked as applicable or inapplicable for a given
+context.
+
+The _Context_ = _Task_ system breaks down in open-ended simulations
+and games.  Consider a flight simulator.  The task might be fly from
+one airport to another.  However, the simulation might have several
+very different states: (a) preflight checks, (b) take-off, (c)
+cruising at altitude, (d) dealing with a storm event, (e) more
+cruising, (f) landing.  A _scoring window_ is defined as a period of
+time between which all events should be scored using the same rules of
+evidence.  In this framework, the _scoring window_ is what should be
+supplied as a value of the _context_ field in the message.  In
+general, the Evidence Capture is responsible for tagging the messages
+with the appropriate context or scoring window.
+
+Finally, there is an _assessment window_ associated with all of the
+data collection for a given learner.  Typically only evidence gathered
+within that time frame is reported.  In particular, only after this
+window closes, can the final scores (i.e., statistics from the
+Evidence Accumulation process) be reported.
+
+### Cloud Computing Frameworks
+
+-   Hadoop
+-   Spark
+-   Kafka
+
+### Watermarks
+
+In a streaming framework, it is expected that all of the relevant
+events will occur with (or shortly after) a scoring window.  It may
+be, however, that some other process needs the estimated scores before
+the scoring window is closed or all data are processed.  It may also
+be that messages are delayed or the learner goes back and revisits the
+task.  This produces new events to be processed after the close of the
+scoring window.
+
+In streaming situations, this can be handled with _watermarks_, a
+label combined with a timestamp.  An "early" watermark is attached to
+messages calculated before the scoring window is closed. This is
+replaced with a message using an "on time" watermark.  Finally, if new
+events arrive after the scoring window is closed, the new scores are
+issued with a "late" watermark.  Downstream processes then have a
+choice of ignoring the late updates, or issuing their own late
+updates.
+
+Another situation that can be handled by watermarks is review.  A
+high-stakes adaptive test may have an estimated score for the learner
+at the testing session.  However, the policy may be to have the scores
+reviewed by the psychometric team before the final score is
+determined.  The initial score could have a "preliminary" watermark,
+and the final score a "certified" watermark.  (Adding a signature
+would be good here.)
+
+## Evidence Stream Framework
+
+### Basic Processes
+
+-   *Evidence Capture* (Presentation Process; Game Engine)
+-   *Evidence Identification* -- within scoring window scoring
+-   *Evidence Accumulation* -- across scoring window scoring
+-   *Activity Selection*
+-   *Learning Management System*
+-   *Message routing and logging*
+-   *Service Management*
+
+Wuzzy lines between processes: \* EI task in simulation engine \* Context determination in simulation engine \* setting cut points on continuous variables.
+
+### Event Stream messages
+
+### Scoring Windows and Context
+
+### Watermarks and Always Available Statistics
+
+EC:  WindowOpen, WindowClosed, WindowComplete
+EI:  Incomplete, Complete, Updated
+EA:  Insufficient, Sufficient, Updated
+AS:  Preliminary, 
+
+External Review: Reviewed
+
+
+
+## Streaming Evidence Identification
+
+### Event data and Context Identification
+
+### Filter -> Map -> Reduce -> Aggregate
+
+### Filter -- selecting messages
+
+### Mapping -- selecting data fields
+
+### Reduction -- summarizing across inputs
+
+### Aggregation -- collecting all of the observables
+
+### Adaptive Feedback
+
+## Streaming Evidence Accumulation
+
+### Hub and Spoke Architecture
+
+\begin{equation*}
+\eqnmark[purple]{pm}{P(\boldsymbol{\Theta})}
+\eqnmark[black]{am}{\prod_j} 
+\eqnmark[blue]{em}{P(\boldsymbol{Y}_j|\boldsymbol{\Theta})}
+\end{equation*}
+
+
+### Proficiency Model
+
+Discrete variables
+
+Continuous variables -- normal approximation -- fixed and adaptive quadrature
+
+### Evidence Models/Likelihoods
+
+Bayes nets
+
+Memoization
+
+IRT and MIRT models
+
+Passing parameters versus passing arrays
+
+### Evidence Accumulation
+
+### Evidence Updating
+
+### Statistics
+
+## Activity Selection
+
+### Stopping Rules
+
+### Ordering Activities
+
+### Critiquing and Topics
+
+### Calculating Mutual Information, EWOE.
+
+Is there a way to precalculate this so we just need to multiply by the posterior distribution of the footprint?
+
+## Late Data, Timeouts and Watermarks
+
+### Timeouts
+
+### Late Events and Evidence Identification
+
+### Late Events and Evidence Accumulation
+
+### Late Events and Activity Selection
+
+## Security
+
+### Proctors and Scoring Components
+
+### Signing events
+
+## Conclusions
+
+## References
+
+::: Refs
+:::

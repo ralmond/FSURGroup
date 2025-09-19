@@ -1,0 +1,109 @@
+---
+title: "LaTeX, Quarto and RStudio"
+author: "Russell Almond"
+date: "2024-04-19"
+categories: [news]
+---
+
+# RMarkdown and Quarto
+
+-   Help on Quarto
+
+    -   <https://quarto.org/docs>
+    -   \`Help \> Cheat Sheets \> R Markdown ...
+    -   `Help > Markdown Quick Reference`
+
+-   Types of Quarto Projects (`File > New Project ...`)
+
+    -   Quarto Project
+    -   Quarto Website
+    -   Quarto Blog
+    -   Quarto Book
+
+## Rendering Documnets
+
+From Command Line (Terminal):
+
+```         
+quarto preview [notebook.qmd] [-to [pdf|docx|html]]
+```
+
+```         
+quarto render [document.qmd] [- to [pdf|docx|html]]
+```
+
+Leave notebook/document off to render full website.
+
+Also, in RStudio `Build > Render Website ...`
+
+Quarto used `pandoc` to convert between document types.
+
+<https://pandoc.org/>
+
+## Deploying Website
+
+Copy `_site` directory to deployment site.
+
+## Figures and Tables
+
+# LaTeX
+
+$\text{\TeX}$ and $\text{\LaTeX}$
+
+`pandoc install tinytex`
+
+`texlive`, `miktex`
+
+<https://ctan.org/>
+
+## Commands & Groups
+
+-   `$` and `$$` -- In RStudio, no space between `$` and start/stop of equation.
+-   `\` -- starts a command
+-   `{}` --- gives you a group
+
+## Subscripts and superscripts
+
+-   Subscript `_` $b_0$, $x_{ij}$
+-   Superscript `^` $R^2$, $X^{-1}$
+
+## Greek letters and other commands
+
+Greek letters are `\` followed by the name $\theta$, $\Theta$
+
+`\sqrt` $\sqrt{2\pi}$
+
+Note $\log$ (in roman type)
+
+Circumflex $\hat{x}$, $\widehat{X_{ij}}$ Tilde $\tilde{x}$, $\widetilde{X_{ij}}$ Bar $\bar{x}$, $\overline{X_{ij}}$
+
+## Sums and Products
+
+$$\sum_{i=1}^{N} x_i$$
+
+## Fractions
+
+$\frac{1}{2}$
+
+## Bold and Roman
+
+`\text` to get roman `\textbf` or `\boldsymbol` to get bold.
+
+$logit$, $\text{logit}$
+
+## LaTeX class files
+
+<https://myweb.fsu.edu/bwhissel/fsulatex/>
+
+```         
+---
+format:
+  pdf:
+    documentclass: fsuthesis/fsuthesis.cls
+    papersize: letter
+---
+```
+
+## LaTeX paths
+
+## Bibtex, Zotero & APA style references

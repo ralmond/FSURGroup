@@ -1,0 +1,8 @@
+digraph ESP4 {
+  EC[label="Evidence Capture"]
+  EI[label="Evidence Identification"]
+  EA[label="Evidence Accumulation"]
+  AS[label="Activity Selection"]
+  EC -> EI -> EA -> AS
+  AS -> EC[style="dashed"]
+}

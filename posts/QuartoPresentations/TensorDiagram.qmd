@@ -1,0 +1,32 @@
+---
+title: "Tensor Wireframe"
+format: html
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| include: false
+library(rgl)
+setupKnitr(autoprint=TRUE)
+```
+
+```{r}
+#| echo: false
+theta <- '𝜃'
+phi <- '𝜙'
+theta1 <- rep(0:1,each=12)
+theta2 <- rep(rep(0:2,each=4),2)
+theta3 <- rep(0:3,6)
+plot3d(theta1+.5,theta2+.5,theta3+.5,type="n",
+       xlab=paste0(theta,1),ylab=paste0(theta,2),zlab=paste0(theta,3),
+       xlim=c(0,2),ylim=c(0,3),zlim=c(0,4),decorate=FALSE)
+segments3d(rep(c(0,2),20),rep(0:3,each=10),rep(rep(0:4,each=2),4))
+segments3d(rep(0:2,each=10),rep(c(0,3),15),rep(rep(0:4,each=2),3))
+segments3d(rep(0:2,each=8),rep(rep(0:3,each=2),3),rep(c(0,4),12))
+text3d(theta1+.5,theta2+.5,theta3+.5,
+       sprintf("%s[%d,%d,%d]",phi,theta1,theta2,theta3))
+view3d(-10,15,zoom=.75)
+#rglwidget()
+```

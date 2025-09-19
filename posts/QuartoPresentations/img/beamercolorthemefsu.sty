@@ -1,0 +1,89 @@
+% Beamer Color Theme ``Cambridge UK'', sporting the house colors of the University of Cambridge, UK
+% Adapted from beamercolorthemebeetle by Till Tantau
+% Philipp Hennig, 2008.
+% Adapted for FSU colors by Russell Almond, 2016
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+% See the file doc/licenses/LICENSE for more details.
+
+\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/themes/color/beamercolorthemefsu.sty,v 0.5 2016/06/28 20:00:00 ralmond Exp $
+
+\mode<presentation>
+
+%% RGB definition of Camrbidge Colors, as defined by UC Communication Services
+%% should be {cmyk}{...} vales, but the University insists on RGB models %%%
+
+%% FSU only officially defines garnet & gold. Make dark and light
+%% variants by mixing.
+\definecolor{FSUgarnet}{HTML}{782F40}
+\colorlet{FSUdeepgarnet}{FSUgarnet!50!black}
+\colorlet{FSUdarkgarnet}{FSUgarnet!75!black}
+\colorlet{FSUlightgarnet}{FSUgarnet!75!white}
+
+\definecolor{FSUgold}{HTML}{CEB888}
+\colorlet{FSUdarkgold}{FSUgold!75!black}
+\colorlet{FSUlightgold}{FSUgold!75!white}
+\colorlet{FSUpalegold}{FSUgold!50!white}
+
+%% These colors not official fsu colors, so just use cambridge
+%% definitions. 
+\definecolor{fsudarkgreen}{RGB}{67,81,37}
+\definecolor{fsugreen}{RGB}{88,166,24}
+\definecolor{fsulightgreen}{RGB}{168,180,0}
+
+\definecolor{fsudarkviolet}{RGB}{65,45,93}
+\definecolor{fsuviolet}{RGB}{142,37,141}
+\definecolor{fsulightviolet}{RGB}{181,147,155}
+
+\definecolor{fsudarkazur}{RGB}{21,101,112}
+\definecolor{fsuazur}{RGB}{0,179,190}
+\definecolor{fsulightazur}{RGB}{163,193,173}
+
+
+\setbeamercolor{normal text}{fg=FSUdeepgarnet,bg=FSUpalegold}
+\setbeamercolor{structure}{fg=FSUdarkgarnet}
+
+%\setbeamercolor{alerted text}{fg = fsudarkviolet}
+%\setbeamercolor{example text}{fg = fsudarkgreen}
+
+\setbeamercolor{item projected}{use=item,fg=FSUgarnet,bg = FSUgold}
+\setbeamertemplate{itemize items}[circles]
+\setbeamertemplate{enumerate items}[default]
+
+\setbeamercolor*{palette primary}{fg=FSUlightgold,bg=FSUdarkgarnet}
+\setbeamercolor*{palette secondary}{parent=palette primary,use=palette primary,bg=FSUdarkgarnet}
+\setbeamercolor*{palette tertiary}{parent=palette primary,use=palette primary,fg=FSUlightgold,bg=FSUdarkgarnet}
+\setbeamercolor*{palette quaternary}{parent=palette primary,use=palette primary,bg=FSUdarkgarnet}
+
+\setbeamercolor*{block body}{fg=FSUgarnet, bg = FSUlightgold}
+\setbeamercolor*{block body example}{fg=FSUgarnet, bg=FSUlightgold}
+\setbeamercolor*{block title}{parent=structure,bg=FSUdarkgarnet,fg=FSUlightgold}
+\setbeamercolor*{block title example}{bg=FSUdarkgarnet,fg= FSUlightgold}
+
+\setbeamercolor*{sidebar}{parent=palette primary}
+
+\setbeamercolor*{palette sidebar primary}{fg=FSUlightgarnet}
+\setbeamercolor*{palette sidebar secondary}{fg=black}
+\setbeamercolor*{palette sidebar tertiary}{fg=white}
+\setbeamercolor*{palette sidebar quaternary}{fg=black}
+
+\setbeamercolor{frametitle}{bg=FSUdarkgarnet,fg=FSUlightgold}
+\setbeamercolor{frametitle right}{bg=FSUpalegold}
+\setbeamercolor{framesubtitle}{fg=FSUpalegold}
+\setbeamercolor{title}{bg=FSUpalegold,fg=FSUdarkgarnet}
+\setbeamercolor{subtitle}{fg=FSUdarkgold}
+
+\setbeamercolor{block title}{parent=structure}
+\setbeamercolor{block title example}{parent=example text}
+\setbeamercolor{block body}{}
+\setbeamercolor{block body alerted}{}
+\setbeamercolor{block body example}{}
+
+\setbeamercolor*{titlelike}{parent=structure}
+
+\mode
+<all>

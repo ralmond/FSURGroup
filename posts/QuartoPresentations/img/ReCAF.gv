@@ -1,0 +1,9 @@
+digraph ReCAF {
+    A[label="Assessment Plan"]
+    P[label="Proficiency Map"]
+    E[label="EvidenceRules"]
+    T[label="Task Designs"]
+    A -> P -> E -> T
+    T -> E
+}
+
